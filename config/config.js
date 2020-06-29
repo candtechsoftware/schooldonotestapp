@@ -7,7 +7,7 @@ module.exports = {
   /** DATABASE */
     db: {
         DB_HOST: 'localhost',
-        DB_USER: 'root',
+        DB_USER: 'admin',
         DB_PASS:'changeMe', 
         DB_NAME: 'schooldono',
         dialect: "mysql",

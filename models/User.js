@@ -5,8 +5,7 @@ module.exports = (sequelize, Sequelize, DataTypes ) => {
         'user', // name of model
         {
             id: {
-                type: DataTypes.UUID,
-                defaultValue: Sequelize.UUIDV4,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
             },
 
@@ -19,6 +18,10 @@ module.exports = (sequelize, Sequelize, DataTypes ) => {
             email: {
                 type: DataTypes.STRING, 
                 unique: true, 
+            },
+            password: {
+                type: DataTypes.STRING, 
+                unisue: true, 
             },
             user_role: {
                 type: DataTypes.INTEGER,
@@ -35,10 +38,10 @@ module.exports = (sequelize, Sequelize, DataTypes ) => {
 
         },
         { 
-        // Options 
-        timestamps: true, 
+        // Options
+        timestamp: false,
+        underscored: true,
         createdAt: 'created_at',
-        updated_at: 'last_login', 
 
         }
     );
