@@ -29,10 +29,8 @@ db.Op = Op;
 db.sequelize = sequelize; 
 
 db.student = require('./Student')(sequelize, Sequelize, DataTypes);
-db.role = require('./Role')(sequelize, Sequelize, DataTypes); 
-db.user = require('./User.js')(sequelize, Sequelize, DataTypes);
+db.admin = require('./Admin.js')(sequelize, Sequelize, DataTypes);
 db.donation = require('./Donation')(sequelize, Sequelize, DataTypes);
 db.school = require('./School.js')(sequelize, Sequelize, DataTypes); 
-db.teacher = require('./Teacher.js')(sequelize, Sequelize, DataTypes); 
 
 module.exports = db ;

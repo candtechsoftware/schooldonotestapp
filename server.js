@@ -23,8 +23,6 @@ const db = require('./models');
 
 // Routing
 app.get('/', (req, res)=> res.json({message: "Base API URL"})); 
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
 
 const PORT = process.env.PORT || 3300;
 

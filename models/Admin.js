@@ -1,8 +1,6 @@
-const Role = require('./Role.js');
-
 module.exports = (sequelize, Sequelize, DataTypes ) => {
-    const User = sequelize.define(
-        'user', // name of model
+    const Admin = sequelize.define(
+        'admin', // name of model
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -21,21 +19,10 @@ module.exports = (sequelize, Sequelize, DataTypes ) => {
             },
             password: {
                 type: DataTypes.STRING, 
-                unisue: true, 
             },
-            user_role: {
-                type: DataTypes.INTEGER,
-                references: {
-                    model: Role,
-                    key: 'id'
-                }
-
+            is_Archived: {
+                type: DataTypes.BOOLEAN,
             },
-            deleted_at: {
-                type: DataTypes.DATE, 
-                allowNull: true, 
-            }
-
         },
         { 
         // Options

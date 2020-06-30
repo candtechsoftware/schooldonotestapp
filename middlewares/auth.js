@@ -24,36 +24,10 @@ verifyToken = (req, res, next) => {
     });
 };
 
-isAdmin = (req, res, next) => {
-    User.findByPk(req.user_id)
-        .then(user => {
-            if (user.get('user_role_id') == 1)
-                next();
-                return; 
-        })
-        .catch(err => {
-            res.status(404).send({ message: 'user is not admin'});
-            console.error(err);
-        })
-};
 
-isStudent = (req, res, next) => {
-    User.findByPk(req.user_id)
-        .then(user => {
-            if (user.get('user_role_id') == 0)
-                next();
-                return; 
-        })
-        .catch(err => {
-            res.status(404).send({ message: 'user is not a student'});
-            console.error(err);
-        })
-};
 
 const auth = {
     verifyToken: verifyToken,
-    isAdmin: isAdmin, 
-    isStudent: isStudent 
 }
 
 module.exports = auth; 

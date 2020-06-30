@@ -8,21 +8,9 @@ module.exports = (sequelize, Sequalize, DataTypes) => {
                 type: DataTypes.INTEGER, 
                 primaryKey: true, 
             },
-            student_id: {
+            amount: {
                 type: DataTypes.INTEGER,
-                refernces: {
-                    model: Student,
-                    key: 'id'
-                },
-            },
-       
-            school_id: {
-                type: DataTypes.INTEGER, 
-                refernces: {
-                    model: School, 
-                    key: 'id'
-                },
-            },
+            }
 
         },
 
@@ -34,5 +22,15 @@ module.exports = (sequelize, Sequalize, DataTypes) => {
         
         },
     );
+
+    Donation.associate = models => {
+        models.Donation.belongsTo(models.Student, { 
+            onDelete: "CASCADE",
+            foreignKey: {
+                allowNull: false
+            }
+        });
+
+    }; 
     return Donation; 
 }

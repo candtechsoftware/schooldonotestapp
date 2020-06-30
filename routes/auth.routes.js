@@ -1,5 +1,7 @@
 const { verifySignUp } = require('../middlewares');
 const controller = require('../controllers/auth.controller');
+const models = require('../models');
+
 
 module.exports = (app) => {
   app.use((req, res, next) => {
@@ -10,7 +12,7 @@ module.exports = (app) => {
     next(); 
   });
 
-  app.post('/api/auth/register',
+  app.post('/student/register',
 [],
   controller.register
   );

@@ -6,9 +6,21 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         {
             id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
-                autoIncrement: true, 
-                primaryKey: true, 
+                primaryKey: true,
+            },
+
+            first_name: {
+                type: DataTypes.STRING, 
+            },
+            last_name: {
+                type: DataTypes.STRING, 
+            },
+            email: {
+                type: DataTypes.STRING, 
+                unique: true, 
+            },
+            password: {
+                type: DataTypes.STRING, 
             },
             phone: {
                 type: DataTypes.STRING, 
@@ -20,38 +32,30 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
                 type: DataTypes.STRING,
             },
 
-            school_id: {
-                type: DataTypes.INTEGER,
-                refernces: {
-                    model: School,
-                    key: 'id',
-                },
-
+            teacher: {
+                type: DataTypes.STRING,
             },
-            teacher_id: {
-                type: DataTypes.INTEGER,
-                refernces: {
-                    model: Teacher, 
-                    key: 'id', 
-                }
-            },
-            
-
-            deleted_at: {
-                type: DataTypes.DATE,
-                allowNull: true, 
+            is_Archived: {
+                type: DataTypes.BOOLEAN,
             },
 
         },
-        
+       
         // Options
         {
             timestamps: true, 
+            underscored: true,
             created_at: 'created_at',
-            updated_at: 'updated_at'
         }
 
     );
-
+    Student.associate = (models) => {
+        models.Student.belongsTo(models.School,{
+              onDelete: "CASCADE",
+              foreingKey: {
+                allowNull: false,
+                }
+        })
+    }
     return Student; 
 }
