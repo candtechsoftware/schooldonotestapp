@@ -22,15 +22,5 @@ module.exports = (sequelize, Sequalize, DataTypes) => {
         
         },
     );
-
-    Donation.associate = models => {
-        models.Donation.belongsTo(models.Student, { 
-            onDelete: "CASCADE",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-
-    }; 
-    return Donation; 
+    return Donation;
 }

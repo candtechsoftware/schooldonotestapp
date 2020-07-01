@@ -22,7 +22,15 @@ const db = require('./models');
 //db.sequelize.sync().then(()=> initial())
 
 // Routing
+
 app.get('/', (req, res)=> res.json({message: "Base API URL"})); 
+
+const api = require('./routes/routes.js');
+
+
+app.use('/api', api );
+
+
 
 const PORT = process.env.PORT || 3300;
 

@@ -1,3 +1,4 @@
+const Student = require('./Student.js');
 module.exports = (sequelize, Sequalize, DataTypes) => {
     const School = sequelize.define(
         'school', // Model Name
@@ -19,9 +20,9 @@ module.exports = (sequelize, Sequalize, DataTypes) => {
         {
             timestamp: true, 
             createdAt: 'created_at', 
-            updatedAt: 'updateda_at', 
+            updatedAt: 'updated_at',
         
         },
     );
-    return School; 
+    return School;
 }

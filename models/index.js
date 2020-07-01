@@ -33,4 +33,6 @@ db.admin = require('./Admin.js')(sequelize, Sequelize, DataTypes);
 db.donation = require('./Donation')(sequelize, Sequelize, DataTypes);
 db.school = require('./School.js')(sequelize, Sequelize, DataTypes); 
 
+db.student.belongsTo(db.school);
+
 module.exports = db ;

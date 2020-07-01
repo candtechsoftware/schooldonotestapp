@@ -33,5 +33,5 @@ module.exports = (sequelize, Sequelize, DataTypes ) => {
         }
     );
 
-    return User; 
+    return Admin; 
 }

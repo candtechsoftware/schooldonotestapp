@@ -1,5 +1,5 @@
 const School = require('./School');
-const Teacher = require('./Teacher');
+
 module.exports = (sequelize, Sequelize, DataTypes) => {
     const Student = sequelize.define(
         'student', // Model Name
@@ -35,8 +35,9 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             teacher: {
                 type: DataTypes.STRING,
             },
-            is_Archived: {
+            is_archived: {
                 type: DataTypes.BOOLEAN,
+                defaultValue: false,
             },
 
         },
@@ -49,13 +50,6 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         }
 
     );
-    Student.associate = (models) => {
-        models.Student.belongsTo(models.School,{
-              onDelete: "CASCADE",
-              foreingKey: {
-                allowNull: false,
-                }
-        })
-    }
+
     return Student; 
 }
