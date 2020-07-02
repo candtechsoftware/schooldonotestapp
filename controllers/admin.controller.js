@@ -28,7 +28,7 @@ class AdminController {
                     if(admin.length === 0){
                         return res.status(400).json({ message:`Sorry, account does not exist`});
                     } else {
-                        const passwordIsValid = bcrypt.compareSync(password, admin[0].dataValues.password.trim());
+                        const passwordIsValid = bcrypt.compareSync(req.body.password, admin[0].dataValues.password.trim());
 
                         if (passwordIsValid) {
                             let adminDetails = {
@@ -40,7 +40,7 @@ class AdminController {
 
                             let token = jwt.sign({
                                 admin: adminDetails, 
-                            }, sercret, {
+                            }, secret, {
                                 expiresIn: '1d',
                             });
 
@@ -78,7 +78,7 @@ class AdminController {
 
             await Admin.findAll({
                 where: {
-                    emai: email,
+                    email: email,
                     is_archived: false, 
                 },
             })
@@ -86,12 +86,13 @@ class AdminController {
                     if (result > 0) {
                         res.status(400).json({ message: 'Email already in use'}); 
                     } else {
-                        let hashPassword = bcrypt.hashSync(password, 10); 
+                        let hashPassword = bcrypt.hashSync(password, 10);
+
                         let newAdmin = {
                             first_name,
                             last_name,
                             email,
-                            password,
+                            password: hashPassword,
                         }
                         Admin.create(newAdmin)
                             .then(data => {
@@ -108,7 +109,7 @@ class AdminController {
                     }
                 });
         } catch (e){
-            res.status(500).json({ err: e});
+            res.status(500).json({ err: `test: ${e}`});
         }
     }
 
@@ -134,6 +135,9 @@ class AdminController {
                         Student.update(archivedStudent, {
                             where: { id: id }
                         })
+                        .then(response => {
+                            res.status(200).json({ success: true, message: 'Student account archived'})
+                        })
                     }
                 })
                 .catch(err => res.status(500).json({ err: err})); 
@@ -148,8 +152,13 @@ class AdminController {
                 where: {is_archived: false},
             })
                 .then(result => {
-                    res.status(200).json({ result: result });
-                    console.log(result);
+
+                    for (let i = 0; i < result.length; i++) {
+                    Student.update({is_archived: true}, {
+                      where: {id: result[i].id}
+                    }).catch(err => res.status(500).json({err: err}))
+                    }
+                   res.status(200).json({ message: 'All Students have been archived'});
                 })
 
         } catch (e) {
@@ -171,7 +180,6 @@ class AdminController {
     static async createSchool(req, res) {
         try {
             const { name } = req.body; 
-            name = name.toLowerCase().replace(/ /g,''); // Strips whitspace and lowers the case so we can make sure we dont
 
             await School.findAll({
                where: {name: name}
@@ -204,7 +212,7 @@ class AdminController {
 
             let archivedSchool = {
                 name: name,
-                is_Archived: true,
+                is_archived: true,
             }
             await School.update(archivedSchool, {
                 where: {

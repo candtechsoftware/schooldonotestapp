@@ -11,17 +11,15 @@ module.exports = (sequelize, Sequalize, DataTypes) => {
             name: {
                 type: DataTypes.STRING,
             },
-            deleted_at: {
-                type: DataTypes.DATE,
-                allowNull: true, 
+            is_archived: {
+                type: DataTypes.BOOLEAN,
+                allowNull: true,
             }
         },
 
         // Options 
         {
-            timestamp: true, 
-            createdAt: 'created_at', 
-            updatedAt: 'updated_at',
+            timestamps: false, 
         
         },
     );

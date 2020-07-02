@@ -21,9 +21,7 @@ module.exports = (sequelize, Sequelize, DataTypes ) => {
             password: {
                 type: DataTypes.STRING, 
             },
-            is_Archived: {
-                type: DataTypes.BOOLEAN,
-            },
+
         },
         { 
         // Options
