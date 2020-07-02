@@ -26,7 +26,7 @@ class StudentController {
           email: email,
           is_archived: false,
         },
-      }).then((result) => {
+      }).then(result => {
         if (result.length > 0) {
           res.status(400).json({ message: "Email is already registered" });
         } else {
@@ -43,7 +43,7 @@ class StudentController {
             school_id,
           };
           Student.create(newStudent)
-            .then((data) => {
+            .then(data => {
               if (data) {
                 res.status(201).json({
                   message: "Student Created",

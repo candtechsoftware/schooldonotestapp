@@ -5,6 +5,7 @@ module.exports = (sequelize, Sequelize, DataTypes ) => {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
+                autoIncrement: true,
             },
 
             first_name: {
