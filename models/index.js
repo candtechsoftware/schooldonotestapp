@@ -1,5 +1,5 @@
-const config = require('../config/config'); 
-const { Sequelize, DataTypes, Op } = require('sequelize');
+const config = require("../config/config");
+const { Sequelize, DataTypes, Op } = require("sequelize");
 
 // DataBase Connection
 const sequelize = new Sequelize(
@@ -16,23 +16,27 @@ const sequelize = new Sequelize(
       max: config.db.pool.max,
       min: config.db.pool.min,
       acquire: config.db.pool.acquire,
-      idle: config.db.pool.idle
-    }
+      idle: config.db.pool.idle,
+    },
   }
 );
 
-
 const db = {};
 
-db.Sequelize = Sequelize; 
-db.Op = Op; 
-db.sequelize = sequelize; 
+db.Sequelize = Sequelize;
+db.Op = Op;
+db.sequelize = sequelize;
 
-db.student = require('./Student')(sequelize, Sequelize, DataTypes);
-db.admin = require('./Admin.js')(sequelize, Sequelize, DataTypes);
-db.donation = require('./Donation')(sequelize, Sequelize, DataTypes);
-db.school = require('./School.js')(sequelize, Sequelize, DataTypes); 
+db.student = require("./Student")(sequelize, Sequelize, DataTypes);
+db.admin = require("./Admin.js")(sequelize, Sequelize, DataTypes);
+db.donation = require("./Donation")(sequelize, Sequelize, DataTypes);
+db.school = require("./School.js")(sequelize, Sequelize, DataTypes);
 
-db.student.belongsTo(db.school);
+db.student.belongsTo(db.school, {
+  foreignKey: {
+    name: "school_id",
+  },
+});
+db.school.hasMany(db.student);
 
-module.exports = db ;
+module.exports = db;
