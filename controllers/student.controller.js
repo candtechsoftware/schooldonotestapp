@@ -10,6 +10,7 @@ class StudentController {
   static async registerStudent(req, res) {
     try {
       let {
+        student_school_id,
         first_name,
         last_name,
         email,
@@ -32,6 +33,7 @@ class StudentController {
         } else {
           let hashPassword = bcrypt.hashSync(password, 10);
           let newStudent = {
+            student_school_id,
             first_name,
             last_name,
             email,
@@ -52,12 +54,12 @@ class StudentController {
               }
             })
             .catch((err) =>
-              res.status(500).json({ error: `Err test: ${err.message}` })
+              res.status(500).json({ error: `Error in student creation: ${err.message}` })
             );
         }
       });
     } catch (e) {
-      res.status(500).json({ error: `Error in controller ${e}` });
+      res.status(500).json({ error: `Error in controller: ${e}` });
     }
   }
 

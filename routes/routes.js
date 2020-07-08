@@ -5,7 +5,7 @@ const checkJWT = require("../middlewares/check-token");
 
 const StudentController = require("../controllers/student.controller");
 const AdminContoller = require('../controllers/admin.controller');
-
+const DonationController = require('../controllers/donatations.controller');
  
   
 /**
@@ -43,10 +43,15 @@ router.post('/admin/register', AdminContoller.createAdminAccount)
 router.post('/admin/login', AdminContoller.login);
 
 // Admin Adding A School 
-router.post('/admin/school', [checkJWT] ,AdminContoller.createSchool);
+// @access admin only  
+router.post('/admin/school', AdminContoller.createSchool);
+
+// Admin Finding A School 
+// @access admin only  
+router.get('/admin/school/', AdminContoller.fetchSchools);
 
 // Removing A School
-router.delete('/admin/school/:id', [checkJWT],  AdminContoller.archiveSchool);
+router.delete('/admin/school/:id',  AdminContoller.archiveSchool);
 
 // Archive Student
 // @access protected 
@@ -54,6 +59,16 @@ router.delete('/admin/school/:id', [checkJWT],  AdminContoller.archiveSchool);
 router.delete('/admin/student/:id', AdminContoller.archiveSingleStudent);
 router.delete('/admin/student/', AdminContoller.archiveMultipleStudent); // All Students
 
+
+/**
+/------------------------------------
+/ Donations Routes
+/-------------------------------------
+*/
+
+// Creating a donations from IPN
+// @access students
+router.post('/student/donations', DonationController.addDonation); 
 
 
 module.exports = router;

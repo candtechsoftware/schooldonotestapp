@@ -17,9 +17,11 @@ module.exports = (sequelize, Sequalize, DataTypes) => {
 
         // Options 
         {
-            timestamp: true, 
+            timestamps: false, 
+            underscored: true,
+
             createdAt: 'created_at', 
-            updatedAt: 'updateda_at', 
+
         
         },
     );

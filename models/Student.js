@@ -10,6 +10,10 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         autoIncrement: true,
       },
 
+      student_school_id:{
+        type: DataTypes.STRING,
+      },
+
       first_name: {
         type: DataTypes.STRING,
       },

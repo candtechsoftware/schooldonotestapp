@@ -204,6 +204,29 @@ class AdminController {
         }
    }
 
+   // Getting All Schools
+    static async fetchSchools(req, res){
+        try {
+            await School.findAll({
+                attributes: ['name']
+            })
+            .then(result => {
+                if (result.length < 1){
+                    res.status(203).json({ message: 'No school accoun has been created'});
+                } else {
+                    res.status(201).json({
+                        success: true, 
+                        schools: result
+                    });
+                }
+            })
+
+        } catch (err) {
+            res.status(500).json({ message: `Error in finding all schools: ${err.message}`});
+        }
+
+    }
+
 
     // Deleting School 
     static async archiveSchool(req, res) {

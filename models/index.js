@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
   {
     host: config.db.DB_HOST,
     dialect: config.db.dialect,
-    operatorsAliases: false,
+    operatorsAliases: 0,
     port: 6600,
 
     poll: {
@@ -24,7 +24,6 @@ const sequelize = new Sequelize(
 const db = {};
 
 db.Sequelize = Sequelize;
-db.Op = Op;
 db.sequelize = sequelize;
 
 db.student = require("./Student")(sequelize, Sequelize, DataTypes);
@@ -32,6 +31,13 @@ db.admin = require("./Admin.js")(sequelize, Sequelize, DataTypes);
 db.donation = require("./Donation")(sequelize, Sequelize, DataTypes);
 db.school = require("./School.js")(sequelize, Sequelize, DataTypes);
 
+
+/**
+/------------------------------------
+/ Relationships 
+/-------------------------------------
+*/
+// Adds relationsship between school and students
 db.student.belongsTo(db.school, {
   foreignKey: {
     name: "school_id",
@@ -39,4 +45,26 @@ db.student.belongsTo(db.school, {
 });
 db.school.hasMany(db.student);
 
+// Adds relationsship between donation and students schools
+db.donation.belongsTo(db.school, {
+  foreignKey: {
+    name: "school_id",
+  },
+});
+db.donation.belongsTo(db.student, {
+  foreignKey: {
+    name: "student_id",
+  },
+});
+
+db.school.hasMany(db.donation);
+db.student.hasMany(db.donation);
+
+
+
+/**
+/------------------------------------
+/ End of Relationships 
+/-------------------------------------
+*/
 module.exports = db;
