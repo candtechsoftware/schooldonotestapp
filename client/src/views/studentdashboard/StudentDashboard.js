@@ -86,6 +86,7 @@ const StudentDashboard = () => {
                     <td className="text-center">
                       <div className="c-avatar">
                         <img src={'avatars/1.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
+                        <p>This </p>
                         <span className="c-avatar-status bg-success"></span>
                       </div>
                     </td>

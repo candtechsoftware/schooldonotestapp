@@ -11,10 +11,16 @@ import {
   CInputGroupPrepend,
   CInputGroupText,
   CRow
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+} from '@coreui/react';
+
+import { connect } from 'react-redux';
+import { setAlert } from '../../../actions/alert';
+import CIcon from '@coreui/icons-react';
 
 const Register = () => {
+  // const 
+
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -101,4 +107,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default connect(null, { setAlert })(Register);
