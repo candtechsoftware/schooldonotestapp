@@ -1,5 +1,5 @@
 const config = require("../config/config");
-const { Sequelize, DataTypes, Op } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 // DataBase Connection
 const sequelize = new Sequelize(
@@ -31,7 +31,6 @@ db.admin = require("./Admin.js")(sequelize, Sequelize, DataTypes);
 db.donation = require("./Donation")(sequelize, Sequelize, DataTypes);
 db.school = require("./School.js")(sequelize, Sequelize, DataTypes);
 
-
 /**
 /------------------------------------
 / Relationships 
@@ -56,11 +55,6 @@ db.donation.belongsTo(db.student, {
     name: "student_id",
   },
 });
-
-db.school.hasMany(db.donation);
-db.student.hasMany(db.donation);
-
-
 
 /**
 /------------------------------------
