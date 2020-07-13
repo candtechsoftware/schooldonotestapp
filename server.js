@@ -27,7 +27,7 @@ app.get('/', (req, res)=> res.json({message: "Base API URL"}));
 const api = require('./routes/routes.js');
 
 
-app.use('/api', api );
+app.use('/api', cors() ,api );
 
 
 

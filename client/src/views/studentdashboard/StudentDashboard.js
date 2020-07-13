@@ -22,7 +22,7 @@ const StudentDashboard = () => {
         <CCardBody>
           <CRow>
             <CCol sm="5">
-              <h4 id="traffic" className="card-title mb-0">Donation Totals</h4>
+              <h4 id="traffic" className="card-title mb-0">My Donation Totals</h4>
             </CCol>
             <CCol sm="7" className="d-none d-md-block">
               <CButton color="primary" className="float-right">

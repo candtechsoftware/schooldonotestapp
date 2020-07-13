@@ -1,5 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
+import { setAlert } from "../../../actions/alert";
+import PropTypes from 'prop-types';
+import { loginStudent } from '../../../actions/studentauth';
 import {
   CButton,
   CCard,
@@ -16,7 +20,30 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const Login = () => {
+const Login = ({ setAlert,loginStudent, isLoggedInStudent, registerComplete}) => {
+  const [ formData, setFormData ] = useState({
+    email: "",
+    password: "",
+
+  });
+
+  const { email, password } = formData;
+
+  const onChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value});
+  }
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    loginStudent(email, password);
+  }
+  if (isLoggedInStudent){
+    return <Redirect to="/student"></Redirect>
+  }
+  if (registerComplete){
+    setAlert('Registration Complete, please login','success', 5000);
+  }
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -25,7 +52,7 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={e=> onSubmit(e)} >
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
                     <CInputGroup className="mb-3">
@@ -34,7 +61,7 @@ const Login = () => {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="email" autoComplete="email" />
+                      <CInput type="text" placeholder="email" name='email' value={email} onChange={e => onChange(e)} autoComplete="email" />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -42,14 +69,14 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Password" autoComplete="current-password" />
+                      <CInput type="password" placeholder="Password" name='password' value={password} onChange={e => onChange(e)} autoComplete="current-password" />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4">Login</CButton>
+                        <CButton type="submit"  color="success" className="px-4">Login</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">Forgot password?</CButton>
+                        <CButton color="success" >Forgot password?</CButton>
                       </CCol>
                     </CRow>
                   </CForm>
@@ -61,7 +88,7 @@ const Login = () => {
                     <h2>Sign up</h2>
                     <div> 
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>Register Now!</CButton>
+                      <CButton color="success" className="mt-3" active tabIndex={-1}>Register Now!</CButton>
                     </Link>
                     </div>
                   </div>
@@ -75,4 +102,17 @@ const Login = () => {
   )
 }
 
-export default Login
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isLoggedInStudent: PropTypes.bool,
+  registerComplete: PropTypes.bool,
+
+}
+
+const mapStateToProps = state => ({
+  setAlert: PropTypes.func.isRequired,
+  isLoggedInStudent: state.studentAuth.isLoggedInStudent,
+  registerComplete: state.studentAuth.registerComplete
+
+  })
+export default connect(mapStateToProps, {setAlert, loginStudent})(Login)

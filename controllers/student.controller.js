@@ -9,6 +9,7 @@ const Student = db.student;
 class StudentController {
   static async registerStudent(req, res) {
     try {
+
       let {
         student_school_id,
         first_name,
@@ -44,6 +45,7 @@ class StudentController {
             teacher,
             school_id,
           };
+        
           Student.create(newStudent)
             .then(data => {
               if (data) {

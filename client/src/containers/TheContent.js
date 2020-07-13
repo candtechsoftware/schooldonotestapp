@@ -15,8 +15,13 @@ const loading = (
   </div>
 )
 
+// Loading Logged in user
+
 const TheContent = () => {
-  return (
+
+  const isLoggdedInStudent = true
+
+  if (!isLoggdedInStudent){ return (
     <main className="c-main">
       <CContainer fluid>
         <Suspense fallback={loading}>
@@ -36,6 +41,31 @@ const TheContent = () => {
               )
             })}
             <Redirect from="/" to="/dashboard" />
+          </Switch>
+        </Suspense>
+      </CContainer>
+    </main>
+  )} else  
+  return (
+    <main className="c-main">
+      <CContainer fluid>
+        <Suspense fallback={loading}>
+          <Switch>
+            {routes.map((route, idx) => {
+              return route.component && (
+                <Route
+                  key={idx}
+                  path={route.path}
+                  exact={route.exact}
+                  name={route.name}
+                  render={props => (
+                    <CFade>
+                      <route.component {...props} />
+                    </CFade>
+                  )} />
+              )
+            })}
+            <Redirect from="/" to="/student" />
           </Switch>
         </Suspense>
       </CContainer>

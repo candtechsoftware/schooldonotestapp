@@ -46,9 +46,9 @@ router.post("/admin/login", AdminContoller.login);
 // @access admin only
 router.post("/admin/school", [checkJWT], AdminContoller.createSchool);
 
-// Admin Finding A School
-// @access admin only
-router.get("/admin/school/", [checkJWT],AdminContoller.fetchSchools);
+// Admin Finding Get All Schools
+// @access public
+router.get("/schools/",AdminContoller.fetchSchools);
 
 // Removing A School
 router.delete("/admin/school/:id", [checkJWT], AdminContoller.archiveSchool);

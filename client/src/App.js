@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
+import Alert from './views/notifications/alerts/Alerts';
+import { loadStudent } from './actions/studentauth';
+import store from './store'
+import setAuthToken from './utils/setAuthToken';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -18,13 +22,18 @@ const StudentLookup = React.lazy(()=> import('./views/pages/student/Student.js')
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'));
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'));
 
-
-class App extends Component {
-
-  render() {
-    return (
-      <HashRouter>
+// Loading Logged in user
+if (localStorage.token){
+  setAuthToken(localStorage.token);
+}
+const App = () =>{
+  useEffect(() => {
+    store.dispatch(loadStudent);
+  }, [])
+  return (
+      <BrowserRouter>
           <React.Suspense fallback={loading}>
+            <Alert/>
             <Switch>
               <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
               <Route exact path="/search" name="Student Lookup Page" render={props => <StudentLookup {...props}/>} />
@@ -34,9 +43,8 @@ class App extends Component {
               <Route path="/" name="Home" render={props => <TheLayout {...props}/>} />
             </Switch>
           </React.Suspense>
-      </HashRouter>
-    );
-  }
-}
+      </BrowserRouter>
+    
 
+)}
 export default App;
