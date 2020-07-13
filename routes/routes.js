@@ -44,20 +44,20 @@ router.post("/admin/login", AdminContoller.login);
 
 // Admin Adding A School
 // @access admin only
-router.post("/admin/school", AdminContoller.createSchool);
+router.post("/admin/school", [checkJWT], AdminContoller.createSchool);
 
 // Admin Finding A School
 // @access admin only
-router.get("/admin/school/", AdminContoller.fetchSchools);
+router.get("/admin/school/", [checkJWT],AdminContoller.fetchSchools);
 
 // Removing A School
-router.delete("/admin/school/:id", AdminContoller.archiveSchool);
+router.delete("/admin/school/:id", [checkJWT], AdminContoller.archiveSchool);
 
 // Archive Student
 // @access protected
 // only admins can archive accounts
-router.delete("/admin/student/:id", AdminContoller.archiveSingleStudent);
-router.delete("/admin/student/", AdminContoller.archiveMultipleStudent); // All Students
+router.delete("/admin/student/:id", [checkJWT], AdminContoller.archiveSingleStudent);
+router.delete("/admin/student/", [checkJWT],AdminContoller.archiveMultipleStudent); // All Students
 
 /**
 /------------------------------------
@@ -66,8 +66,17 @@ router.delete("/admin/student/", AdminContoller.archiveMultipleStudent); // All 
 */
 
 // Creating a donations from IPN
-// @access students
+// @access public 
 router.post("/student/donations", DonationController.addDonation);
-router.get("/student/donations/", DonationController.getAllDonations);
+
+// Students Viewing All their donations
+// @access private (Student can view only their donations total) 
+router.get("/student/donations/", [checkJWT],DonationController.getAllDonations);
+
+// View Donations All Donatiosn
+// @access privagte (Admin Only) 
+router.get('/admin/donations', [checkJWT],(req, res ) => {
+    res.status(200).json({ message: "Need to add controller action"}); 
+})
 
 module.exports = router;

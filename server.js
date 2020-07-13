@@ -8,7 +8,6 @@ const helmet = require('helmet');
 const app = express();
 
 
-
 // Middlewars
 app.use(cors()); // Enable Cors
 app.use(morgan('dev')); // Enable Logging
