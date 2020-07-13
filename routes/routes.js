@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const checkJWT = require("../middlewares/check-token");
 
 const StudentController = require("../controllers/student.controller");
-const AdminContoller = require("../controllers/admin.controller");
+const AdminController = require("../controllers/admin.controller");
 const DonationController = require("../controllers/donatations.controller");
 
 /**
@@ -36,28 +36,36 @@ router.post("/studens/", (req, res) => {
 // Creating an Admin Account
 // @access protected
 // Only Admins can create other admin accounts
-router.post("/admin/register", AdminContoller.createAdminAccount);
+router.post("/admin/register", AdminController.createAdminAccount);
 
 // Logging In Admin Account
 // @access public
-router.post("/admin/login", AdminContoller.login);
+router.post("/admin/login", AdminController.login);
 
 // Admin Adding A School
 // @access admin only
-router.post("/admin/school", [checkJWT], AdminContoller.createSchool);
+router.post("/admin/school", [checkJWT], AdminController.createSchool);
 
-// Admin Finding Get All Schools
+// Finding Get All Schools
 // @access public
-router.get("/schools/",AdminContoller.fetchSchools);
+router.get("/schools/", AdminController.fetchSchools);
 
 // Removing A School
-router.delete("/admin/school/:id", [checkJWT], AdminContoller.archiveSchool);
+router.delete("/admin/school/:id", [checkJWT], AdminController.archiveSchool);
 
 // Archive Student
 // @access protected
 // only admins can archive accounts
-router.delete("/admin/student/:id", [checkJWT], AdminContoller.archiveSingleStudent);
-router.delete("/admin/student/", [checkJWT],AdminContoller.archiveMultipleStudent); // All Students
+router.delete(
+  "/admin/student/:id",
+  [checkJWT],
+  AdminController.archiveSingleStudent
+);
+router.delete(
+  "/admin/student/",
+  [checkJWT],
+  AdminController.archiveMultipleStudent
+); // All Students
 
 /**
 /------------------------------------
@@ -66,17 +74,21 @@ router.delete("/admin/student/", [checkJWT],AdminContoller.archiveMultipleStuden
 */
 
 // Creating a donations from IPN
-// @access public 
+// @access public
 router.post("/student/donations", DonationController.addDonation);
 
 // Students Viewing All their donations
-// @access private (Student can view only their donations total) 
-router.get("/student/donations/", [checkJWT],DonationController.getAllDonations);
+// @access private (Student can view only their donations total)
+router.get(
+  "/student/donations/",
+  [checkJWT],
+  DonationController.getAllDonations
+);
 
 // View Donations All Donatiosn
-// @access privagte (Admin Only) 
-router.get('/admin/donations', [checkJWT],(req, res ) => {
-    res.status(200).json({ message: "Need to add controller action"}); 
-})
+// @access privagte (Admin Only)
+router.get("/admin/donations", [checkJWT], (req, res) => {
+  res.status(200).json({ message: "Need to add controller action" });
+});
 
 module.exports = router;

@@ -9,7 +9,6 @@ const Student = db.student;
 class StudentController {
   static async registerStudent(req, res) {
     try {
-
       let {
         student_school_id,
         first_name,
@@ -28,7 +27,7 @@ class StudentController {
           email: email,
           is_archived: false,
         },
-      }).then(result => {
+      }).then((result) => {
         if (result.length > 0) {
           res.status(400).json({ message: "Email is already registered" });
         } else {
@@ -45,9 +44,9 @@ class StudentController {
             teacher,
             school_id,
           };
-        
+
           Student.create(newStudent)
-            .then(data => {
+            .then((data) => {
               if (data) {
                 res.status(201).json({
                   message: "Student Created",
@@ -56,7 +55,9 @@ class StudentController {
               }
             })
             .catch((err) =>
-              res.status(500).json({ error: `Error in student creation: ${err.message}` })
+              res
+                .status(500)
+                .json({ error: `Error in student creation: ${err.message}` })
             );
         }
       });
@@ -91,6 +92,8 @@ class StudentController {
             let token = jwt.sign(
               {
                 student: studentDetails,
+                isAdmin: false,
+                isAuthenticated: true,
               },
               secret,
               {

@@ -44,6 +44,8 @@ class AdminController {
               let token = jwt.sign(
                 {
                   admin: adminDetails,
+                  isAdmin: true,
+                  isAuthenticated: true,
                 },
                 secret,
                 {
@@ -191,12 +193,10 @@ class AdminController {
           };
           School.create(newSchool)
             .then((data) => {
-              res
-                .status(200)
-                .json({
-                  message: "School Created Sucessfully",
-                  school_data: data,
-                });
+              res.status(200).json({
+                message: "School Created Sucessfully",
+                school_data: data,
+              });
             })
             .catch((err) => res.status(500).json({ message: err }));
         }
@@ -264,12 +264,10 @@ class AdminController {
           id: req.params.id,
         },
       }).then((response) => {
-        res
-          .status(200)
-          .json({
-            success: true,
-            message: "School account updated successfully",
-          });
+        res.status(200).json({
+          success: true,
+          message: "School account updated successfully",
+        });
       });
     } catch (e) {
       res.status(500).json({ err: e });
