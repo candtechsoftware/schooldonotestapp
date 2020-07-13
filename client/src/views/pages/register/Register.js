@@ -50,6 +50,7 @@ const Register = props => {
       props.setAlert("Passwords do not match");
       console.log("Passwords do not match");
     } else {
+      console.log(formData);
       console.log("passwords match");
     }
   };
@@ -61,7 +62,7 @@ const Register = props => {
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
               <CCardBody className="p-4">
-                <CForm>
+                <CForm onSubmit={e=> onSubmit(e)}>
                   <h1>Register</h1>
                   <p className="text-muted">Create your account</p>
                   <CInputGroup className="mb-3">
@@ -198,7 +199,7 @@ const Register = props => {
                       autoComplete="new-password"
                     />
                   </CInputGroup>
-                  <CButton color="success" block>
+                  <CButton type="submit" color="success" block>
                     Create Account
                   </CButton>
                 </CForm>
