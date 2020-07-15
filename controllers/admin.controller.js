@@ -25,7 +25,7 @@ class AdminController {
         .then((admin) => {
           if (admin.length === 0) {
             return res
-              .status(400)
+              .status(401)
               .json({ message: `Sorry, account does not exist` });
           } else {
             const passwordIsValid = bcrypt.compareSync(
@@ -87,7 +87,7 @@ class AdminController {
         },
       }).then((result) => {
         if (result > 0) {
-          res.status(400).json({ message: "Email already in use" });
+          res.status(409).json({ message: "Email already in use" });
         } else {
           let hashPassword = bcrypt.hashSync(password, 10);
 

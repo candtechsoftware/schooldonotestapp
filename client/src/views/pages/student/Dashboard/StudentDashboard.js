@@ -12,7 +12,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-import MainChartExample from '../charts/MainChartExample.js'
+import StudentChart from './StudentDonationChart';
 
 
 const StudentDashboard = () => {
@@ -44,7 +44,7 @@ const StudentDashboard = () => {
               </CButtonGroup>
             </CCol>
           </CRow>
-          <MainChartExample style={{height: '300px', marginTop: '40px'}}/>
+          <StudentChart style={{height: '300px', marginTop: '40px'}}/>
         </CCardBody>
         <CCardFooter>
           <CRow className="text-center">

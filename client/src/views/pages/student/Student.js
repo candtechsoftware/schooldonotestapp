@@ -13,8 +13,6 @@ import {
   CRow
 } from '@coreui/react';
 
-import {connect} from 'react-redux';
-import { setAlert } from '../../../actions/alert';
 import CIcon from '@coreui/icons-react';
 
 const StudentLookup = () => {
@@ -52,4 +50,4 @@ const StudentLookup = () => {
   )
 }
 
-export default connect(null, { setAlert })(StudentLookup);
+export default StudentLookup;

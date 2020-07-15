@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { setAlert } from "../../../actions/alert";
-import PropTypes from "prop-types";
-import { loginStudent } from "../../../actions/studentauth";
+import { connect } from 'react-redux'; 
+import PropTypes from 'prop-types';
+import { loginStudent } from '../../../redux/user/user.actions';
 import {
   CButton,
   CCard,
@@ -20,12 +19,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-const Login = ({
-  setAlert,
-  loginStudent,
-  isAuthenticated,
-  registerComplete,
-}) => {
+const Login = ({loginStudent, isAuthenticated}) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -42,12 +36,9 @@ const Login = ({
     loginStudent(email, password);
   };
   if (isAuthenticated) {
-    return <Redirect to="/student"></Redirect>;
+    return <Redirect to='/student'/>
   }
-  if (registerComplete) {
-    setAlert("Registration Complete, please login", "success", 5000);
-  }
-
+  
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -133,14 +124,11 @@ const Login = ({
 };
 
 Login.propTypes = {
-  login: PropTypes.func,
-  isLoggedInStudent: PropTypes.bool,
-  registerComplete: PropTypes.bool,
-};
-
-const mapStateToProps = (state) => ({
-  setAlert: PropTypes.func.isRequired,
-  isAuthenticated: state.studentAuth.isAuthenticated,
-  registerComplete: state.studentAuth.registerComplete,
+  loginStudent: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+}
+const mapStateToProps = state => ({
+  isAuthenticated: state.user.isAuthenticated
 });
-export default connect(mapStateToProps, { setAlert, loginStudent })(Login);
+
+export default connect(mapStateToProps, { loginStudent })(Login);

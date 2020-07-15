@@ -6,27 +6,22 @@ const secret = process.env.SERCRET_KEY;
 module.exports = function(req, res, next) {
   let token = req.headers["authorization"];
 
-  if (token) {
-    jwt.verify(token, secret, function(err, decoded) {
-      if (err) {
-        res.json({
-          success: false,
-          message: 'Failed to authenticate token'
-        });
+  if (!token) { 
+    return res.status(401).json({ messge: "Missing authorization token"});
+  }
+  try {
+    jwt.verify(token, secret, (error, decoded) => {
+      if (error) {
+        return res.status(401).json({ message: 'Token is not valid'});
       } else {
-
-        req.decoded = decoded;
+        console.log(decoded);
+        req.user =  decoded;
         next();
-
       }
-    });
+    })
 
-  } else {
-
-    res.status(403).json({
-      success: false,
-      message: 'No token provided'
-    });
-
+  } catch (err) {
+    console.error('something went wrong with auth middleware');
+    res.status(500).json({ message: 'Server auth error'});
   }
 }

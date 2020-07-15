@@ -29,7 +29,7 @@ class StudentController {
         },
       }).then((result) => {
         if (result.length > 0) {
-          res.status(400).json({ message: "Email is already registered" });
+          res.status(409).json({ message: "Email is already registered" });
         } else {
           let hashPassword = bcrypt.hashSync(password, 10);
           let newStudent = {
@@ -77,7 +77,7 @@ class StudentController {
     })
       .then((student) => {
         if (student.length === 0) {
-          res.status(400).json({ message: "Sorry, account does not exsist" });
+          res.status(401).json({ message: "Sorry, account does not exsist" });
         } else {
           let passwordIsValid = bcrypt.compareSync(
             req.body.password,
@@ -116,6 +116,27 @@ class StudentController {
         }
       })
       .catch((err) => res.status(500).json({ error: err.message }));
+  }
+
+  static async loadStudent(req, res) {
+    console.log(req.student);
+    try {
+      const user = await Student.findByPk(req.user.student.id);
+      console.log('here', )
+      res.status(201).json({
+        message: 'student loaded',
+        user: {
+          id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          isAdmin: false,
+          isAuthenticated: true,
+        },
+      })
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
   }
 
   static async updateStudent(req, res) {

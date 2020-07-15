@@ -20,7 +20,8 @@ router.post("/student/register", StudentController.registerStudent);
 // Student Login
 // @access public
 router.post("/student/login", StudentController.login);
-
+// GET logged in student by token 
+router.get('/student', checkJWT, StudentController.loadStudent);
 // Fetch All Students
 // @access public
 router.post("/studens/", (req, res) => {

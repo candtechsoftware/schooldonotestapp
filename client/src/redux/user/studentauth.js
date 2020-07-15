@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import { REGISTER_SUCCES, REGISTER_FAIL ,STUDENT_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
-import setAuthToken from '../utils/setAuthToken';
+import setAuthToken from '../../utils/authHeader';
 // Load User 
 export const loadStudent = () => async dispatch => {
   if(localStorage.token) {

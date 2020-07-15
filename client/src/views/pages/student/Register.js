@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, Redirect } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setAlert } from '../../../redux/alert/alert.action';
+import { registerStudent } from '../../../redux/user/user.actions';
 import {
   CButton,
   CCard,
@@ -15,14 +18,11 @@ import {
   CRow
 } from "@coreui/react";
 
-import { connect } from "react-redux";
-import { setAlert } from "../../../actions/alert";
-import { register } from "../../../actions/studentauth";
 import CIcon from "@coreui/icons-react";
-import PropTypes from 'prop-types'
 
-const Register = ({ setAlert, register, registerComplete }) => {
+const Register = ({registerStudent, setAlert, isRegistered}) => {
   const grades = [
+    'Select Grade',
     'Pre-L',
     'Kindergarten',
     '1st',
@@ -35,6 +35,7 @@ const Register = ({ setAlert, register, registerComplete }) => {
     '8th'
   ];
   const sizes = [
+    'Select Size',
     'Youth small',
     'Youth medium',
     'Youth large',
@@ -74,32 +75,16 @@ const Register = ({ setAlert, register, registerComplete }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    if (password !== confirm_password && password !== "password") {
-      setAlert("Passwords do not match", 'danger');
+    if (password !== confirm_password){
+      setAlert('Passwords do not match', 'danger');
     } else {
-       try {
-          register({
-            student_school_id,
-            first_name,
-            last_name,
-            email,
-            password,
-            phone,
-            shirt_size,
-            grade,
-            teacher,
-            school_id: 1,
-        });
-      } catch (err) {
-          console.error(err);
-        }
-
-    }
-  };
-  if (registerComplete){
-    return <Redirect to="/login"></Redirect>
+    registerStudent(formData);
+  }
   } 
-  
+
+  if (isRegistered) {
+    return <Redirect to="/login"/>
+  }
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -123,6 +108,7 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={student_school_id}
                       onChange={e =>onChange(e)}
                       autoComplete="Student Id"
+                      required
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -138,6 +124,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={first_name}
                       onChange={e =>onChange(e)}
                       autoComplete="first_name"
+                      required
+
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -153,6 +141,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={last_name}
                       onChange={e =>onChange(e)}
                       autoComplete="lastname"
+                      required
+
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -166,6 +156,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={email}
                       onChange={e =>onChange(e)}
                       autoComplete="email"
+                      required
+
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -181,6 +173,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={phone}
                       onChange={e =>onChange(e)}
                       autoComplete="phone"
+                      required
+
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -196,6 +190,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={school_id}
                       onChange={e =>onChange(e)}
                       autoComplete="Student Id"
+                      required
+
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -212,6 +208,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={grade}
                       onChange={e =>onChange(e)}
                       autoComplete="grade"
+                      required
+
                     >
                       {grades.map(grade => <option key={grade} value={grade}>{grade}</option>)}
                       </select>
@@ -230,6 +228,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={shirt_size}
                       onChange={e =>onChange(e)}
                       autoComplete="shirt_size"
+                      required
+
                     >
                      {sizes.map(size => <option key={size} value={size}>{size}</option>)}
 
@@ -248,6 +248,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={teacher}
                       onChange={e =>onChange(e)}
                       autoComplete="teacher"
+                      required
+
                     />
                   </CInputGroup>
 
@@ -264,6 +266,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       name="password"
                       onChange={e =>onChange(e)}
                       autoComplete="new-password"
+                      required
+
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
@@ -279,6 +283,8 @@ const Register = ({ setAlert, register, registerComplete }) => {
                       value={confirm_password}
                       onChange={e =>onChange(e)}
                       autoComplete="new-password"
+                      required
+
                     />
                   </CInputGroup>
                   <CButton type="submit" color="success" block>
@@ -302,15 +308,14 @@ const Register = ({ setAlert, register, registerComplete }) => {
   );
 }
 
-
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired,
-  registerComplete: PropTypes.bool,
-  
-};
-const mapStateToProps = state => ({
-  registerComplete: state.studentAuth.registerComplete
-  })
+  registerStudent: PropTypes.func.isRequired,
+  isRegistered: PropTypes.bool
+}
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+const mapStateToProps = state => ({
+  isRegistered: state.user.isRegistered
+})
+
+export default connect(mapStateToProps, { setAlert, registerStudent})(Register);
