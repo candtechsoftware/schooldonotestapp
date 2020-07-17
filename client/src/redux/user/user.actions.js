@@ -1,6 +1,7 @@
-import { LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_FAIL, REGISTER_SUCCES, SET_CURRENT_USER } from '../types';
+import { LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_FAIL, REGISTER_SUCCES, SET_CURRENT_USER, AUTH_ERROR, LOGOUT } from '../types';
 import UserService from './user.service'
 import { setAlert } from '../alert/alert.action';
+import setAuthtoken from '../../utils/authHeader';
 
 export const loginStudent = (email, password) => async dispatch => {
   const user = await UserService.loginStudent(email, password);
@@ -36,17 +37,27 @@ export const registerStudent = formData => async dispatch => {
 }
 
 export const loadStudent = () => async dispatch => {
-  console.log('this')
-  try {
-  const response = await UserService.loadStudent();
-  console.log("Response in the User Actions: ", response);
-  dispatch({
-    type: SET_CURRENT_USER,
-    payload: response,
-  }, [])
-  } catch (err) {
-    console.log('error in the user actions', err);
-    dispatch(setAlert("Loading User Failed", 'danger', 4000));
+  if (localStorage.token){
+    setAuthtoken(localStorage.token);
+    try {
+      
+      let response = await UserService.loadStudent();
+      if (response.status !==  201) {
+          response = await UserService.loadAdmin();
+
+      }
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: response,
+      }, [])
+      } catch (err) {
+        console.log('error in the user actions', err);
+        dispatch({
+          type: AUTH_ERROR
+        })
+        dispatch(setAlert("Loading User Failed", 'danger', 4000));
+    
+      }
 
   }
 }
@@ -67,4 +78,9 @@ export const loginAdmin = (email, password) => async dispatch => {
     console.error(err);
   }
 
+}
+
+export const logout = () => async dispatch => {
+  localStorage.removeItem('token');
+  dispatch({type: LOGOUT})
 }

@@ -13,8 +13,6 @@ class UserService {
     const body = JSON.stringify(formData); 
     try {
         const response = await api.post('http://localhost:5000/api/student/register', body, configHeaders);
-        console.log("in service ",response.data.student);
-        console.log("in service ",response.data.message);
         const user = {
           user: response.data.student,
           message: response.data.message
@@ -47,26 +45,59 @@ class UserService {
       return user; 
 
     } catch (err){
-      console.log(err);
+      console.error(err);
     }
   }
 
 
   static async loadStudent() {
-    console.log('in service')
     try {
       const token = localStorage.token;
       if (token){
-        const response = await api.get('/api/student');
-        console.log('Load Student Response', response); 
+        let response = await api.get('/api/student');
+ 
+        response = {
+          status: response.status,
+          user: {
+            id: response.data.user.id,
+            first_name: response.data.user.first_name,
+            last_name: response.data.user.last_name,
+          },
+          isAdmin: response.data.user.isAdmin,
+          isAuthenticated: response.data.user.isAuthenticated,
+
+        }
+
         return response;
       }
     } catch (err) {
-      console.log('Error in load student service: ', err);
       return {};
     }
   }
 
+  static async loadAdmin() {
+    try {
+      const token = localStorage.token;
+      if (token){
+        let response = await api.get('/api/admin');
+        
+        response = {
+          user: {
+            id: response.data.user.id,
+            first_name: response.data.user.first_name,
+            last_name: response.data.user.last_name,
+          },
+          isAdmin: response.data.user.isAdmin,
+          isAuthenticated: response.data.user.isAuthenticated,
+
+        }
+
+        return response;
+      }
+    } catch (err) {
+      return {};
+    }
+  }
 
   static async loginAdmin(email, password) {
     const configHeaders = {
@@ -78,7 +109,6 @@ class UserService {
     try {
       const response = await api.post(`http://localhost:5000/api/admin/login`, body, configHeaders);
       const decodedToken = jwtDecode(response.data.token)
-      console.log("Decoded Token: ",decodedToken);
       let user = {
         token: response.data.token,
         user: decodedToken.admin,
@@ -91,7 +121,6 @@ class UserService {
       return user; 
 
     } catch (err){
-      console.log("error in service: ", err);
     }
   }
 

@@ -36,7 +36,7 @@ const Login = ({loginStudent, isAuthenticated}) => {
     loginStudent(email, password);
   };
   if (isAuthenticated) {
-    return <Redirect to='/student'/>
+    return <Redirect to='/students'/>
   }
   
   return (

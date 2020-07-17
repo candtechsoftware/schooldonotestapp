@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_SUCCES, REGISTER_FAIL,  } from '../types';
+import { SET_CURRENT_USER, LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_SUCCES, REGISTER_FAIL, AUTH_ERROR, LOGOUT } from '../types';
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -12,7 +12,9 @@ const userReducer = (state= initialState, action) => {
     case SET_CURRENT_USER:
       return {
         ...state,
-        currentUser: action.payload,
+        currentUser: action.payload.user, // Gets User from json response 
+        isAdmin: action.payload.isAdmin || false,
+        isAuthenticated: action.payload.isAuthenticated || false,
       };
     case LOGIN_STUDENT_SUCCESS:
       return {
@@ -36,8 +38,10 @@ const userReducer = (state= initialState, action) => {
         ...state,
         isRegistered: true,
       }
+      case LOGOUT:
+      case AUTH_ERROR:
       case REGISTER_FAIL:
-        return {};
+        return initialState;
     default:
       return state; 
   }

@@ -119,12 +119,10 @@ class StudentController {
   }
 
   static async loadStudent(req, res) {
-    console.log(req.student);
     try {
       const user = await Student.findByPk(req.user.student.id);
-      console.log('here', )
       res.status(201).json({
-        message: 'student loaded',
+        message: 'user loaded',
         user: {
           id: user.id,
           first_name: user.first_name,
@@ -135,7 +133,10 @@ class StudentController {
       })
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).json({
+        status: 'Failed',
+        message: 'Server Error',
+      });
     }
   }
 

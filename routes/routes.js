@@ -20,11 +20,13 @@ router.post("/student/register", StudentController.registerStudent);
 // Student Login
 // @access public
 router.post("/student/login", StudentController.login);
+
 // GET logged in student by token 
 router.get('/student', checkJWT, StudentController.loadStudent);
+
 // Fetch All Students
 // @access public
-router.post("/studens/", (req, res) => {
+router.post("/students/", (req, res) => {
   res.status(200).json({ message: "needs to return a list of all students" });
 });
 
@@ -43,6 +45,8 @@ router.post("/admin/register", AdminController.createAdminAccount);
 // @access public
 router.post("/admin/login", AdminController.login);
 
+// GET logged in admin by token 
+router.get('/admin', checkJWT, AdminController.loadAdmin);
 // Admin Adding A School
 // @access admin only
 router.post("/admin/school", [checkJWT], AdminController.createSchool);
@@ -83,13 +87,12 @@ router.post("/student/donations", DonationController.addDonation);
 router.get(
   "/student/donations/",
   [checkJWT],
-  DonationController.getAllDonations
+  DonationController.getDonationByStudent
 );
 
 // View Donations All Donatiosn
 // @access privagte (Admin Only)
-router.get("/admin/donations", [checkJWT], (req, res) => {
-  res.status(200).json({ message: "Need to add controller action" });
-});
+router.get("/admin/donations", [checkJWT],DonationController.getAllDonations);
+
 
 module.exports = router;

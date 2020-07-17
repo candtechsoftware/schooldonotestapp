@@ -117,6 +117,27 @@ class AdminController {
       res.status(500).json({ err: `test: ${e}` });
     }
   }
+  static async loadAdmin(req, res) {
+    try {
+      const user = await Admin.findByPk(req.user.admin.id);
+      res.status(201).json({
+        message: 'user loaded',
+        user: {
+          is: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          isAdmin: true,
+          isAuthenticated: true,
+        },
+      })
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({
+        status: 'Failed',
+        message: 'Server Error',
+      });
+    }
+  }
 
   /**
     /------------------------------------

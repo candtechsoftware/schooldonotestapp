@@ -1,101 +1,61 @@
-import React from 'react'
-import { CChartLine } from '@coreui/react-chartjs'
-import { getStyle, hexToRgba } from '@coreui/utils/src'
+import React, { useEffect } from 'react'
+import { CDataTable, CCol } from '@coreui/react'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loadDonationByStudent } from '../../../../redux/donations/donation.actions';
+import Spinner from './Spinner'
 
-const brandSuccess = getStyle('success') || '#4dbd74'
-const brandInfo = getStyle('info') || '#20a8d8'
-const brandDanger = getStyle('danger') || '#f86c6b'
+const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) => {
+  useEffect(() => {
+    loadDonationByStudent();
+  },[loadDonationByStudent])
+  const usersData = [
 
-const StudentChart = attributes => {
-  const random = (min, max)=>{
-    return Math.floor(Math.random() * (max - min + 1) + min)
+  ]
+  if(Array.isArray(donations)){
+    for (let i = 0; i < donations.length; i++){
+    donations[i].created_at = donations[i].created_at.slice(0,10);
+    donations[i].amount = `$${donations[i].amount}`
+ 
+    usersData.push(donations[i])}
   }
 
-  const defaultDatasets = (()=>{
-    let elements = 27
-    const data1 = []
-    const data2 = []
-    const data3 = []
-    for (let i = 0; i <= elements; i++) {
-      data1.push(random(56, 200))
-      data2.push(random(80, 100))
-      data3.push(65)
-    }
-    return [
-      {
-        label: 'My First dataset',
-        backgroundColor: hexToRgba(brandInfo, 10),
-        borderColor: brandInfo,
-        pointHoverBackgroundColor: brandInfo,
-        borderWidth: 2,
-        data: data1
-      },
-      {
-        label: 'My Second dataset',
-        backgroundColor: 'transparent',
-        borderColor: brandSuccess,
-        pointHoverBackgroundColor: brandSuccess,
-        borderWidth: 2,
-        data: data2
-      },
-      {
-        label: 'My Third dataset',
-        backgroundColor: 'transparent',
-        borderColor: brandDanger,
-        pointHoverBackgroundColor: brandDanger,
-        borderWidth: 1,
-        borderDash: [8, 5],
-        data: data3
-      }
-    ]
-  })()
 
-  const defaultOptions = (()=>{
-    return {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            gridLines: {
-              drawOnChartArea: false
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              maxTicksLimit: 6,
-              stepSize: Math.ceil(500 / 5),
-              max: 500
-            },
-            gridLines: {
-              display: true
-            }
-          }]
-        },
-        elements: {
-          point: {
-            radius: 0,
-            hitRadius: 10,
-            hoverRadius: 4,
-            hoverBorderWidth: 3
-          }
-        }
-      }
-    }
-  )()
+  console.log("data", usersData)
 
+  const fields = [
+    { key: 'amount', _style: { width: '30%'} },
+
+    { key: 'created_at', _style: { width: '40%'} },
+  ]
   // render
-  return (
-    <CChartLine
-      {...attributes}
-      datasets={defaultDatasets}
-      options={defaultOptions}
-      labels={['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']}
-    />
+  return loading ? (<Spinner/>): (<>
+      <CCol sm="5">
+         <h5 id="traffic" className="card-title mb-0">Total: ${
+          usersData.reduce((acc, item) => {
+            console.log('in reduxce', item.amount)
+            return acc + parseFloat(item.amount.replace('$',''))}, 0)}
+            </h5>
+      </CCol>
+    <CDataTable
+     
+      items={usersData}
+      fields={fields}
+      sorter
+      pagination
+      itemsPerPageSelect
+      itemsPerPage={10}
+ 
+    /></>
   )
 }
 
+StudentChart.propTypes = {
+  loadDonationByStudent: PropTypes.func.isRequired,
+  donation: PropTypes.object
+}
 
-export default StudentChart
+const mapStateToProps = state => ({
+  donation: state.donation
+})
+export default connect(mapStateToProps ,{ loadDonationByStudent })(StudentChart);

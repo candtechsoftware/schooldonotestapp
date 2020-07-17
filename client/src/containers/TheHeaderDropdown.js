@@ -7,8 +7,11 @@ import {
 
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
+import { connect } from 'react-redux'; 
+import PropTypes from 'prop-types';
+import { logout } from '../redux/user/user.actions'
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = ({ user: {isAuthenticated }, logout }) => {
   return (
   <div>
   <CDropdown inNav className="c-header-nav-items mx-2" direction="down">
@@ -26,9 +29,9 @@ const TheHeaderDropdown = () => {
         <CIcon name="cil-lock-locked" className="mfe-2" />
         My Account
       </CDropdownItem>
-        <CDropdownItem>
+        <CDropdownItem href="/login" onClick={logout} className="test">
           <CIcon name="cil-lock-locked" className="mfe-2" />
-          Logout
+            Logout
         </CDropdownItem>
     </Fragment>
         </CDropdownMenu>
@@ -37,5 +40,12 @@ const TheHeaderDropdown = () => {
   );
 };
 
+TheHeaderDropdown.propTypes = {
+  logout: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+}
 
-export default TheHeaderDropdown;
+const mapStateToProps = state => ({
+  user: state.user 
+})
+export default connect(mapStateToProps, { logout })(TheHeaderDropdown);

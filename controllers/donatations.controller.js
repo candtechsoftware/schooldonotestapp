@@ -3,6 +3,7 @@ const Donation = db.donation;
 const School = db.school;
 const Student = db.student;
 
+
 class DonationController {
   static async addDonation(req, res) {
     try {
@@ -39,12 +40,12 @@ class DonationController {
   static async getAllDonations(req, res) {
     try {
       await Donation.findAll({
-        include: [Student, School],
       }).then((result) => {
         if (result.length < 1) {
           res.status(203).json({ message: "No donations have been made" });
         } else {
-          res.status(201).json({ data: result });
+
+          res.status(201).json({ donations: result });
         }
       });
     } catch (err) {
@@ -52,6 +53,28 @@ class DonationController {
         message: `Error caused while getting all donations: ${err.message}`,
       });
     }
+  }
+
+  // Gets Donations by student
+  static async getDonationByStudent(req,res) {
+    try {
+      const donations = await Donation.findAll({
+        attributes: [
+          'id',
+          'amount',
+          'student_id',
+          'school_id',
+          'created_at', 
+        ],  where: { 
+          student_id: req.user.student.id, 
+        },
+      })
+      res.status(201).json({ donations })
+      console.log(donations);
+    } catch(err) {
+      console.log(err);       
+    }
+
   }
 }
 

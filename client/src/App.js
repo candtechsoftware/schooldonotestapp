@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
 import Alert from './views/notifications/alerts/Alerts';
 import { connect } from 'react-redux'; 
-
-
+import { loadStudent } from './redux/user/user.actions';
+import setAuthtoken from './utils/authHeader';
+import store from './store';
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -22,9 +23,15 @@ const StudentLookup = React.lazy(()=> import('./views/pages/student/Student.js')
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'));
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'));
 
+if (localStorage.token) {
+  setAuthtoken(localStorage.token) 
 
+
+}
 const App = () =>{
-
+  useEffect(() => {
+    store.dispatch(loadStudent())
+  },[])
   return (
       <BrowserRouter>
           <React.Suspense fallback={loading}>
