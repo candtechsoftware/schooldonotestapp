@@ -25,7 +25,7 @@ const TheHeader = ({sidebar, toggleSideBar}) => {
       toggleSideBar(sidebar);
   }
 
-  console.log('in header: ', sidebar)
+
 
   const toggleSidebarMobile = () => {
     toggleSideBar(sidebar);

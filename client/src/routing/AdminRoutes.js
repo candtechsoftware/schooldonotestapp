@@ -9,7 +9,7 @@ const AdminRoute = ({
   ...rest
 
 }) => {
-console.log('admin routes')
+
 return (
  <Route
   {...rest} 

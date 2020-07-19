@@ -26,9 +26,7 @@ router.get('/student', checkJWT, StudentController.loadStudent);
 
 // Fetch All Students
 // @access public
-router.post("/students/", (req, res) => {
-  res.status(200).json({ message: "needs to return a list of all students" });
-});
+router.get("/students", StudentController.getAllStudents);
 
 /**
 /------------------------------------
@@ -49,21 +47,20 @@ router.post("/admin/login", AdminController.login);
 router.get('/admin', checkJWT, AdminController.loadAdmin);
 // Admin Adding A School
 // @access admin only
-router.post("/admin/school", [checkJWT], AdminController.createSchool);
+router.post("/admin/school", [checkJWT],AdminController.createSchool);
 
 // Finding Get All Schools
 // @access public
 router.get("/schools/", AdminController.fetchSchools);
 
 // Removing A School
-router.delete("/admin/school/:id", [checkJWT], AdminController.archiveSchool);
+router.delete("/admin/school/:id", AdminController.archiveSchool);
 
 // Archive Student
 // @access protected
 // only admins can archive accounts
 router.delete(
   "/admin/student/:id",
-  [checkJWT],
   AdminController.archiveSingleStudent
 );
 router.delete(

@@ -13,10 +13,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Dashboard from '../views/dashboard/Dashboard';
 import AdminDonations from '../views/pages/admin/dashboard/AdminDashboard';
-// const StudentDashboard = React.lazy(() => import('../views/pages/student/Dashboard/StudentDashboard'));
-// routes config
-
-
+import Schools from '../views/pages/admin/schools/Schools';
+import Students from '../views/pages/admin/students/Students';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -32,8 +30,8 @@ const TheContent = ({user: {isAuthenticated, isAdmin}}) => {
       <CContainer fluid>
           <Switch>
               <AdminRoutes exact path='/dashboard' component={AdminDonations}/>
-              <AdminRoutes exact path='/admin/schools' component={Dashboard}/>
-              <AdminRoutes exact path='/admin/students' component={Dashboard}/>
+              <AdminRoutes exact path='/admin/schools' component={Schools}/>
+              <AdminRoutes exact path='/admin/students' component={Students}/>
     
           </Switch>
       </CContainer>

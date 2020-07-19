@@ -5,6 +5,7 @@ const secret = process.env.SERCRET_KEY;
 
 const db = require("../models/index.js");
 const Student = db.student;
+const School = db.school;
 
 class StudentController {
   static async registerStudent(req, res) {
@@ -138,6 +139,24 @@ class StudentController {
         message: 'Server Error',
       });
     }
+  }
+
+  static async getAllStudents(req, res) {
+    try {
+      const response = await Student.findAll({
+        where: {
+          is_archived: false,
+        },
+        attributes: ['id','first_name', 'last_name', 'student_school_id'],
+        include: [
+          {model: School, attributes: ['name']}
+        ]
+      })
+      res.status(200).json({students: response });
+    } catch (err) {
+      console.log('err in get all students', err)
+    }
+
   }
 
   static async updateStudent(req, res) {

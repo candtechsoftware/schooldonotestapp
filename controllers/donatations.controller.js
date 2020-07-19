@@ -40,6 +40,11 @@ class DonationController {
   static async getAllDonations(req, res) {
     try {
       await Donation.findAll({
+        include: [
+          {model: Student, attributes: ['first_name', 'last_name']},
+          {model: School , attributes: ['name']},
+        ],
+        attributes: ['amount', 'created_at']
       }).then((result) => {
         if (result.length < 1) {
           res.status(203).json({ message: "No donations have been made" });

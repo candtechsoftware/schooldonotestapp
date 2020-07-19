@@ -7,6 +7,12 @@ export default [
     _children: [
       {
         _tag: 'CSidebarNavItem',
+        name: 'All Dontations',
+        to: '/dashboard',
+      },    
+      
+      {
+        _tag: 'CSidebarNavItem',
         name: 'Student Dontations',
         to: '/student/donations',
       },
@@ -33,11 +39,7 @@ export default [
         name: 'Manage School',
         to: 'admin/schools/',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Manage Admins',
-        to: '/admin/users',
-      },
+
     ]
   },
   
