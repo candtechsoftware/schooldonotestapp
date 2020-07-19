@@ -7,7 +7,7 @@ import {
 const initialState = {
   donations: [],
   donation: null,
-  loading: true, 
+  loading: true , 
   error: {}
 }
 
@@ -18,6 +18,7 @@ export default function(state = initialState, action) {
     case GET_DONATONS:
       return {
         ...state,
+        loading: false, 
         donations: action.payload,
       }
     case GET_CURRENT_STUDENT_DONATION:

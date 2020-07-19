@@ -1,5 +1,7 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {  toggleSideBar } from '../redux/sidebar/sidebar.action';
 import {
   CHeader,
   CToggler,
@@ -16,18 +18,17 @@ import {
   TheHeaderDropdown,
 }  from './index'
 
-const TheHeader = () => {
-  const dispatch = useDispatch()
-  const sidebarShow = useSelector(state => state.sidebarShow)
+const TheHeader = ({sidebar, toggleSideBar}) => {
+
 
   const toggleSidebar = () => {
-    const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
-    dispatch({type: 'set', sidebarShow: val})
+      toggleSideBar(sidebar);
   }
 
+  console.log('in header: ', sidebar)
+
   const toggleSidebarMobile = () => {
-    const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive'
-    dispatch({type: 'set', sidebarShow: val})
+    toggleSideBar(sidebar);
   }
 
   return (
@@ -39,7 +40,7 @@ const TheHeader = () => {
       />
       <CToggler
         inHeader
-        className="ml-3 d-md-down-none"
+        className="ml-3 d-md-down-none testtoggle"
         onClick={toggleSidebar}
       />
 
@@ -63,4 +64,10 @@ const TheHeader = () => {
   )
 }
 
-export default TheHeader
+TheHeader.propTypes =  {
+  toggleSideBar : PropTypes.func
+}
+const mapStateToProps = state => ({
+  sidebar: state.sidebar.showSideBar
+})
+export default connect(mapStateToProps, { toggleSideBar})(TheHeader);

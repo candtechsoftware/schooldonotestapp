@@ -1,5 +1,5 @@
 import { 
-  
+  GET_DONATONS, 
   GET_CURRENT_STUDENT_DONATION,
   DONATION_ERROR
 } from '../types';
@@ -23,4 +23,24 @@ export const loadDonationByStudent = () => async dispatch => {
       type: DONATION_ERROR
     })
   }
+}
+
+
+export const getAllDonations = () => async dispatch => {
+  if(localStorage.token){
+    setAuthtoken(localStorage.token);
+  }
+
+  try {
+    let response = await DonationService.getAllDonations();
+    console.log(response);
+
+    dispatch({
+      type: GET_DONATONS,
+      payload: response,
+    })
+  } catch (err) {
+    console.log('err in get all donations actions: ', err);
+  }
+
 }

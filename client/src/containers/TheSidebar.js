@@ -1,5 +1,8 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'; 
+import { toggleSideBar } from '../redux/sidebar/sidebar.action';
+
 import {
   CCreateElement,
   CSidebar,
@@ -15,16 +18,15 @@ import {
 import CIcon from '@coreui/icons-react'
 
 // sidebar nav config
-import navigation from './_nav'
+import navigation from './_nav';
+import studentNavigation from './_studentnav';
 
-const TheSidebar = () => {
-  const dispatch = useDispatch()
-  const show = useSelector(state => state.sidebarShow)
+const TheSidebar = ({sidebar, toggleSideBar }) => {
+  
 
   return (
     <CSidebar
-      show={show}
-      onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
+      show={sidebar}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
         <CIcon
@@ -55,4 +57,13 @@ const TheSidebar = () => {
   )
 }
 
-export default React.memo(TheSidebar)
+TheSidebar.propTypes = {
+  toggleSideBar: PropTypes.func,
+
+}
+const mapStateToProps = state => ({
+  sidebar: state.sidebar.isOpen
+})
+const SideBarComponent = React.memo(TheSidebar) 
+export default connect(mapStateToProps, { toggleSideBar })(SideBarComponent);
+

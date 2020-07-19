@@ -6,12 +6,13 @@ import StudentDashboard from '../views/pages/student/Dashboard/StudentDashboard'
 
 import {
   Redirect,
-  Switch
+  Switch,
 } from 'react-router-dom'
 import { CContainer } from '@coreui/react'
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
-const Dashboard = React.lazy(() => import('../views/dashboard/Dashboard'));
+import Dashboard from '../views/dashboard/Dashboard';
+import AdminDonations from '../views/pages/admin/dashboard/AdminDashboard';
 // const StudentDashboard = React.lazy(() => import('../views/pages/student/Dashboard/StudentDashboard'));
 // routes config
 
@@ -29,26 +30,20 @@ const TheContent = ({user: {isAuthenticated, isAdmin}}) => {
     if (isAdmin && isAuthenticated ){ return (
     <main className="c-main">
       <CContainer fluid>
-        <Suspense fallback={loading}>
           <Switch>
-              <AdminRoutes exact path='/dashboard' component={Dashboard}/>
+              <AdminRoutes exact path='/dashboard' component={AdminDonations}/>
               <AdminRoutes exact path='/admin/schools' component={Dashboard}/>
               <AdminRoutes exact path='/admin/students' component={Dashboard}/>
     
           </Switch>
-        </Suspense>
       </CContainer>
     </main>
   )} else if (!isAdmin && isAuthenticated ) {
     return (
       <main className="c-main">
-        <CContainer fluid>
-          <Suspense fallback={loading}>
             <Switch>
-                <StudentRoute exact path='/students' component={StudentDashboard}/>
+                {!isAdmin ? <StudentRoute exact path='/students' component={StudentDashboard}/>: <Redirect to='/dashboard'/>}
             </Switch>
-          </Suspense>
-        </CContainer>
       </main>
       
     )} else {

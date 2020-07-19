@@ -1,5 +1,15 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// Pages
+import StudentLogin from './views/pages/student/Login';
+import AdminLogin from './views/pages/admin/Login';
+import Register from './views/pages/student/Register';
+import StudentLookup from './views/pages/student/Student.js';
+import Page404 from './views/pages/page404/Page404';
+import Page500 from './views/pages/page500/Page500';
+import TheLayout from './containers/TheLayout';
+
+
 import './scss/style.scss';
 import Alert from './views/notifications/alerts/Alerts';
 import { connect } from 'react-redux'; 
@@ -13,15 +23,6 @@ const loading = (
 
 // Containers
 )
-const TheLayout = React.lazy(() => import('./containers/TheLayout'));
-
-// Pages
-const StudentLogin = React.lazy(() => import('./views/pages/student/Login'));
-const AdminLogin = React.lazy(() => import('./views/pages/admin/Login'));
-const Register = React.lazy(() => import('./views/pages/student/Register'));
-const StudentLookup = React.lazy(()=> import('./views/pages/student/Student.js'));
-const Page404 = React.lazy(() => import('./views/pages/page404/Page404'));
-const Page500 = React.lazy(() => import('./views/pages/page500/Page500'));
 
 if (localStorage.token) {
   setAuthtoken(localStorage.token) 
@@ -34,7 +35,6 @@ const App = () =>{
   },[])
   return (
       <BrowserRouter>
-          <React.Suspense fallback={loading}>
             <Alert/>
             <Switch>
               <Route exact path="/login" name="Login Page" render={props => <StudentLogin {...props}/>} />
@@ -45,7 +45,6 @@ const App = () =>{
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
               <Route path="/" name="Home" render={props => <TheLayout {...props}/>} />
             </Switch>
-          </React.Suspense>
       </BrowserRouter>
     
 

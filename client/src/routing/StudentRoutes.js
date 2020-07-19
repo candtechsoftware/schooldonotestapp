@@ -9,7 +9,9 @@ const StudentRoute = ({
   ...rest
 
 }) => {
-  return (
+  return isAdmin && isAuthenticated ? 
+  <Redirect to='/dashboard'/>
+    :  (
  <Route
   {...rest} 
   render={props => 

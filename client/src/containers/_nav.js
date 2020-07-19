@@ -26,17 +26,17 @@ export default [
       {
         _tag: 'CSidebarNavItem',
         name: 'Manage Student',
-        to: '/students/manage',
+        to: '/admin/students',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Manage School',
-        to: '/school/manage',
+        to: 'admin/schools/',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Manage Admins',
-        to: '/admin/manage',
+        to: '/admin/users',
       },
     ]
   },

@@ -20,6 +20,10 @@ const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) 
     usersData.push(donations[i])}
   }
 
+  const noItemsView ={
+    message: 'No Donations Yet'
+  }
+
 
   console.log("data", usersData)
 
@@ -44,6 +48,7 @@ const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) 
       sorter
       pagination
       itemsPerPageSelect
+      noItemsView={noItemsView}
       itemsPerPage={10}
  
     /></>
