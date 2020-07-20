@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../redux/alert/alert.action';
 import { registerStudent } from '../../../redux/user/user.actions';
+import { getAllSchools } from '../../../redux/schools/schools.action'
 import {
   CButton,
   CCard,
@@ -20,7 +21,12 @@ import {
 
 import CIcon from "@coreui/icons-react";
 
-const Register = ({registerStudent, setAlert, isRegistered}) => {
+const Register = ({registerStudent, setAlert, isRegistered, getAllSchools, schools: {schools, loading }}) => {
+  useEffect(()=>{
+    getAllSchools();
+  }, [getAllSchools]);
+
+
   const grades = [
     'Select Grade',
     'Pre-L',
@@ -57,6 +63,7 @@ const Register = ({registerStudent, setAlert, isRegistered}) => {
     password: "",
     confirm_password: ""
   });
+  
 
   const {
     first_name,
@@ -183,16 +190,20 @@ const Register = ({registerStudent, setAlert, isRegistered}) => {
                         <CIcon name="cil-pencil" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput
-                      type="text"
+                         <select
+                      type="select"
                       placeholder="School"
                       name="school_id"
+                      className="custom-select"
                       value={school_id}
                       onChange={e =>onChange(e)}
-                      autoComplete="Student Id"
+                      autoComplete="grade"
                       required
 
-                    />
+                    > 
+                      <option key='select' value='select school'>Select School</option>
+                      {schools.map(school => <option key={school.id} value={school.id}>{school.name}</option>)}
+                      </select>               
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -311,11 +322,14 @@ const Register = ({registerStudent, setAlert, isRegistered}) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   registerStudent: PropTypes.func.isRequired,
+  getAllSchools: PropTypes.func.isRequired, 
   isRegistered: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
-  isRegistered: state.user.isRegistered
+  isRegistered: state.user.isRegistered,
+  schools: state.schools
 })
 
-export default connect(mapStateToProps, { setAlert, registerStudent})(Register);
+
+export default connect(mapStateToProps, { setAlert, registerStudent, getAllSchools })(Register);
