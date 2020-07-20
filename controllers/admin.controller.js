@@ -231,7 +231,10 @@ class AdminController {
   static async fetchSchools(req, res) {
     try {
       await School.findAll({
-        attributes: ["name"],
+        attributes: ['id', 'name'],
+        where: { 
+          is_archived: false,
+        }
       }).then((result) => {
         if (result.length < 1) {
           res

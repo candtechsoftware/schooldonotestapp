@@ -18,7 +18,6 @@ export const loadDonationByStudent = () => async dispatch => {
     })
 
   } catch (err) {
-    console.log('error in donation load by student: ', err); 
     dispatch({
       type: DONATION_ERROR
     })
@@ -33,14 +32,13 @@ export const getAllDonations = () => async dispatch => {
 
   try {
     let response = await DonationService.getAllDonations();
-    console.log(response);
 
     dispatch({
       type: GET_DONATONS,
       payload: response,
     })
   } catch (err) {
-    console.log('err in get all donations actions: ', err);
+    console.error('err in get all donations actions: ', err);
   }
 
 }

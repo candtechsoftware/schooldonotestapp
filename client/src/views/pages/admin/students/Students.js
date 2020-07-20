@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -8,19 +8,25 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CButton
+  CButton,
+  CDataTable
 } from '@coreui/react'
 import Spinner from '../../student/Dashboard/Spinner';
-import { getAllStudents } from '../../../../redux/students/student.actions';
+import { getAllStudents, archiveStudent } from '../../../../redux/students/student.actions';
 
 
-const Students = ({getAllStudents, students: {loading, students}}) => {
+const Students = ({getAllStudents, archiveStudent, students: {loading, students}}) => {
   useEffect(()=>{
     getAllStudents();
   },[getAllStudents])
 
-  console.log(loading );
-  console.log(students);
+
+
+  const fields = [
+    {key: 'Student', _style: { width: '10%'}},
+    {key: 'School', _style: { width: '10%'}},
+    {key: 'Archive', label: '', _style: { width: '1%'}, sorter: false, filter: false }
+  ]
 
   return loading ? (<Spinner/>) 
     :
@@ -33,22 +39,31 @@ const Students = ({getAllStudents, students: {loading, students}}) => {
            Students 
           </CCardHeader>
           <CCardBody>
-            <table className="table table-stiped table-hover">
-              <tr>
-                <th>Student</th>
-                <th>School</th>
-              </tr>
-           {students.map(student => (
-             <Fragment>
-               <tr>
-             <td>{student.first_name} {student.last_name}</td>
-             <td>{student.school.name}</td>
-             <td><CButton type="submit" color="danger" className="px-4">Archive</CButton></td>
-             </tr>
-             </Fragment>
-           ))}
-           </table>
-           
+            <CDataTable
+              items={students}
+              fields={fields}
+              columnFilter
+              tableFilter
+              sorter
+              pagination
+              itemsPerPageSelect
+              itemsPerPage={10}
+              scopedSlots= {{
+                'Archive':
+                (item, index)=> {
+                  return (
+                    <td className='py-2'>
+                    <CButton
+                      onClick={()=> {
+                        console.log(item.id)
+                        archiveStudent(item.id)
+                      }}
+                      color='danger'
+                    >Archive</CButton>
+                    </td>
+                  )}
+              }}
+            />
           </CCardBody>
         </CCard>
       </CCol>
@@ -58,6 +73,7 @@ const Students = ({getAllStudents, students: {loading, students}}) => {
 
 Students.propTypes = {
   getAllStudents: PropTypes.func.isRequired,
+  archiveStudent: PropTypes.func.isRequired,
   students: PropTypes.object 
 }
 
@@ -65,4 +81,4 @@ const mapStateToProps = state => ({
   students: state.students
 })
 
-export default connect(mapStateToProps,{getAllStudents})(Students);
+export default connect(mapStateToProps,{getAllStudents, archiveStudent})(Students);

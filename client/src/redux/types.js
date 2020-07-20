@@ -23,7 +23,7 @@ export const DELETE_STUDENT = 'DELETE_STUDENT';
 
 // Schools
 export const GET_SCHOOLS = 'GET_SCHOOLS';
-export const DELETE_SCHOOLS = 'DELETE_SCHOOLS';
+export const DELETE_SCHOOL = 'DELETE_SCHOOL';
 export const ADD_SCHOOL = 'ADD_SCHOOL';
 
 

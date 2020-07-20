@@ -75,9 +75,8 @@ class DonationController {
         },
       })
       res.status(201).json({ donations })
-      console.log(donations);
     } catch(err) {
-      console.log(err);       
+      res.status(500).json({ error: err});       
     }
 
   }

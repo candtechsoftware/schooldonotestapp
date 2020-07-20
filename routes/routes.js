@@ -47,7 +47,7 @@ router.post("/admin/login", AdminController.login);
 router.get('/admin', checkJWT, AdminController.loadAdmin);
 // Admin Adding A School
 // @access admin only
-router.post("/admin/school", [checkJWT],AdminController.createSchool);
+router.post("/admin/school", AdminController.createSchool);
 
 // Finding Get All Schools
 // @access public

@@ -152,6 +152,7 @@ class StudentController {
           {model: School, attributes: ['name']}
         ]
       })
+
       res.status(200).json({students: response });
     } catch (err) {
       console.log('err in get all students', err)

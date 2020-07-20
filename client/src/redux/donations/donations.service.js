@@ -8,7 +8,7 @@ class DonationService {
       const response = await api.get('http://localhost:5000/api/student/donations')
       return response.data; 
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
   static async getAllDonations() {
@@ -16,7 +16,7 @@ class DonationService {
         const response = await api.get("http://localhost:5000/api/admin/donations");
         return response.data.donations;
     } catch(err) {
-      console.log("This is in all donations: ", err);
+      console.error("This is in all donations: ", err);
     }
 
   }

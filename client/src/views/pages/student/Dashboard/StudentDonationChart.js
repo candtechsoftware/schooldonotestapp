@@ -24,9 +24,6 @@ const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) 
     message: 'No Donations Yet'
   }
 
-
-  console.log("data", usersData)
-
   const fields = [
     { key: 'amount', _style: { width: '30%'} },
 
@@ -37,7 +34,6 @@ const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) 
       <CCol sm="5">
          <h5 id="traffic" className="card-title mb-0">Total: ${
           usersData.reduce((acc, item) => {
-            console.log('in reduxce', item.amount)
             return acc + parseFloat(item.amount.replace('$',''))}, 0)}
             </h5>
       </CCol>
