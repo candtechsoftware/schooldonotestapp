@@ -23,8 +23,11 @@ const Students = ({getAllStudents, archiveStudent, students: {loading, students}
 
 
   const fields = [
-    {key: 'Student', _style: { width: '10%'}},
-    {key: 'School', _style: { width: '10%'}},
+    {key: 'Student', _style: { width: '1%'}},
+    {key: 'School', _style: { width: '1%'}},
+    {key: 'grade', label: 'Grade', _style: { width: '1%'}, sorter: false, filter: false },
+    {key: 'teacher', label: 'Teacher', _style: { width: '1%'}, sorter: false, filter: false },
+  {key: 'shirt_size', label: 'Shirt Size', _style: { width: '1%'}, sorter: false, filter: false },
     {key: 'Archive', label: '', _style: { width: '1%'}, sorter: false, filter: false }
   ]
 

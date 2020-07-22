@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import StudentItem from "./StudentItem";
+import { connect } from "react-redux";
+import { getAllStudents } from "../../../redux/students/student.actions";
+import PropTypes from "prop-types";
 import {
   CButton,
   CCard,
@@ -11,19 +15,28 @@ import {
   CInputGroupPrepend,
   CInputGroupText,
   CRow
-} from '@coreui/react';
+} from "@coreui/react";
 
-import CIcon from '@coreui/icons-react';
+import CIcon from "@coreui/icons-react";
 
-const StudentLookup = () => {
-  // const 
+const StudentLookup = ({ getAllStudents, students: { loading, students } }) => {
+  const [searchData, setSearchData] = useState({
+    searchBar: ""
+  });
 
+  const { searchBar } = searchData;
 
+  const onChange = e => {
+    setSearchData({ ...searchData, [e.target.name]: e.target.value });
+    getAllStudents();
+    console.log("Search bar ", searchBar);
+  };
+  console.log("students: ", students);
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md="9" lg="7" xl="6">
+          <CCol md="9" lg="7" xl="9">
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <CForm>
@@ -33,21 +46,56 @@ const StudentLookup = () => {
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>
-                      <CIcon name="cil-list" />
+                        <CIcon name="cil-list" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Find student" autoComplete="new-password" />
+                    <CInput
+                      type="text"
+                      placeholder="Find student"
+                      autoComplete="new-password"
+                      value={searchBar}
+                      name="searchBar"
+                      onChange={e => onChange(e)}
+                    />
                   </CInputGroup>
-                  <CButton color="success" block>Search</CButton>
+                  <CButton color="success" block>
+                    Search
+                  </CButton>
                 </CForm>
               </CCardBody>
-
             </CCard>
+            {!loading ? (
+              <CCard className="mx-4">
+                <CCardBody className="p-4">
+                  <h2>Search Results: </h2>
+                  <table>
+                    {students.map(student => (
+                      <tr>
+                        <StudentItem
+                          name={student.Student}
+                          schoolId={student.student_school_id}
+                          id={student.id}
+                        />
+                      </tr>
+                    ))}
+                  </table>
+                </CCardBody>
+              </CCard>
+            ) : (
+              ""
+            )}
           </CCol>
         </CRow>
       </CContainer>
     </div>
-  )
-}
+  );
+};
+StudentLookup.propTypes = {
+  getAllStudents: PropTypes.func.isRequired,
+  students: PropTypes.object
+};
 
-export default StudentLookup;
+const mapStateToProps = state => ({
+  students: state.students
+});
+export default connect(mapStateToProps, { getAllStudents })(StudentLookup);

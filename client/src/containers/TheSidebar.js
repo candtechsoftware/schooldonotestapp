@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'; 
 import { toggleSideBar } from '../redux/sidebar/sidebar.action';
-
+import logo from '../assets/logo.png';
 import {
   CCreateElement,
   CSidebar,
@@ -13,6 +13,7 @@ import {
   CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem,
+  CImg
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
@@ -28,18 +29,14 @@ const TheSidebar = ({sidebar, toggleSideBar }) => {
     <CSidebar
       show={sidebar}
     >
-      <CSidebarBrand className="d-md-down-none" to="/">
-        <CIcon
-          className="c-sidebar-brand-full"
-          name="logo-negative"
-          height={35}
-        />
-        <CIcon
-          className="c-sidebar-brand-minimized"
-          name="sygnet"
-          height={35}
-        />
-      </CSidebarBrand>
+      
+      <CImg
+        src={logo}
+        height='150'
+        fluid
+        className="mb-2"
+
+      />
       <CSidebarNav>
 
         <CCreateElement
@@ -52,7 +49,6 @@ const TheSidebar = ({sidebar, toggleSideBar }) => {
           }}
         />
       </CSidebarNav>
-      <CSidebarMinimizer className="c-d-md-down-none"/>
     </CSidebar>
   )
 }

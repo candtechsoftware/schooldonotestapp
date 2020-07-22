@@ -20,8 +20,6 @@ const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) =>
     },[getAllDonations]);
 
 
-
-
     let donationsList = [];
     
     let total = 0; 

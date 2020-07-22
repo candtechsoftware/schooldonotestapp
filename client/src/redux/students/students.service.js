@@ -16,6 +16,11 @@ class StudentService {
                 let formatted = {
                   id: response.data.students[i].id,
                   Student: `${response.data.students[i].first_name} ${response.data.students[i].last_name}`,
+                  student_school_id: response.data.students[i].student_school_id,
+                  phone: response.data.students[i].phone,
+                  grade: response.data.students[i].grade,
+                  teacher: response.data.students[i].teacher,
+                  shirt_size: response.data.students[i].shirt_size,
                   School: response.data.students[i].school.name,
                 }
                 studentList.push(formatted);
@@ -31,7 +36,6 @@ class StudentService {
     static async archiveStudent(id) {
         try{
             const response = await api.delete(`http://localhost:5000/api/admin/student/${id}`);
-            console.log('in service', response)
             return response;
         }catch(err){
             console.log('err in studnet delete service', err);

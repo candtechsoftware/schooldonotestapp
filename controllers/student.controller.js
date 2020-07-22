@@ -147,7 +147,7 @@ class StudentController {
         where: {
           is_archived: false,
         },
-        attributes: ['id','first_name', 'last_name', 'student_school_id'],
+        attributes: ['id','first_name', 'last_name', 'student_school_id', 'phone', 'grade', 'teacher', 'shirt_size'],
         include: [
           {model: School, attributes: ['name']}
         ]
@@ -211,6 +211,22 @@ class StudentController {
           Student.update({ is_Archived: true }, { where: { id: id } });
         }
       });
+    } catch (e) {
+      res.status(500).json({ error: e });
+    }
+  }
+
+  static async getSingleStudent(req, res) {
+    try {
+      let id = req. params.id;
+      let student = await Student.findOne({
+        where: {
+          id: id,
+          is_archived: false, 
+        },
+        attributes: ['id','first_name', 'last_name', 'student_school_id', 'phone', 'grade', 'teacher', 'shirt_size'],
+      })
+      res.status(200).json({ student })
     } catch (e) {
       res.status(500).json({ error: e });
     }
