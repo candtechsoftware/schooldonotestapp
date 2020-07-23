@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // Pages
 import StudentLogin from './views/pages/student/Login';
+import SingleStudent from './views/pages/student/donation/SingleStudent';
 import AdminLogin from './views/pages/admin/Login';
 import Register from './views/pages/student/Register';
 import StudentLookup from './views/pages/student/Student.js';
@@ -34,12 +35,13 @@ const App = () =>{
     store.dispatch(loadStudent())
   },[])
   return (
-      <BrowserRouter>
+      <BrowserRouter >
             <Alert/>
             <Switch>
               <Route exact path="/login" name="Login Page" render={props => <StudentLogin {...props}/>} />
               <Route exact path="/admin/login" name="Login Page" render={props => <AdminLogin {...props}/>} />
               <Route exact path="/search" name="Student Lookup Page" render={props => <StudentLookup {...props}/>} />
+              <Route exact path="/student/:id" name="Student Donation Page" render={props => <SingleStudent {...props}/>} />
               <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} />
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />

@@ -220,12 +220,15 @@ class StudentController {
     try {
       let id = req. params.id;
       let student = await Student.findOne({
+        include: [School],
         where: {
           id: id,
           is_archived: false, 
         },
         attributes: ['id','first_name', 'last_name', 'student_school_id', 'phone', 'grade', 'teacher', 'shirt_size'],
       })
+
+      console.log('student: ', student);
       res.status(200).json({ student })
     } catch (e) {
       res.status(500).json({ error: e });

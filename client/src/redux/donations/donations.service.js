@@ -21,6 +21,23 @@ class DonationService {
 
   }
 
+  static async addDonation(donation) {
+    const configHeaders = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const body = JSON.stringify(donation)
+    try {
+      const request = await api.post('http://localhost:5000/api/donation', body, configHeaders);
+      return request;
+
+    } catch (err){
+      console.log('error in add donation service: ' , err); 
+    }
+  }
+
+
 }
 
 export default DonationService;

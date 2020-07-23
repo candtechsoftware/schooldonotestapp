@@ -68,17 +68,16 @@ const StudentLookup = ({ getAllStudents, students: { loading, students } }) => {
               <CCard className="mx-4">
                 <CCardBody className="p-4">
                   <h2>Search Results: </h2>
-                  <table>
+                  <CContainer fluid>
                     {students.map(student => (
-                      <tr>
                         <StudentItem
                           name={student.Student}
                           schoolId={student.student_school_id}
                           id={student.id}
+                          key={student.id}
                         />
-                      </tr>
                     ))}
-                  </table>
+                    </CContainer>
                 </CCardBody>
               </CCard>
             ) : (

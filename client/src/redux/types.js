@@ -18,6 +18,7 @@ export const LOGOUT = 'LOGOUT';
 
 // Students
 export const GET_STUDENTS = 'GET_STUDENTS';
+export const GET_STUDENT = 'GET_STUDENT';
 export const DELETE_STUDENTS = 'DELETE_STUDENTS';
 export const DELETE_STUDENT = 'DELETE_STUDENT';
 

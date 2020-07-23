@@ -74,7 +74,7 @@ router.delete(
 
 // Creating a donations from IPN
 // @access public
-router.post('/student/donations', DonationController.addDonation);
+router.post('/donation', DonationController.addDonation);
 
 // Students Viewing All their donations
 // @access private (Student can view only their donations total)

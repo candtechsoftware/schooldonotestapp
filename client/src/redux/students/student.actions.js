@@ -1,4 +1,4 @@
-import { GET_STUDENTS,DELETE_STUDENT } from '../types';
+import {GET_STUDENT, GET_STUDENTS,DELETE_STUDENT } from '../types';
 import StudentService from './students.service';
 
 
@@ -21,6 +21,18 @@ export const archiveStudent = id => async dispatch => {
         dispatch({
             type: DELETE_STUDENT,
             payload: id
+        })
+    } catch (err) {
+        console.error('err in archive students ', err);
+    }
+}
+
+export const getStudent = id => async dispatch => {
+    try {
+        const response = await StudentService.getStudent(id);
+        dispatch({
+            type: GET_STUDENT,
+            payload: response
         })
     } catch (err) {
         console.error('err in archive students ', err);
