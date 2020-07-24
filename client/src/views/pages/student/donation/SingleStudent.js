@@ -20,6 +20,7 @@ import {
 import CIcon from "@coreui/icons-react";
 import { getStudent } from "../../../../redux/students/student.actions";
 import { addDonation } from "../../../../redux/donations/donation.actions";
+import PaypalExpressBtn from './PaypalBtn';
 
 import { Link } from "react-router-dom";
 
@@ -53,7 +54,12 @@ const SingleStudent = ({
     donationData.student_id = student.id;
     donationData.school_id = student.school_id;
     console.log(donationData)
-    addDonation(donationData);
+   // addDonation(donationData);
+  }
+
+  const paymentHandler = (details, data) => {
+    console.log('details', details);
+    console.log('data ', data );
   }
   return (loading || student == null ? (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -127,6 +133,7 @@ const SingleStudent = ({
                         <CButton type="submit" color="success" className="px-4">
                             Dontate 
                         </CButton>
+
                       </CCol>
                       <CCol xs="6" className="text-right">
                         <Link
