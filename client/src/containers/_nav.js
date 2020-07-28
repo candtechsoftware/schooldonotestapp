@@ -14,12 +14,12 @@ export default [
       {
         _tag: 'CSidebarNavItem',
         name: 'Student Dontations',
-        to: '/student/donations',
+        to: '/admin/students/donations',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'School Donations',
-        to: '/school/donations',
+        to: '/admin/schools/donations',
       },
     ]
   },
@@ -37,7 +37,7 @@ export default [
       {
         _tag: 'CSidebarNavItem',
         name: 'Manage School',
-        to: 'admin/schools/',
+        to: '/admin/schools/',
       },
 
     ]

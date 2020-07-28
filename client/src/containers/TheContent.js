@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import AdminRoutes from '../routing/AdminRoutes';
 import StudentRoute from '../routing/StudentRoutes';
@@ -11,16 +11,13 @@ import {
 import { CContainer } from '@coreui/react'
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
-import Dashboard from '../views/dashboard/Dashboard';
 import AdminDonations from '../views/pages/admin/dashboard/AdminDashboard';
 import Schools from '../views/pages/admin/schools/Schools';
+import SchoolDonation from '../views/pages/admin/schools/SchoolDonation';
+import SingleSchool from '../views/pages/admin/schools/SingleSchool';
+
 import Students from '../views/pages/admin/students/Students';
 
-const loading = (
-  <div className="pt-3 text-center">
-    <div className="sk-spinner sk-spinner-pulse"></div>
-  </div>
-)
 
 // Loading Logged in user
 
@@ -31,7 +28,11 @@ const TheContent = ({user: {isAuthenticated, isAdmin}}) => {
           <Switch>
               <AdminRoutes exact path='/dashboard' component={AdminDonations}/>
               <AdminRoutes exact path='/admin/schools' component={Schools}/>
+              <AdminRoutes exact path='/admin/schools/donations' component={SchoolDonation}/>
+            <AdminRoutes exact path='/admin/schools/donations/:id' component={SingleSchool}/>
               <AdminRoutes exact path='/admin/students' component={Students}/>
+              <AdminRoutes exact path='/admin/students/donations' component={Students}/>
+            <AdminRoutes exact path='/admin/students/donations/:id' component={Students}/>
     
           </Switch>
       </CContainer>

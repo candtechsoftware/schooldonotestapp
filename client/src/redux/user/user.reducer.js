@@ -5,6 +5,7 @@ const initialState = {
   currentUser: null,
   isAdmin: false,
   isAuthenticated: false,
+  loading: true,
 }
 
 const userReducer = (state= initialState, action) => {
@@ -15,6 +16,7 @@ const userReducer = (state= initialState, action) => {
         currentUser: action.payload.user, // Gets User from json response 
         isAdmin: action.payload.isAdmin || false,
         isAuthenticated: action.payload.isAuthenticated || false,
+        loading: false 
       };
     case LOGIN_STUDENT_SUCCESS:
       return {
@@ -23,6 +25,7 @@ const userReducer = (state= initialState, action) => {
         currentUser: action.payload.user,
         isAdmin: action.payload.isAdmin,
         isAuthenticated: action.payload.isAuthenticated,
+        loading: false 
       }
 
     case LOGIN_ADMIN_SUCCESS:
@@ -32,11 +35,13 @@ const userReducer = (state= initialState, action) => {
           currentUser: action.payload.user,
           isAdmin: action.payload.isAdmin,
           isAuthenticated: action.payload.isAuthenticated,
+          loading: false 
         }
     case REGISTER_SUCCES:
       return {
         ...state,
         isRegistered: true,
+        loading: false 
       }
       case LOGOUT:
       case AUTH_ERROR:

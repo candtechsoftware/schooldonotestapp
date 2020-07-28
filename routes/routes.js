@@ -84,8 +84,19 @@ router.get(
   DonationController.getDonationByStudent,
 );
 
-// View Donations All Donatiosn
+// View Donations All Donations
 // @access privagte (Admin Only)
-router.get('/admin/donations', [checkJWT], DonationController.getAllDonations);
+router.get('/admin/donations',  [checkJWT],DonationController.getAllDonations);
+
+// View Donations by School 
+// @access privagte (Admin Only)
+router.get('/admin/school/donations/',  [checkJWT],DonationController.getDonationsGroupedBySchool);
+
+
+// View Donations by School ID
+// @access privagte (Admin Only)
+router.get('/admin/school/donations/:id', [checkJWT],  DonationController.getDonationsBySchoolId);
+
+
 
 module.exports = router;

@@ -23,24 +23,23 @@ const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) =>
     let donationsList = [];
     
     let total = 0; 
-    if (Array.isArray(donations)){
+    if (Array.isArray(donations) && donations){
         for (let i = 0; i < donations.length; i++){
             total += donations[i].amount;
+          
             let formatted = {
-            Amount: `$${donations[i].amount}`,
-            Student: `${donations[i].student.first_name} ${donations[i].student.last_name}`,
-            School: `${donations[i].school.name}`,
-            Date:  donations[i].created_at.slice(0,10),
+            School: `${donations[i].school.name}` || '',
+            Total: `$${donations[i].amount}` || '',
             }
             donationsList.push(formatted)
         }
     }
 
+
+
    const fields = [
-       {key: 'Amount',  _style: { width: '10%'}},
        {key: 'School',  _style: { width: '20%'}},
-       {key: 'Student',  _style: { width: '20%'}},
-       {key: 'Date',  _style: { width: '20%'}},
+       {key: 'Total',  _style: { width: '10%'}},
    ]
    
    return loading ?
@@ -52,7 +51,10 @@ const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) =>
         <CCol>
           <CCard>
             <CCardHeader>
-              Donations Total: ${total}
+              Donations Total: {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD"
+                      }).format(total)}
             </CCardHeader>
             <CCardBody>
                 <CDataTable 

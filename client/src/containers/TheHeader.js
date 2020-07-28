@@ -11,8 +11,6 @@ import {
   
 } from '@coreui/react'
 
-// routes config
-import routes from '../routes'
 
 import { 
   TheHeaderDropdown,
@@ -53,10 +51,7 @@ const TheHeader = ({sidebar, toggleSideBar}) => {
       </CHeaderNav>
 
       <CSubheader className="px-3 justify-content-between">
-        <CBreadcrumbRouter 
-          className="border-0 c-subheader-nav m-0 px-0 px-md-3" 
-          routes={routes} 
-        />
+
           <div className="d-md-down-none mfe-2 c-subheader-nav">
           </div>
       </CSubheader>

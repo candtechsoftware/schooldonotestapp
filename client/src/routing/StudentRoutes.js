@@ -2,25 +2,25 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Spinner from '../views/pages/student/Dashboard/Spinner';
 
 const StudentRoute = ({
   component: Component,
-  user: {isAuthenticated, isAdmin},
+  user: {isAuthenticated, isAdmin, loading},
   ...rest
 
 }) => {
-  return isAdmin && isAuthenticated ? 
-  <Redirect to='/dashboard'/>
-    :  (
- <Route
-  {...rest} 
-  render={props => 
-    isAuthenticated && !isAdmin ?
-      (<Component {...props} />) :
-      (<Redirect to='/admin/login'/>
-    )}
-  />
-);}
+  return <Route
+    {...rest}
+    render={props => 
+      loading ? (<Spinner/>) : isAuthenticated && !isAdmin ? (
+        <Component {...props}/>
+      ): (
+        <Redirect to="login"/>
+      )
+    }
+    />  
+}
 
 StudentRoute.propTypes = { 
   user: PropTypes.object.isRequired

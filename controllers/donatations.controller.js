@@ -60,7 +60,92 @@ class DonationController {
     }
   }
 
-  // Gets Donations by student
+  // Get Single School Donations Total
+  static async getDonationsBySchoolId(req, res){
+    try{
+        let id = req.params.id;
+        const schoolDonations = await Donation.findAll({
+          include: [
+            {model: Student, attributes: ['first_name', 'last_name']},
+            {model: School, attributes: ['name']},
+
+          ],
+          attributes: [
+            'id',
+            'amount',
+          ],
+          where: {
+            school_id: id,
+          }
+        }) 
+
+        if (schoolDonations.length > 0) {
+          for (let dono of schoolDonations) {
+            console.log("hi", dono);
+          }
+          res.status(200).json({data: schoolDonations});
+        }
+
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({
+        status: 'Failed',
+        message: 'Server error'
+      })
+    }
+  }
+
+  static async getDonationsGroupedBySchool(req, res) {
+    try {
+      const [donations, meta ] = await db.sequelize.query("SELECT school_id, sum(amount) as total_sum from donations GROUP by school_id");
+      const donationsList = []
+      for (let dono of donations) {
+        console.log(dono.school_id)
+        let school = await School.findByPk(dono.school_id)
+        console.log("school", school.name);
+        donationsList.push({ school_id: dono.school_id, school: school.name, total_amount: dono.total_sum})
+      }
+      console.log("List ", donationsList);
+      res.status(200).json({data: donationsList, meta})
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({error: err.message})
+    }
+  }
+
+
+
+    // Get Single Student Donations Total 
+    static async getDonationsByStudentId(req, res){
+      try{
+          let id = req.params.id;
+          const studentDonations = await Donation.findAll({
+            attributes: [
+              'id',
+              'amount',
+            ],
+            where: {
+              student: id,
+            }
+          }) 
+          if (studentDonations.length > 0) {
+            res.status(200).json({data: studentDonations});
+          } else {
+
+            res.status(200).json({data: "empty"});
+
+          }
+  
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).json({
+          status: 'Failed',
+          message: 'Server error'
+        })
+      }
+    }
+
+  // Gets Donations by student for student who are logged in
   static async getDonationByStudent(req,res) {
     try {
       const donations = await Donation.findAll({
