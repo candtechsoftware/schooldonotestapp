@@ -73,6 +73,7 @@ class DonationController {
           attributes: [
             'id',
             'amount',
+            'created_at'
           ],
           where: {
             school_id: id,
@@ -80,9 +81,7 @@ class DonationController {
         }) 
 
         if (schoolDonations.length > 0) {
-          for (let dono of schoolDonations) {
-            console.log("hi", dono);
-          }
+
           res.status(200).json({data: schoolDonations});
         }
 
@@ -106,7 +105,26 @@ class DonationController {
         donationsList.push({ school_id: dono.school_id, school: school.name, total_amount: dono.total_sum})
       }
       console.log("List ", donationsList);
-      res.status(200).json({data: donationsList, meta})
+      res.status(200).json({data: donationsList})
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({error: err.message})
+    }
+  }
+    // Get Student Donations Grouped Total 
+  static async getDonationsGroupedByStudent(req, res) {
+    try {
+      const [donations, meta ] = await db.sequelize.query("SELECT student_id, sum(amount) as total_sum from donations GROUP by student_id");
+      const donationsList = []
+      for (let dono of donations) {
+        console.log("id: ", dono.student_id)
+        let student = await Student.findByPk(dono.student_id);
+        console.log(student.first_name);
+        donationsList.push({student_id: student.id, student: `${student.first_name} ${student.last_name}`, total_sum: dono.total_sum});
+        
+      }
+      console.log("List ", donationsList);
+      res.status(200).json({data: donationsList})
     } catch (err) {
       console.error(err.message);
       res.status(500).json({error: err.message})
@@ -115,17 +133,23 @@ class DonationController {
 
 
 
+
     // Get Single Student Donations Total 
     static async getDonationsByStudentId(req, res){
       try{
           let id = req.params.id;
           const studentDonations = await Donation.findAll({
+            include:[
+              {model: Student, attributes: ['first_name', 'last_name']},
+              {model: School, attributes: ['name']},
+            ],
             attributes: [
               'id',
               'amount',
+              'created_at',
             ],
             where: {
-              student: id,
+              student_id: id,
             }
           }) 
           if (studentDonations.length > 0) {
@@ -155,13 +179,16 @@ class DonationController {
           'student_id',
           'school_id',
           'created_at', 
-        ],  where: { 
+        ], 
+         where: { 
           student_id: req.user.student.id, 
         },
       })
+      console.log("something: ", donations);
       res.status(201).json({ donations })
     } catch(err) {
-      console.log(req);
+      console.log('-------------------')
+      console.log(err);
       res.status(500).json({ error: err});       
     }
 

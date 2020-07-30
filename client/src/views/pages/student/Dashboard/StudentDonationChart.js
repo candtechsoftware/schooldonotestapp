@@ -11,7 +11,8 @@ const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) 
   },[loadDonationByStudent])
   const usersData = [
 
-  ]
+  ];
+  
   if(Array.isArray(donations)){
     for (let i = 0; i < donations.length; i++){
     donations[i].created_at = donations[i].created_at.slice(0,10);

@@ -14,7 +14,9 @@ import PropTypes from 'prop-types';
 import AdminDonations from '../views/pages/admin/dashboard/AdminDashboard';
 import Schools from '../views/pages/admin/schools/Schools';
 import SchoolDonation from '../views/pages/admin/schools/SchoolDonation';
+import StudentDonations from '../views/pages/admin/students/StudentDonations';
 import SingleSchool from '../views/pages/admin/schools/SingleSchool';
+import SingleStudent from '../views/pages/admin/students/SingleStudent';
 
 import Students from '../views/pages/admin/students/Students';
 
@@ -31,8 +33,8 @@ const TheContent = ({user: {isAuthenticated, isAdmin}}) => {
               <AdminRoutes exact path='/admin/schools/donations' component={SchoolDonation}/>
             <AdminRoutes exact path='/admin/schools/donations/:id' component={SingleSchool}/>
               <AdminRoutes exact path='/admin/students' component={Students}/>
-              <AdminRoutes exact path='/admin/students/donations' component={Students}/>
-            <AdminRoutes exact path='/admin/students/donations/:id' component={Students}/>
+              <AdminRoutes exact path='/admin/students/donations' component={StudentDonations}/>
+            <AdminRoutes exact path='/admin/students/donations/:id' component={SingleStudent}/>
     
           </Switch>
       </CContainer>

@@ -1,7 +1,7 @@
 import React, {useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getDonationsGroupedBySchool } from "../../../../redux/donations/donation.actions";
+import { getDonationsGroupedByStudent } from "../../../../redux/donations/donation.actions";
 import {Link} from 'react-router-dom';
 import {
   CCardBody,
@@ -14,28 +14,28 @@ import {
 } from "@coreui/react";
 import Spinner from '../../student/Dashboard/Spinner'
 const StudentDonations = ({
-  getDonationsGroupedBySchool,
+  getDonationsGroupedByStudent,
   donation: { donations, loading }
 }) => {
   useEffect(() => {
-    getDonationsGroupedBySchool();
-  }, [getDonationsGroupedBySchool]);
+    getDonationsGroupedByStudent();
+  }, [getDonationsGroupedByStudent]);
 
   let donationsList = [];
 
   let total = 0;
   if (Array.isArray(donations)) {
     for (let i = 0; i < donations.length; i++) {
-        donations[i].total_amount = new Intl.NumberFormat("en-US", {
+        donations[i].total_sum = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD"
-        }).format(donations[i].total_amount)
+        }).format(donations[i].total_sum)
     }
   }
 
   const fields = [
-    { key: "school",label: "School", _style: { width: "1%" } },
-    { key: "total_amount", label: "Total Amount", _style: { width: "1%" } },
+    { key: "student",label: "Student", _style: { width: "1%" } },
+    { key: "total_sum", label: "Total Amount", _style: { width: "1%" } },
     {
       key: 'see_school',
       label: '',
@@ -53,7 +53,7 @@ const StudentDonations = ({
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader>Donations Total By Student: ${total}</CCardHeader>
+            <CCardHeader>Donations Total Grouped By Student</CCardHeader>
             <CCardBody>
               <CDataTable
                 items={donations}
@@ -70,7 +70,7 @@ const StudentDonations = ({
 
 
                         <Link
-              to={`/admin/schools/donations/${item.school_id}`}
+              to={`/admin/students/donations/${item.student_id}`}
             >
             <CButton color="primary">See More</CButton>
               </Link>
@@ -89,7 +89,7 @@ const StudentDonations = ({
 };
 
 StudentDonations.propTypes = {
-    getDonationsGroupedBySchool: PropTypes.func.isRequired,
+    getDonationsGroupedByStudent: PropTypes.func.isRequired,
     donation: PropTypes.object
 }
 
@@ -97,4 +97,4 @@ const mapStateToProps = state => ({
   donation: state.donation
 })
 
-export default connect(mapStateToProps, {getDonationsGroupedBySchool})(StudentDonations);
+export default connect(mapStateToProps, {getDonationsGroupedByStudent})(StudentDonations);

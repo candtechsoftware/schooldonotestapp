@@ -21,35 +21,21 @@ class PayPalBtn extends Component {
 
     return (
       <div style={buttonStyles}>
-        {showLoading ? <span> Loading... </span> : null}
-        <PayPalButton
-          createOrder={(data, actions) => {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: { total }
-                  }
-                }
-              ],
-              application_context: {
-                shipping_preference: "NO_SHIPPING" // default is "GET_FROM_FILE"
-              }
-            });
-          }}
-          onApprove={(data, actions) => {
-            // Capture the funds from the transaction
-            return actions.order.capture().then(function(details) {
-              // Show a success message to your buyer
-              alert("Transaction completed by " + details.payer);
-            });
-          }}
-          onButtonReady={() => this.setState({ showLoading: false })}
-          options={{
-            clientId:
-              "AaLgWT2mzVerEuCHGSyE_xbg_V1vTdKYNyCd6mdQSaOx0iJ4sYkoBOPCbUGGTTW0K7VG0oLHEN8kdQHI"
-          }}
-        />
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+      <input type="hidden" name="business"
+    value="http://www.helloworld.com"/>
+
+<input type="hidden" name="cmd" value="_donations"/>
+<input type="hidden" name="item_name" value="Friends of the Park"/>
+<input type="hidden" name="item_number" value="Fall Cleanup Campaign"/>
+<input type="hidden" name="currency_code" value="USD"/>
+<input type="image" name="submit"
+src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+alt="Donate"/>
+<img alt="" width="1" height="1"
+src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" />
+      </form>
+
       </div>
     );
   }

@@ -21,6 +21,12 @@ router.post('/student/register', StudentController.registerStudent);
 // @access public
 router.post('/student/login', StudentController.login);
 
+// Student Login
+// @access public
+router.post('/student/forgot-password', StudentController.sendResetLink);
+router.post('/student/reset-password/:token', StudentController.resetPassword);
+
+
 // GET logged in student by token
 router.get('/student', checkJWT, StudentController.loadStudent);
 
@@ -79,7 +85,7 @@ router.post('/donation', DonationController.addDonation);
 // Students Viewing All their donations
 // @access private (Student can view only their donations total)
 router.get(
-  '/student/donations/',
+  '/donations/student',
   [checkJWT],
   DonationController.getDonationByStudent,
 );
@@ -98,5 +104,13 @@ router.get('/admin/school/donations/',  [checkJWT],DonationController.getDonatio
 router.get('/admin/school/donations/:id', [checkJWT],  DonationController.getDonationsBySchoolId);
 
 
+// View Donations by School 
+// @access privagte (Admin Only)
+router.get('/admin/student/donations/', [checkJWT],  DonationController.getDonationsGroupedByStudent);
+
+
+// View Donations by School ID
+// @access privagte (Admin Only)
+router.get('/admin/student/donations/:id', [checkJWT],   DonationController.getDonationsByStudentId);
 
 module.exports = router;

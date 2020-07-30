@@ -1,4 +1,4 @@
-import { GET_STUDENT ,GET_STUDENTS, DELETE_STUDENT } from "../types";
+import { GET_STUDENT ,GET_STUDENTS, DELETE_STUDENT, GET_FILTERED_STUDENTS } from "../types";
 
 const initialState = {
   students: null,
@@ -22,6 +22,12 @@ const studentReducer = (state = initialState, action) => {
         student: payload,
         loading: false
       };
+
+    case GET_FILTERED_STUDENTS:
+      return {
+        ...state,
+        students: payload,
+      }
 
     case DELETE_STUDENT:
       return {

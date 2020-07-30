@@ -3,12 +3,16 @@ import {
   GET_CURRENT_STUDENT_DONATION,
   DONATION_ERROR,
   GET_DONATONS_BY_SCHOOL,
-  GET_DONATONS_BY_SCHOOL_ID
+  ADD_DONATION,
+  GET_DONATONS_BY_SCHOOL_ID,
+  GET_DONATONS_BY_STUDENT,
+  GET_DONATONS_BY_STUDENT_ID
 } from "../types";
 
 const initialState = {
   donations: [],
   donation: null,
+  donationSuccess: false, 
   loading: true,
   error: {}
 };
@@ -39,11 +43,30 @@ export default function(state = initialState, action) {
         ...state,
         donations: action.payload,
         loading: false
-      }
+      };
+      case GET_DONATONS_BY_STUDENT:
+        return {
+          ...state,
+          donations: action.payload,
+          loading: false 
+        };
+      case GET_DONATONS_BY_STUDENT_ID:
+        return {
+          ...state,
+          donations: action.payload,
+          loading: false
+        }
     case DONATION_ERROR:
       return {
         error: action.payload
       };
+      case ADD_DONATION:
+        return {
+          ...state,
+          donation: action.payload,
+          donationSuccess: true,
+          
+        };
     default:
       return {};
   }

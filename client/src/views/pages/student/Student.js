@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import StudentItem from "./StudentItem";
 import { connect } from "react-redux";
 import { getAllStudents } from "../../../redux/students/student.actions";
+import { getAllStudentsFilter } from "../../../redux/students/student.actions";
 import PropTypes from "prop-types";
 import {
   CButton,
@@ -19,7 +20,8 @@ import {
 
 import CIcon from "@coreui/icons-react";
 
-const StudentLookup = ({ getAllStudents, students: { loading, students } }) => {
+const StudentLookup = ({ getAllStudents,getAllStudentsFilter, students: { loading, students } }) => {
+
   const [searchData, setSearchData] = useState({
     searchBar: ""
   });
@@ -28,8 +30,8 @@ const StudentLookup = ({ getAllStudents, students: { loading, students } }) => {
 
   const onChange = e => {
     setSearchData({ ...searchData, [e.target.name]: e.target.value });
-    getAllStudents();
     console.log("Search bar ", searchBar);
+    getAllStudentsFilter(e.target.value);
   };
   console.log("students: ", students);
   return (
@@ -91,10 +93,11 @@ const StudentLookup = ({ getAllStudents, students: { loading, students } }) => {
 };
 StudentLookup.propTypes = {
   getAllStudents: PropTypes.func.isRequired,
+  getAllStudentsFilter: PropTypes.func,
   students: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   students: state.students
 });
-export default connect(mapStateToProps, { getAllStudents })(StudentLookup);
+export default connect(mapStateToProps, { getAllStudents, getAllStudentsFilter })(StudentLookup);

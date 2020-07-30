@@ -5,7 +5,9 @@ import api from '../../utils/api';
 class DonationService {
   static async getDonationByStudent() {
     try {
-      const response = await api.get('http://localhost:5000/api/student/donations')
+      const response = await api.get('http://localhost:5000/api/donations/student')
+      console.log('resonse in service', response)
+
       return response.data; 
     } catch (err) {
       console.error(err);
@@ -65,6 +67,43 @@ class DonationService {
       }).format(data.amount)
       data.school = data.school.name
     }
+    console.log('IN SERVICE' , response.data.data);
+    return response.data;
+    } catch (err){
+      console.log('error in service ', err); 
+    }
+  }
+
+
+  // Students
+
+  static async getDonationsGroupedByStudent(){
+    try {
+      const response = await api.get("http://localhost:5000/api/admin/student/donations");
+      console.log("response in service", response);
+
+      return response.data.data; 
+
+    } catch (err) {
+      console.log('Error in view donations grouped by student service ', err)
+    }
+  }
+
+  static async getDonationsByStudentId(id){
+    try {
+      const response = await api.get(`http://localhost:5000/api/admin/student/donations/${id}`)
+    console.log('response in get donation by student id service' , response);
+    
+    
+    let formated = []
+    // for (let data of response.data.data){
+    //   data.student = `${data.student.first_name} ${data.student.last_name}`
+    //   data.amount = new Intl.NumberFormat("en-US", {
+    //     style: "currency",
+    //     currency: "USD"
+    //   }).format(data.amount)
+    //   data.student = data.student.name
+    // }
     console.log('IN SERVICE' , response.data.data);
     return response.data;
     } catch (err){

@@ -29,7 +29,6 @@ const Login = ({loginStudent, isAuthenticated}) => {
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(e.target);
   };
 
   const onSubmit = async (e) => {
@@ -88,7 +87,9 @@ const Login = ({loginStudent, isAuthenticated}) => {
                         </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
+                        <Link to='/forgot-password'>
                         <CButton color="success">Forgot password?</CButton>
+                        </Link>
                       </CCol>
                     </CRow>
                   </CForm>

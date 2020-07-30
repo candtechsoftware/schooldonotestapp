@@ -22,11 +22,14 @@ import { getStudent } from "../../../../redux/students/student.actions";
 import { addDonation } from "../../../../redux/donations/donation.actions";
 import { PaypalBtn, PayPalBtn } from "./PaypalBtn";
 import { Link } from "react-router-dom";
+import { setAlert } from '../../../../redux/alert/alert.action';
 
 const SingleStudent = ({
+  setAlert,
   addDonation,
   getStudent,
   student: { student, loading },
+  donationSuccess,
   match
 }) => {
   useEffect(() => {
@@ -51,8 +54,12 @@ const SingleStudent = ({
     donationData.student_id = student.id;
     donationData.school_id = student.school_id;
     console.log(donationData);
+    addDonation(donationData);
     // addDonation(donationData);
   };
+  if (donationSuccess){
+    setAlert("Donation Successful");
+  }
 
   const paymentHandler = (details, data) => {
     console.log("details", details);
@@ -82,7 +89,7 @@ const SingleStudent = ({
                   Choose An Amount to Donate. (a small convenience fee will be
                   added to cover this transaction)
                 </p>
-                <CForm onSubmit={e => onSubmit(e)}>
+                <CForm  onSubmit={e => onSubmit(e)} >
                   <CLabel>
                     <strong>Donation Amount</strong>{" "}
                   </CLabel>
@@ -144,8 +151,9 @@ const SingleStudent = ({
                   </CInputGroup>{" "}
                   <CRow>
                     <CCol xs="6">
+                    <CButton color="success" type="submit">Back To Search</CButton>
 
-                      <PayPalBtn total={total} />
+                      {/* <PayPalBtn total={total} /> */}
                     </CCol>
                     <CCol xs="6" className="text-right">
                       <Link to="/search">
@@ -155,23 +163,29 @@ const SingleStudent = ({
                   </CRow>
                 </CForm>
               </CCardBody>
+  
             </CRow>
           </CCard>
         </CRow>
       </CContainer>
+
+
+
     </div>
   );
 };
 
 SingleStudent.propTypes = {
   addDonation: PropTypes.func.isRequired,
+  setAlert:  PropTypes.func.isRequired,
   getStudent: PropTypes.func.isRequired,
-  student: PropTypes.object
+  student: PropTypes.object,
+  donationSuccess: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
   student: state.students
 });
-export default connect(mapStateToProps, { getStudent, addDonation })(
+export default connect(mapStateToProps, { getStudent, addDonation, setAlert })(
   SingleStudent
 );

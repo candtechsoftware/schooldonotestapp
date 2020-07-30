@@ -1,19 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { CCard, CContainer, CRow, CButton, CCardHeader, CCardBody } from "@coreui/react";
+import { CCard, CContainer, CRow, CButton, CCardHeader, CCardBody, CCol } from "@coreui/react";
 import {Link} from "react-router-dom";
 
 const StudentItem = ({name, schoolId, id}) => {
   return (
     <>
         <CCard>
+          
           <CRow className="student-row">
-            <CCardHeader>{name} - Id: {schoolId}</CCardHeader>
-            <Link
-              to={`student/${id}`}
-            >
-            <CButton>Donate</CButton>
+              <CCol>
+                <h4>{name}</h4>
+                <p>Id: {schoolId}</p>
+                </CCol>
+                <CCol>
+              <Link
+                to={`student/${id}`}
+              > 
+              <CButton color="primary" className="donation-btn">Donate</CButton>
               </Link>
+              </CCol>
           </CRow>
         </CCard>
     </>
