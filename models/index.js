@@ -3,7 +3,8 @@ const { Sequelize, DataTypes } = require("sequelize");
 require('dotenv').config(); 
 
 // DataBase Connection
-const sequelize = new Sequelize(
+const sequelize =  process.env.ENV === "PROD" ? new Sequelize("mysql://b419bf41ea225b:5d54371d@us-cdbr-east-02.cleardb.com/heroku_e74f7b6b36fc1db")
+: new Sequelize(
   config.db.DB_NAME,
   config.db.DB_USER,
   config.db.DB_PASS,
