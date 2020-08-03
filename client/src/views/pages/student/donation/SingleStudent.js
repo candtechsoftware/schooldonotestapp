@@ -20,7 +20,7 @@ import {
 import CIcon from "@coreui/icons-react";
 import { getStudent } from "../../../../redux/students/student.actions";
 import { addDonation } from "../../../../redux/donations/donation.actions";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { setAlert } from "../../../../redux/alert/alert.action";
 
 const SingleStudent = ({
@@ -33,7 +33,7 @@ const SingleStudent = ({
 }) => {
   useEffect(() => {
     getStudent(match.params.id);
-  }, [getStudent]);
+  }, [getStudent, match.params.id]);
 
   const convienceFee = 0.04;
   const [amount, setAmount] = useState(0);
@@ -61,10 +61,10 @@ const SingleStudent = ({
     setAlert("Donation Successful");
   }
 
-  const paymentHandler = (details, data) => {
-    console.log("details", details);
-    console.log("data ", data);
-  };
+  // const paymentHandler = (details, data) => {
+  //   console.log("details", details);
+  //   console.log("data ", data);
+  // };
   return loading || student == null ? (
     <div className="c-app c-default-layout flex-row align-items-center">
       <Spinner />

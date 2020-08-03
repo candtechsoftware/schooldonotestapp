@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {store} from '../store';
 import { LOGOUT } from '../redux/types';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 const api = axios.create({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: `${process.env.REACT_APP_URL}/api`,
   headers: {
     'Content-Type': 'application/json'
   }

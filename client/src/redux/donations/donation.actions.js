@@ -7,7 +7,6 @@ import {
   GET_DONATONS_BY_SCHOOL,
   GET_DONATONS_BY_STUDENT,
   GET_DONATONS_BY_STUDENT_ID,
-  GET_FILTERED_STUDENTS
 } from "../types";
 import setAuthtoken from "../../utils/authHeader";
 import DonationService from "./donations.service";

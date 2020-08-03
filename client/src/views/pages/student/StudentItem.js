@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { CCard, CContainer, CRow, CButton, CCardHeader, CCardBody, CCol } from "@coreui/react";
+import { CCard, CRow, CButton, CCol } from "@coreui/react";
 import {Link} from "react-router-dom";
 
 const StudentItem = ({name, schoolId, id}) => {

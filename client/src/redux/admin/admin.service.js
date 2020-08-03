@@ -1,9 +1,11 @@
 import api from '../../utils/api';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class AdminService {
   static async getAllSettings(){
     try {
-      const response = await api.get('http://localhost:5000/api/admin/settings/');
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/settings/`);
       return response.data.settings;
     } catch(err){
       console.error(err);
@@ -18,7 +20,7 @@ class AdminService {
     }
     const body = JSON.stringify(data);
     try {
-      const response = await api.post(`http://localhost:5000/api/admin/settings/${setting_id}`, body, configHeaders );
+      const response = await api.post(`${process.env.REACT_APP_URL}/api/admin/settings/${setting_id}`, body, configHeaders );
       console.log("In service: ", response)
       return response.settings;
     } catch(err){

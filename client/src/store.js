@@ -16,6 +16,7 @@ const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: hardSet,
+  blacklist: ['navigation'] // navigation will not be persisted
 
 
 }

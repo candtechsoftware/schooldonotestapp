@@ -1,16 +1,13 @@
-import jwtDecode from "jwt-decode";
 import api from "../../utils/api";
+import dotenv from 'dotenv';
+dotenv.config();
 
 class StudentService {
   static async getAllStudents() {
-    const configHeaders = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+    console.log("env: ", process.env.apiURL)
 
     try {
-      const response = await api.get("http://localhost:5000/api/students");
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/students`);
       let studentList = [];
       for (let i = 0; i < response.data.students.length; i++) {
         let formatted = {
@@ -35,7 +32,7 @@ class StudentService {
   static async archiveStudent(id) {
     try {
       const response = await api.delete(
-        `http://localhost:5000/api/admin/student/${id}`
+        `${process.env.REACT_APP_URL}/api/admin/student/${id}`
       );
       return response;
     } catch (err) {
@@ -45,7 +42,7 @@ class StudentService {
 
   static async getStudent(id) {
     try {
-      const response = await api.get(`http://localhost:5000/api/student/${id}`);
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/student/${id}`);
       const formatted = {
           id: response.data.student.id,
           name: `${response.data.student.first_name} ${response.data.student.last_name}`,

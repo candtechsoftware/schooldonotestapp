@@ -21,9 +21,6 @@ const StudentDonations = ({
     getDonationsGroupedByStudent();
   }, [getDonationsGroupedByStudent]);
 
-  let donationsList = [];
-
-  let total = 0;
   if (Array.isArray(donations)) {
     for (let i = 0; i < donations.length; i++) {
         donations[i].total_sum = new Intl.NumberFormat("en-US", {

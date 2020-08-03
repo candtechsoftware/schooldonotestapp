@@ -16,6 +16,7 @@ export const getAllSchools = () => async dispatch => {
 
 export const archiveSchool = id => async dispatch => {
   try{
+    // eslint-disable-next-line no-unused-vars
     const response =  await SchoolsService.archiveSchool(id);
     dispatch({
       type: DELETE_SCHOOL,

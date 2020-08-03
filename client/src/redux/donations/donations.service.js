@@ -1,10 +1,11 @@
 // import { setAlert } from '../alert/alert.action';
 import api from '../../utils/api';
-
+import dotenv from 'dotenv';
+dotenv.config();
 class DonationService {
   static async getDonationByStudent() {
     try {
-      const response = await api.get('http://localhost:5000/api/donations/student')
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/donations/student`)
       console.log('resonse in service', response)
 
       return response.data; 
@@ -14,7 +15,7 @@ class DonationService {
   }
   static async getAllDonations() {
     try {
-        const response = await api.get("http://localhost:5000/api/admin/donations");
+        const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/donations`);
         return response.data.donations;
       
     } catch(err) {
@@ -31,7 +32,7 @@ class DonationService {
     }
     const body = JSON.stringify(donation)
     try {
-      const request = await api.post('http://localhost:5000/api/donation', body, configHeaders);
+      const request = await api.post(`${process.env.REACT_APP_URL}/api/donation`, body, configHeaders);
       return request;
 
     } catch (err){
@@ -41,7 +42,7 @@ class DonationService {
 
   static async getDonationsGroupedBySchool(){
     try {
-      const response = await api.get("http://localhost:5000/api/admin/school/donations");
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/school/donations`);
       console.log("response in service", response);
 
       return response.data.data; 
@@ -53,11 +54,10 @@ class DonationService {
 
   static async getDonationsBySchoolId(id){
     try {
-      const response = await api.get(`http://localhost:5000/api/admin/school/donations/${id}`)
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/school/donations/${id}`)
     console.log('response in get donation by school id service' , response);
     
-    
-    let formated = []
+
     for (let data of response.data.data){
       data.student = `${data.student.first_name} ${data.student.last_name}`
       data.amount = new Intl.NumberFormat("en-US", {
@@ -78,7 +78,7 @@ class DonationService {
 
   static async getDonationsGroupedByStudent(){
     try {
-      const response = await api.get("http://localhost:5000/api/admin/student/donations");
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/student/donations`);
       console.log("response in service", response);
 
       return response.data.data; 
@@ -90,19 +90,9 @@ class DonationService {
 
   static async getDonationsByStudentId(id){
     try {
-      const response = await api.get(`http://localhost:5000/api/admin/student/donations/${id}`)
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/student/donations/${id}`)
     console.log('response in get donation by student id service' , response);
     
-    
-    let formated = []
-    // for (let data of response.data.data){
-    //   data.student = `${data.student.first_name} ${data.student.last_name}`
-    //   data.amount = new Intl.NumberFormat("en-US", {
-    //     style: "currency",
-    //     currency: "USD"
-    //   }).format(data.amount)
-    //   data.student = data.student.name
-    // }
     console.log('IN SERVICE' , response.data.data);
     return response.data;
     } catch (err){

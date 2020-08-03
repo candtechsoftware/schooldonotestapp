@@ -39,6 +39,7 @@ export const archiveStudent = id => async dispatch => {
             type: DELETE_STUDENT,
             payload: id
         })
+        if (!response) console.log(response);
     } catch (err) {
         console.error('err in archive students ', err);
     }

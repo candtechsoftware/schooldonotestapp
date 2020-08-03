@@ -1,9 +1,11 @@
 import api from '../../utils/api'; 
+import dotenv from 'dotenv';
+dotenv.config();
 
 class SchoolsService {
   static async getAllSchools() {
     try {
-      const response = await api.get('http://localhost:5000/api/schools');
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/schools`);
       return response.data.schools
 
     } catch (error) {
@@ -13,7 +15,7 @@ class SchoolsService {
 
   static async archiveSchool(id) {
     try {
-      const response = await api.delete(`http://localhost:5000/api/admin/school/${id}`);
+      const response = await api.delete(`${process.env.REACT_APP_URL}/api/admin/school/${id}`);
       return response; 
 
     } catch (error) {
@@ -29,7 +31,7 @@ class SchoolsService {
     }
       try {
         const body = JSON.stringify(formData);
-        const response = await api.post('http://localhost:5000/api/admin/school', body, configHeaders)
+        const response = await api.post(`${process.env.REACT_APP_URL}/api/admin/school`, body, configHeaders)
         return response.data.school_data ;
     } catch (error) {
       console.error('error in add service ', error);

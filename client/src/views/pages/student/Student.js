@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import StudentItem from "./StudentItem";
 import { connect } from "react-redux";
 import { getAllStudents } from "../../../redux/students/student.actions";
@@ -31,7 +31,7 @@ const StudentLookup = ({ getAllStudents,getAllStudentsFilter, students: { loadin
   const onChange = e => {
     setSearchData({ ...searchData, [e.target.name]: e.target.value });
     console.log("Search bar ", searchBar);
-    getAllStudentsFilter(e.target.value);
+    getAllStudentsFilter(e.target.value.toLowerCase());
   };
   console.log("students: ", students);
   return (

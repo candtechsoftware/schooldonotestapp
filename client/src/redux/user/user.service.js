@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import api from '../../utils/api';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 class UserService {
 
@@ -12,7 +13,7 @@ class UserService {
     }
     const body = JSON.stringify(formData); 
     try {
-        const response = await api.post('http://localhost:5000/api/student/register', body, configHeaders);
+        const response = await api.post(`${process.env.REACT_APP_URL}/api/student/register`, body, configHeaders);
         const user = {
           user: response.data.student,
           message: response.data.message
@@ -32,7 +33,7 @@ class UserService {
     }
     const body = JSON.stringify({email, password});
     try {
-      const response = await api.post(`http://localhost:5000/api/student/login`, body, configHeaders);
+      const response = await api.post(`${process.env.REACT_APP_URL}/api/student/login`, body, configHeaders);
       const decodedToken = jwtDecode(response.data.token)
       let user = {
         token: response.data.token,
@@ -107,7 +108,7 @@ class UserService {
     }
     const body = JSON.stringify({email, password});
     try {
-      const response = await api.post(`http://localhost:5000/api/admin/login`, body, configHeaders);
+      const response = await api.post(`${process.env.REACT_APP_URL}/api/admin/login`, body, configHeaders);
       const decodedToken = jwtDecode(response.data.token)
       let user = {
         token: response.data.token,

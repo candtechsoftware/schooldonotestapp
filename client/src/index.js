@@ -13,10 +13,16 @@ import {store, persistor} from './store'
 import { PersistGate } from 'redux-persist/integration/react'
 
 React.icons = icons
+const  onBeforeLift = () => {
+  // take some action before the gate lifts
+  persistor.purge();
+  persistor.flush();
+}
 
 ReactDOM.render(
   <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+          <PersistGate loading={null}       onBeforeLift={onBeforeLift}
+ persistor={persistor}>
 
       <App/>
       </PersistGate>
