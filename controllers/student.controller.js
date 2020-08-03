@@ -5,7 +5,7 @@ const db = require("../models/index.js");
 const Student = db.student;
 const School = db.school;
 const secret = process.env.SERCRET_KEY;
-
+require('dotenv').config(); 
 
 class StudentController {
   static async registerStudent(req, res) {
@@ -142,6 +142,8 @@ class StudentController {
   }
 
   static async getAllStudents(req, res) {
+
+
     try {
       const response = await Student.findAll({
         where: {
@@ -155,7 +157,16 @@ class StudentController {
 
       res.status(200).json({students: response });
     } catch (err) {
-      console.log('err in get all students', err)
+      let d = {
+        DB_HOST: process.env.DB_HOST || 'localhost',
+        DB_USER: process.env.MYSQL_USER || 'root',
+        DB_PASS: process.env.MYSQL_PASSWORD || 'changeMe', 
+        DB_NAME: process.env.MYSQL_DATABASE || 'schooldono',
+        dialect: "mysql",
+      }
+  
+      console.log(d)
+      console.log('err in gegitt all students', err)
     }
 
   }
