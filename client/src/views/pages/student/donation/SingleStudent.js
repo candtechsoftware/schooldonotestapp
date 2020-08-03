@@ -19,6 +19,8 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { getStudent } from "../../../../redux/students/student.actions";
+import { loadSettings} from '../../../../redux/admin/admin.actions';
+
 import { addDonation } from "../../../../redux/donations/donation.actions";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../../../redux/alert/alert.action";
@@ -26,6 +28,8 @@ import { setAlert } from "../../../../redux/alert/alert.action";
 const SingleStudent = ({
   setAlert,
   addDonation,
+  loadSettings,
+  settings,
   getStudent,
   student: { student, loading },
   donationSuccess,
@@ -33,9 +37,14 @@ const SingleStudent = ({
 }) => {
   useEffect(() => {
     getStudent(match.params.id);
-  }, [getStudent, match.params.id]);
+    loadSettings();
+    }, [getStudent, match.params.id, loadSettings]);
 
-  const convienceFee = 0.04;
+
+
+  const convienceFee = parseFloat(settings.value)/100;
+  console.log("In Component ", settings)
+  console.log("In Component ", convienceFee)
   const [amount, setAmount] = useState(0);
   let fee = amount * convienceFee;
   let total = fee + parseFloat(amount);
@@ -172,16 +181,21 @@ const SingleStudent = ({
 };
 
 SingleStudent.propTypes = {
+  loadSettings: PropTypes.func,
   addDonation: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
   getStudent: PropTypes.func.isRequired,
   student: PropTypes.object,
-  donationSuccess: PropTypes.bool,
+  donationSuccess: PropTypes.bool,  
+  settings: PropTypes.object
+
 };
 
 const mapStateToProps = (state) => ({
   student: state.students,
+  settings: state.admin.settings,
+
 });
-export default connect(mapStateToProps, { getStudent, addDonation, setAlert })(
+export default connect(mapStateToProps, {loadSettings, getStudent, addDonation, setAlert })(
   SingleStudent
 );

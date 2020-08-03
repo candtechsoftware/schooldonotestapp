@@ -6,7 +6,7 @@ class AdminService {
   static async getAllSettings(){
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/settings/`);
-      return response.data.settings;
+      return response.data.settings[0];
     } catch(err){
       console.error(err);
     }

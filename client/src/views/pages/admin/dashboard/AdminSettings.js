@@ -58,11 +58,11 @@ const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
       console.log("should be number", fee)
 
     }else {
-    updateSettings(id, {value : fee})
+    updateSettings(settings.id, {value : fee})
 
   }
   };
-  console.log('in conmponet ', settings)
+  console.log('in admin settgins conmponet ', settings)
   
   return false ?
       (<Spinner/>): (
@@ -73,20 +73,19 @@ const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
               <CCardHeader>
                 <h2>Settings</h2>
                 <CCardBody>
-                    
-                      {settings.map(set => {
-                        return (
-                          <div className="container" key={set.id} >
-                          <CForm onSubmit={(e) => onSubmit(e, set.id)} key={set.id}>
-                          <div className="column-left">{set.setting.toUpperCase()}</div>
+
+                          <div className="container" key={settings.id} >
+                          <CForm onSubmit={(e) => onSubmit(e, settings.id)} key={settings.id}>
+                          <div className="column-left">{settings.setting}</div>
                            
                            <div className="column-center">
+                           {settings.value}%
                             <CInput
                               className="settingInput"
-                              key={set.id}
+                              key={settings.id}
                               type='text'
-                              placeholder={set.value}
-                              name={set.setting}
+                              placeholder={`${settings.value}%`}
+                              name={settings.setting}
                               onChange={(e) => onChange(e)}
 
                             />
@@ -101,9 +100,9 @@ const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
 
                              </CForm>
                              </div>
-                        )
+                        
                  
-                      })}
+                      
 
                 </CCardBody>
               </CCardHeader>
@@ -187,7 +186,7 @@ AdminSettings.propTypes = {
   loadSettings: PropTypes.func,
   updateSettings: PropTypes.func, 
   setAlert: PropTypes.func, 
-  settings: PropTypes.array
+  settings: PropTypes.object
 }
 
 const mapStateToProps = state =>({

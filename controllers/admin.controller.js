@@ -154,7 +154,7 @@ class AdminController {
           if (settings.length > 0 )  {
             res.status(200).json({settings});
           } else {
-            res.status(401).json({message: 'No Admin Settings'})
+            res.status(401).json({message: 'No Admin Settingsdd'})
           }
       } catch (err) {
         res.status(500).json({error: err.message});

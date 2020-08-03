@@ -55,7 +55,7 @@ class UserService {
     try {
       const token = localStorage.token;
       if (token){
-        let response = await api.get('/api/student');
+        let response = await api.get(`${process.env.REACT_APP_URL}/api/student`);
  
         response = {
           status: response.status,
@@ -80,7 +80,7 @@ class UserService {
     try {
       const token = localStorage.token;
       if (token){
-        let response = await api.get('/api/admin');
+        let response = await api.get(`${process.env.REACT_APP_URL}/api/admin`);
         
         response = {
           user: {

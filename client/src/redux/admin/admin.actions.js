@@ -28,11 +28,17 @@ export const updateSettings = (setting_id, data) => async dispatch => {
     setAuthtoken(localStorage.token);
   }
   try{
-    const response = AdminService.updateSetting();
+    const response = AdminService.updateSetting(setting_id, data);
     console.log('setting: ' ,response);
+    const newSettings = {
+      id: setting_id,
+      setting: "fee",
+      value: data.value,
+    };
+
     dispatch({
       type: UPDATE_SETTING,
-      payload: response
+      payload: newSettings
     })
 
   } catch (err){
