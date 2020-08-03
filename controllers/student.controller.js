@@ -163,6 +163,7 @@ class StudentController {
         DB_PASS: process.env.MYSQL_PASSWORD || 'changeMe', 
         DB_NAME: process.env.MYSQL_DATABASE || 'schooldono',
         dialect: "mysql",
+        port:  process.env.MYSQL_PORT || 6600,
       }
   
       console.log(d)
