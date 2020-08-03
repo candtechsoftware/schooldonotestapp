@@ -53,7 +53,7 @@ const SchoolDonation = ({
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader>Donations Total By School: ${total}</CCardHeader>
+            <CCardHeader><h3>Donations Total By School</h3></CCardHeader>
             <CCardBody>
               <CDataTable
                 items={donations}

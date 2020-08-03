@@ -2,6 +2,7 @@ const db = require("../models/index.js");
 const Donation = db.donation;
 const School = db.school;
 const Student = db.student;
+const PayPalController = require("./paypal.controller")
 
 
 class DonationController {
@@ -13,6 +14,7 @@ class DonationController {
         student_id,
         school_id,
         amount,
+        payer_name: ""
       };
       console.log(req.body);
       await Donation.create(newDonation)
@@ -23,12 +25,15 @@ class DonationController {
               .json({ message: "Donataion Added", donation: data });
           }
         })
-        .catch((error) =>
-          res.status(500).json({
+        .catch((error) =>{
+        console.log(error);
+          res.status(502).json({
             error: `Error in donation creation: ${error}`,
-          })
+          })}
         );
     } catch (err) {
+      console.log(err);
+
       res.status(400).json({
         message: `Error caused while adding donation: ${err}`,
         data: req.body,
@@ -191,6 +196,48 @@ class DonationController {
       console.log(err);
       res.status(500).json({ error: err});       
     }
+
+  }
+  
+  // PayPal Ipn Handler
+  static async paypalHandler(req, res){
+      res.status(200).send('ok');
+      res.end();
+
+      const body = req.body || {};
+      const {first_name, last_name, item_name, mc_gross, invoice } = body;
+
+      console.log('body ', body);
+
+      //Validate IPN Message
+      try {
+        const isValidated = await PayPalController.validate(body);
+        if (!isValidated) {
+          console.error('Error in validating IPN message');
+          return; 
+        }
+
+        const student = await Student.findByPk(item_name, { 
+          include:[School]
+          })
+        if (!student){
+          console.log('Error in finding student')
+        }
+        console.log("Student id: " + student.id);
+   
+        let newDonation = {
+          student_id: student.id,
+          order_id: invoice,
+          payer_name: `${first_name} ${last_name}`,
+          school_id: student.school.id,
+          amount: mc_gross ,
+        };
+        const donation =  await Donation.create(newDonation)
+
+        
+      } catch (err) {
+        console.log(err);
+      }
 
   }
 }

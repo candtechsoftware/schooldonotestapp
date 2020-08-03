@@ -1,11 +1,11 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const sendMail = require('../config/sendmail');
 const db = require("../models/index.js");
 const Student = db.student;
 const School = db.school;
 const secret = process.env.SERCRET_KEY;
+
 
 class StudentController {
   static async registerStudent(req, res) {
@@ -236,72 +236,46 @@ class StudentController {
   }
 
   static async sendResetLink(req, res, next) {
+    const {email} = req.body;
+
     try {
-      const { email } = req.body; 
+      const student = await Student.findOne({where: {email: email}});
+      if (!student) return res.status(401).json({message: 'No email found'}); 
+      console.log("should be email ", student.dataValues.email); 
+      let token = jwt.sign(
+        {
+          student: student,
+        },
+        secret,
+        {
+          expiresIn: 3600,
+        }
 
-     const student = await Student.findOne({ where: {
-       email,
-       is_archived: false, 
-      } });
 
-     if (!email) {
-       return res.status(400).json({ error: `Email is required`});
-     }
-     if (!student) {
-      return res.status(400).json({ error: `Student is not found`});
+      )
+      let link = `http://localhost:/3000/reset-password/${token}`
+      const text = `Hi ${student.first_name} \n
+          Please click on following link ${link} to reset password. 
+        `
+      
+      sendMail(student.dataValues.email, "Password Reset", text)
+    } catch (err ){
+      console.log("Error in forgot password ", err)
     }
-
-    const studentDetails = {
-      id: student.dataValues.id,
-      first_name: student.first_name,
-      last_name: student.last_name, 
-    }
-    const token = jwt.sign({
-      studnet: studentDetails,
-      isAdmin: false,
-      isAuthenticated: true, 
-    }, secret, { expiresIn: 3600});
-
-    const link = `${req.protocol}://localhost:3000/reset-password/${token}`;
-    await sendMail(
-      email,
-      'alex@mosierdata.com',
-      'Reset Password',
-      `<div>Click the link below to reset your password</div><br/>
-      <div>${link}</div>`
-    );
-    } catch (err) {
-      console.log('errir in controller, ', err);
-    }
+    
   }
 
-  static async resetPassword(req, res, next){
-    try{  
-      const { password } = req.body;
-      const { token } = req.params;
-      const decoded = jwt.verify(token, secret, (error, decoded)=> {
-        if (error){
-          return res.status(500).json({ error: error, message: "in reset password"});
-        } else {
-          return decoded 
-        }
-      });
-      console.log(decoded);
-      let hashPassword = bcrypt.hashSync(password, 10);
-      const updateStudent = await Student.update(
-        { passowrd: hashPassword},
-       { where: {
-          id: decoded.id,
-          is_archived: false,
-        }}
-        );
-        return res.status(200).json({ token, student: decoded});
+  static async resetPassword(req, res, next){ 
+    let token = req.body.token;
+    let student = jwt.verify(token, secret, (error, decoded) => {
+      if (error) {
+        return res.status(401).json({ message: 'Token is not valid'});
+      } else {
+        return req.user;
 
-
-    } catch(err){
-      return new Error(err);
-    }
+      }
+    });
+    console.log(student);
   }
 }
-
 module.exports = StudentController;

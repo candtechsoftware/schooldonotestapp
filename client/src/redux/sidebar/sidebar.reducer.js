@@ -5,7 +5,7 @@ const initialState = {
 }
 
 const sideBarReducer = (state = initialState, action) => {
-  const {type, payload} = action;
+  const {type} = action;
 
   switch (type) {
     case TOGGLE_SIDEBAR:

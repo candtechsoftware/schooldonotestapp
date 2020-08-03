@@ -20,3 +20,30 @@
 .donation-name{
   width: 100%;
 }
+
+.alertcard{
+  min-height: 50px;
+}
+.alertname{
+  position: absolute;
+  padding-bottom: 20px;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  margin-left: -50px;
+}
+
+.column-left {
+  float: left;
+  width: 13.333%;
+}
+
+.column-right {
+  float: right;
+  width: 33.333%;
+}
+
+.column-center {
+  display: inline-block;
+  width: 43.333%;
+}

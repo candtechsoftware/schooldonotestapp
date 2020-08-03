@@ -51,10 +51,11 @@ const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) =>
         <CCol>
           <CCard>
             <CCardHeader>
-              Donations Total: {new Intl.NumberFormat("en-US", {
+              <h1>Donations Total: {new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "USD"
                       }).format(total)}
+                      </h1>
             </CCardHeader>
             <CCardBody>
                 <CDataTable 

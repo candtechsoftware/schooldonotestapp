@@ -12,6 +12,8 @@ import { CContainer } from '@coreui/react'
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
 import AdminDonations from '../views/pages/admin/dashboard/AdminDashboard';
+import AdminSettings from '../views/pages/admin/dashboard/AdminSettings';
+
 import Schools from '../views/pages/admin/schools/Schools';
 import SchoolDonation from '../views/pages/admin/schools/SchoolDonation';
 import StudentDonations from '../views/pages/admin/students/StudentDonations';
@@ -29,6 +31,7 @@ const TheContent = ({user: {isAuthenticated, isAdmin}}) => {
       <CContainer fluid>
           <Switch>
               <AdminRoutes exact path='/dashboard' component={AdminDonations}/>
+              <AdminRoutes exact path='/admin/settings' component={AdminSettings}/>
               <AdminRoutes exact path='/admin/schools' component={Schools}/>
               <AdminRoutes exact path='/admin/schools/donations' component={SchoolDonation}/>
             <AdminRoutes exact path='/admin/schools/donations/:id' component={SingleSchool}/>

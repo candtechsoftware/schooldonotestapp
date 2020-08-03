@@ -15,14 +15,7 @@ const StudentDashboard = () => {
     <>
       <CCard>
         <CCardBody>
-          <CRow>
-            <CCol sm="5">
-              <h3 id="traffic" className="card-title mb-0">My Donation</h3>
-            </CCol>
-            <CCol sm="7" className="d-none d-md-block">
 
-            </CCol>
-          </CRow>
           <StudentChart style={{height: '300px', marginTop: '40px'}}/>
         </CCardBody>
         <CCardFooter>

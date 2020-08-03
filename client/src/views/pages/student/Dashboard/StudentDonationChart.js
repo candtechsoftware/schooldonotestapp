@@ -32,6 +32,7 @@ const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) 
   ]
   // render
   return loading ? (<Spinner/>): (<>
+      <h2>My Donations</h2>
       <CCol sm="5">
          <h5 id="traffic" className="card-title mb-0">Total: ${
           usersData.reduce((acc, item) => {

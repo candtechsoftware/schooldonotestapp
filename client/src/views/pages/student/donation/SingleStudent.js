@@ -15,14 +15,13 @@ import {
   CInput,
   CInputGroup,
   CInputGroupPrepend,
-  CInputGroupText
+  CInputGroupText,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { getStudent } from "../../../../redux/students/student.actions";
 import { addDonation } from "../../../../redux/donations/donation.actions";
-import { PaypalBtn, PayPalBtn } from "./PaypalBtn";
-import { Link } from "react-router-dom";
-import { setAlert } from '../../../../redux/alert/alert.action';
+import { Link, Redirect } from "react-router-dom";
+import { setAlert } from "../../../../redux/alert/alert.action";
 
 const SingleStudent = ({
   setAlert,
@@ -30,7 +29,7 @@ const SingleStudent = ({
   getStudent,
   student: { student, loading },
   donationSuccess,
-  match
+  match,
 }) => {
   useEffect(() => {
     getStudent(match.params.id);
@@ -42,22 +41,23 @@ const SingleStudent = ({
   let total = fee + parseFloat(amount);
 
   let donationData = {};
-  const onChange = e => {
+  const onChange = (e) => {
     setAmount(e.target.value);
     fee = amount * convienceFee;
     total = fee + amount;
   };
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     donationData.amount = total;
     donationData.student_id = student.id;
     donationData.school_id = student.school_id;
     console.log(donationData);
     addDonation(donationData);
+    window.location = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3KBGNFDPRV6TE&source=url&item_name=${student.id}`;
     // addDonation(donationData);
   };
-  if (donationSuccess){
+  if (donationSuccess) {
     setAlert("Donation Successful");
   }
 
@@ -89,7 +89,7 @@ const SingleStudent = ({
                   Choose An Amount to Donate. (a small convenience fee will be
                   added to cover this transaction)
                 </p>
-                <CForm  onSubmit={e => onSubmit(e)} >
+                <CForm onSubmit={(e) => onSubmit(e)}>
                   <CLabel>
                     <strong>Donation Amount</strong>{" "}
                   </CLabel>
@@ -104,7 +104,7 @@ const SingleStudent = ({
                       placeholder="Donation Amount"
                       name="amount"
                       value={amount}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                     />
                   </CInputGroup>
                   <CLabel>
@@ -122,9 +122,9 @@ const SingleStudent = ({
                       name="fee"
                       value={new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "USD"
+                        currency: "USD",
                       }).format(fee)}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       disabled
                     />
                   </CInputGroup>
@@ -143,17 +143,17 @@ const SingleStudent = ({
                       name="total"
                       value={new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "USD"
+                        currency: "USD",
                       }).format(total)}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       disabled
                     />
                   </CInputGroup>{" "}
                   <CRow>
                     <CCol xs="6">
-                    <CButton color="success" type="submit">Back To Search</CButton>
-
-                      {/* <PayPalBtn total={total} /> */}
+                      <CButton color="success" type="submit">
+                        Donate
+                      </CButton>
                     </CCol>
                     <CCol xs="6" className="text-right">
                       <Link to="/search">
@@ -163,28 +163,24 @@ const SingleStudent = ({
                   </CRow>
                 </CForm>
               </CCardBody>
-  
             </CRow>
           </CCard>
         </CRow>
       </CContainer>
-
-
-
     </div>
   );
 };
 
 SingleStudent.propTypes = {
   addDonation: PropTypes.func.isRequired,
-  setAlert:  PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
   getStudent: PropTypes.func.isRequired,
   student: PropTypes.object,
-  donationSuccess: PropTypes.bool
+  donationSuccess: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  student: state.students
+const mapStateToProps = (state) => ({
+  student: state.students,
 });
 export default connect(mapStateToProps, { getStudent, addDonation, setAlert })(
   SingleStudent

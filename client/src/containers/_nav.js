@@ -39,7 +39,11 @@ export default [
         name: 'Manage School',
         to: '/admin/schools/',
       },
-
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Manage Settings',
+        to: '/admin/settings/',
+      },
     ]
   },
   

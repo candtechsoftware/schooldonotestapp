@@ -7,6 +7,8 @@ const db = require("../models/index.js");
 const Admin = db.admin;
 const Student = db.student;
 const School = db.school;
+const AdminSettings = db.admin_settings;
+
 
 class AdminController {
   /**
@@ -138,6 +140,47 @@ class AdminController {
       });
     }
   }
+
+    /**
+    /------------------------------------
+    / Admin Controller Settings Management
+    /-------------------------------------
+    */
+
+    static async getAllSettings(req, res) {
+      try {
+          const settings = await AdminSettings.findAll();
+          
+          if (settings.length > 0 )  {
+            res.status(200).json({settings});
+          } else {
+            res.status(401).json({message: 'No Admin Settings'})
+          }
+      } catch (err) {
+        res.status(500).json({error: err.message});
+      }
+
+    }
+
+
+    static async updateSetting(req, res) {
+      try {
+          let id = req.params.id;
+          const settings = await AdminSettings.findByPk(id);
+          
+          if (settings)  {
+            settings.value = req.body.value;
+            settings.save();
+            res.status(200).json({settings, update: req.body});
+          } else {
+            res.status(401).json({message: 'No Admin Settings'})
+          }
+      } catch (err) {
+        res.status(500).json({error: err.message});
+      }
+
+    }
+
 
   /**
     /------------------------------------

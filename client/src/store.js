@@ -4,14 +4,26 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger'; 
 import rootReducer from './redux/rootReducer';
 import setAuthtoken from './utils/authHeader';
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
 
 const initialState = {}
 const middleware = [thunk, logger];
 
+const persistConfig = {
+  key: 'root',
+  storage,
+  stateReconciler: hardSet,
+
+
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = createStore(
-  rootReducer,
+  persistedReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
@@ -29,4 +41,5 @@ store.subscribe(() => {
 
 })
 
-export default store;
+let persistor = persistStore(store)
+export {persistor, store};

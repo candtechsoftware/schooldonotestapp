@@ -17,7 +17,8 @@ import Alert from './views/notifications/alerts/Alerts';
 import { connect } from 'react-redux'; 
 import { loadStudent } from './redux/user/user.actions';
 import setAuthtoken from './utils/authHeader';
-import store from './store';
+import {store} from './store';
+
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>

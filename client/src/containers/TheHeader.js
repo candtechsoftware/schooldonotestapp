@@ -7,8 +7,7 @@ import {
   CToggler,
   CHeaderNav,
   CSubheader,
-  CBreadcrumbRouter,
-  
+ 
 } from '@coreui/react'
 
 
@@ -16,31 +15,24 @@ import {
   TheHeaderDropdown,
 }  from './index'
 
-const TheHeader = ({sidebar, toggleSideBar}) => {
+const TheHeader = ({isAdmin, setOpen, loadStudent, isOpen }) => {
 
-
-  const toggleSidebar = () => {
-      toggleSideBar(sidebar);
-  }
-
-
-
-  const toggleSidebarMobile = () => {
-    toggleSideBar(sidebar);
-  }
-
+  console.log('in header', isAdmin);
   return (
     <CHeader withSubheader>
-      <CToggler
+    {isAdmin ?  (
+    <>
+    <CToggler
         inHeader
         className="ml-md-3 d-lg-none"
-        onClick={toggleSidebarMobile}
+        onClick={() => setOpen(!isOpen)}
       />
       <CToggler
         inHeader
         className="ml-3 d-md-down-none testtoggle"
-        onClick={toggleSidebar}
-      />
+        onClick={() => setOpen(!isOpen)}
+      /></>
+      ) : (<></>)}
 
       <CHeaderNav className="d-md-down-none mr-auto">
 
@@ -60,9 +52,9 @@ const TheHeader = ({sidebar, toggleSideBar}) => {
 }
 
 TheHeader.propTypes =  {
-  toggleSideBar : PropTypes.func
+  isAdmin : PropTypes.bool
 }
 const mapStateToProps = state => ({
-  sidebar: state.sidebar.showSideBar
+  isAdmin: state.user.isAdmin
 })
 export default connect(mapStateToProps, { toggleSideBar})(TheHeader);

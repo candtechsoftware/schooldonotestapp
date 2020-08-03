@@ -1,7 +1,7 @@
 import { SET_CURRENT_USER, LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_SUCCES, REGISTER_FAIL, AUTH_ERROR, LOGOUT } from '../types';
 
 const initialState = {
-  token: localStorage.getItem('token'),
+  token: null,
   currentUser: null,
   isAdmin: false,
   isAuthenticated: false,
@@ -46,6 +46,7 @@ const userReducer = (state= initialState, action) => {
       case LOGOUT:
       case AUTH_ERROR:
       case REGISTER_FAIL:
+        localStorage.removeItem('token')
         return initialState;
     default:
       return state; 

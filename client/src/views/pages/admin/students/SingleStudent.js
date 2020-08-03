@@ -12,12 +12,17 @@ const SingleStudent = ({getDonationsByStudentId, donation: {donations , loading 
   console.log("In component ", donations);
 
   let donationaList = [];
+  let sum = 0;
   for (let dono of donations) {
     let formatted = {
         Student: `${dono.student.first_name} ${dono.student.last_name}`, 
-        Amount: dono.amount,
+        Amount: new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD"
+        }).format(dono.amount),
         Date: dono.created_at ,
     }
+    sum += parseFloat(dono.amount);
     donationaList.push(formatted);
   }
   return (
@@ -29,7 +34,7 @@ const SingleStudent = ({getDonationsByStudentId, donation: {donations , loading 
         <CCard>
           <CCardHeader>
             <h2>{`${donations[0].student.first_name} ${donations[0].student.last_name}`}</h2>
-            <h5>Total: Number</h5>
+            <h5>Total: ${sum}</h5>
           </CCardHeader>
           <CCardBody>
             <CDataTable

@@ -10,8 +10,8 @@ const Alerts = ({ alerts }) =>
   alerts !== null && 
   alerts.length > 0 && 
   alerts.map(alert => (
-      <CAlert key={alert.id} color={alert.alertType}>
-        {alert.msg}
+      <CAlert className="alertcard" key={alert.id} color={alert.alertType}>
+        <p className="alertname"> {alert.msg} </p>
       </CAlert>
 
   ));

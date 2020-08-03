@@ -1,4 +1,3 @@
-import {} from '../types.js';
 // import { setAlert } from '../alert/alert.action';
 import api from '../../utils/api';
 

@@ -1,19 +1,19 @@
-require('dotenv').config(); 
+require("dotenv").config();
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendMail = (receiver, source, subject, content) => {
+const sendMail = (emailTo, subject, content) => {
   console.log('in send mail ');
   try {
     const data = {
-      to: receiver,
-      from: source,
+      to: emailTo,
+      from: process.env.FROM_EMAIL,
       subject,
       html: content,
     };
 
     return sgMail.send(data);
-
+  
   } catch(err){
     console.log('eror in send mail', err);
   }

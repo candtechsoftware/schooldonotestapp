@@ -30,6 +30,8 @@ db.student = require("./Student")(sequelize, Sequelize, DataTypes);
 db.admin = require("./Admin.js")(sequelize, Sequelize, DataTypes);
 db.donation = require("./Donation")(sequelize, Sequelize, DataTypes);
 db.school = require("./School.js")(sequelize, Sequelize, DataTypes);
+db.admin_settings = require("./AdminSettings.js")(sequelize, Sequelize, DataTypes);
+
 
 /**
 /------------------------------------

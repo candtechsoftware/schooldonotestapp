@@ -11,6 +11,13 @@ module.exports = (sequelize, Sequalize, DataTypes) => {
             },
             amount: {
                 type: DataTypes.INTEGER,
+            },
+            payer_name: {
+                type: DataTypes.STRING, 
+
+            },
+            order_id: {
+                type: DataTypes.STRING,
             }
 
         },

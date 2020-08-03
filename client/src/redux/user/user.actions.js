@@ -55,7 +55,6 @@ export const loadStudent = () => async dispatch => {
         dispatch({
           type: AUTH_ERROR
         })
-        dispatch(setAlert("Loading User Failed", 'danger', 4000));
     
       }
 

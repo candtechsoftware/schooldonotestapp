@@ -1,33 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'; 
-import { toggleSideBar } from '../redux/sidebar/sidebar.action';
 import logo from '../assets/logo.png';
 import {
   CCreateElement,
   CSidebar,
-  CSidebarBrand,
   CSidebarNav,
   CSidebarNavDivider,
   CSidebarNavTitle,
-  CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem,
   CImg
 } from '@coreui/react'
 
-import CIcon from '@coreui/icons-react'
 
 // sidebar nav config
 import navigation from './_nav';
-import studentNavigation from './_studentnav';
 
-const TheSidebar = ({sidebar, toggleSideBar }) => {
-  
-
+const TheSidebar = ({isOpen}) => {
   return (
     <CSidebar
-      show={sidebar}
+      show={isOpen}
     >
       
       <CImg
@@ -54,12 +47,13 @@ const TheSidebar = ({sidebar, toggleSideBar }) => {
 }
 
 TheSidebar.propTypes = {
-  toggleSideBar: PropTypes.func,
+  isAdmin: PropTypes.bool,
 
 }
 const mapStateToProps = state => ({
-  sidebar: state.sidebar.isOpen
+  isAdmin: state.user.isAdmin,
+
 })
 const SideBarComponent = React.memo(TheSidebar) 
-export default connect(mapStateToProps, { toggleSideBar })(SideBarComponent);
+export default connect(mapStateToProps, {  })(SideBarComponent);
 

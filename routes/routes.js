@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const checkJWT = require('../middlewares/check-token');
+var ipn = require('express-ipn');
 
 const StudentController = require('../controllers/student.controller');
 const AdminController = require('../controllers/admin.controller');
@@ -45,12 +46,19 @@ router.get('/student/:id', StudentController.getSingleStudent);
 // Only Admins can create other admin accounts
 router.post('/admin/register', AdminController.createAdminAccount);
 
+// Load all settigns
+router.get('/admin/settings', AdminController.getAllSettings)
+
+// Update Settings
+router.post('/admin/settings/:id', AdminController.updateSetting)
+
 // Logging In Admin Account
 // @access public
 router.post('/admin/login', AdminController.login);
 
 // GET logged in admin by token
-router.get('/admin', checkJWT, AdminController.loadAdmin);
+router.get('/admin', [checkJWT], AdminController.loadAdmin);
+
 // Admin Adding A School
 // @access admin only
 router.post('/admin/school', AdminController.createSchool);
@@ -112,5 +120,9 @@ router.get('/admin/student/donations/', [checkJWT],  DonationController.getDonat
 // View Donations by School ID
 // @access privagte (Admin Only)
 router.get('/admin/student/donations/:id', [checkJWT],   DonationController.getDonationsByStudentId);
+
+// Paypal Ipn listener 
+router.post('/ipn', DonationController.paypalHandler);
+
 
 module.exports = router;

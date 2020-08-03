@@ -46,3 +46,10 @@ export const GET_CURRENT_STUDENT_DONATION = 'GET_CURRENT_STUDENT_DONATION';
 
 // Sidebar 
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
+
+
+// Admin Settings 
+export const CREATE_ADMIN = 'CREATE_ADMIN';
+export const DELETE_ADMIN = 'DELETE_ADMIN';
+export const UPDATE_SETTING = 'UPDATE_SETTING';
+export const LOAD_SETTING = 'LOAD_SETTING';
