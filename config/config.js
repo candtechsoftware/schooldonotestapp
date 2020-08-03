@@ -6,10 +6,10 @@ module.exports = {
 
   /** DATABASE */
     db: {
-        DB_HOST: 'localhost',
-        DB_USER: 'admin',
-        DB_PASS:'changeMe', 
-        DB_NAME: 'schooldono',
+        DB_HOST: process.env.DB_HOST || 'localhost',
+        DB_USER: process.env.MYSQL_USER || 'root',
+        DB_PASS: process.env.MYSQL_PASSWORD || 'changeMe', 
+        DB_NAME: process.env.MYSQL_DATABASE || 'schooldono',
         dialect: "mysql",
 
     // pool is optional, it will be used for Sequelize connection pool configuration
