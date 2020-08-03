@@ -1,5 +1,6 @@
 const config = require("../config/config");
 const { Sequelize, DataTypes } = require("sequelize");
+require('dotenv').config(); 
 
 // DataBase Connection
 const sequelize = new Sequelize(
@@ -10,7 +11,7 @@ const sequelize = new Sequelize(
     host: config.db.DB_HOST,
     dialect: config.db.dialect,
     operatorsAliases: 0,
-    port: 6600,
+    port: process.env.MYSQL_PORT || 6600,
 
     poll: {
       max: config.db.pool.max,
