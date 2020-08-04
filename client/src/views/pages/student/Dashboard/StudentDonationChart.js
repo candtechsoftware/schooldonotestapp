@@ -30,13 +30,18 @@ const StudentChart = ({loadDonationByStudent, donation: {donations , loading}}) 
 
     { key: 'created_at', _style: { width: '40%'} },
   ]
+
+  let total = usersData.reduce((acc, item) => {
+    return acc + parseFloat(item.amount.replace('$',''))}, 0);
+  total = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(total);
   // render
   return loading ? (<Spinner/>): (<>
       <h2>My Donations</h2>
       <CCol sm="5">
-         <h5 id="traffic" className="card-title mb-0">Total: ${
-          usersData.reduce((acc, item) => {
-            return acc + parseFloat(item.amount.replace('$',''))}, 0)}
+         <h5 id="traffic" className="card-title mb-0">Total: {total}
             </h5>
       </CCol>
     <CDataTable
