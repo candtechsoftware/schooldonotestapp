@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class AdminService {
+
   static async getAllSettings(){
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/settings/`);

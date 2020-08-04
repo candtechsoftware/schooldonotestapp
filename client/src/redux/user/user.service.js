@@ -25,6 +25,26 @@ class UserService {
 
 
   }
+
+  static async registerAdmin(formData) {
+    const configHeaders = {
+      headers: {  
+        'Content-Type': 'application/json'
+      }
+    }
+    const body = JSON.stringify(formData); 
+    try {
+      const response = await api.post(`${process.env.REACT_APP_URL}/api/admin/register`, body, configHeaders);
+      const user = {
+        user: response.data.admin,
+        message: response.data.message, 
+      }
+      return user;
+    } catch (err) {
+      return { user: null, message: err.message}
+    }
+  }
+
   static async loginStudent(email, password) {
     const configHeaders = {
       headers: {

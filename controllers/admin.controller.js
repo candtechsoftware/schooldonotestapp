@@ -4,6 +4,7 @@ require("dotenv").config();
 const secret = process.env.SERCRET_KEY;
 
 const db = require("../models/index.js");
+const { rest } = require("underscore");
 const Admin = db.admin;
 const Student = db.student;
 const School = db.school;
@@ -119,6 +120,8 @@ class AdminController {
       res.status(500).json({ err: `test: ${e}` });
     }
   }
+
+
   static async loadAdmin(req, res) {
     try {
       const user = await Admin.findByPk(req.user.admin.id);

@@ -157,16 +157,6 @@ class StudentController {
 
       res.status(200).json({students: response });
     } catch (err) {
-      let d = {
-        DB_HOST: process.env.DB_HOST || 'localhost',
-        DB_USER: process.env.MYSQL_USER || 'root',
-        DB_PASS: process.env.MYSQL_PASSWORD || 'changeMe', 
-        DB_NAME: process.env.MYSQL_DATABASE || 'schooldono',
-        dialect: "mysql",
-        port:  process.env.MYSQL_PORT || 6600,
-      }
-  
-      console.log(d)
       console.log('err in gegitt all students', err)
     }
 

@@ -36,6 +36,30 @@ export const registerStudent = formData => async dispatch => {
   }
 }
 
+export const registerAdmin = formData => async dispatch => {
+  try {
+      const response = await UserService.registerAdmin(formData);
+      const user = response.user;
+      const message = response.message;
+      console.log(user);
+      if (user){
+        dispatch({
+          type: REGISTER_SUCCES,
+          payload: user,
+        });
+      } else {
+        dispatch({
+          type: REGISTER_FAIL,
+        })
+        dispatch(setAlert("Registration Failed", 'danger', 2000))
+      }
+
+  } catch (err) {
+    console.log('error in register admin: ', err);
+  }
+
+}
+
 export const loadStudent = () => async dispatch => {
   if (localStorage.token){
     setAuthtoken(localStorage.token);

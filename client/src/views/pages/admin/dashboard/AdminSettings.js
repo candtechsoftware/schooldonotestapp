@@ -1,8 +1,11 @@
 import React, {useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import AdminRegister from './AdminRegister';
 import PropTypes from 'prop-types';
 import { loadSettings, updateSettings} from '../../../../redux/admin/admin.actions';
 import { setAlert } from '../../../../redux/alert/alert.action';
+import { registerAdmin } from '../../../../redux/user/user.actions';
+
 import {
   CCard,
   CCardBody,
@@ -21,7 +24,7 @@ import Spinner from '../../student/Dashboard/Spinner';
 import CIcon from "@coreui/icons-react";
 
 
-const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
+const AdminSettings = ({registerAdmin, updateSettings, loadSettings, settings, setAlert}) =>{
   useEffect(() => {
     loadSettings();
   }, [loadSettings])
@@ -36,19 +39,31 @@ const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
     email: "",
     password: "",
     confirmPassword: "",
-
+    first_name: "",
+    last_name: "",
   })
+
   const {fee} = formData;
-  const {email , password, confirmPassword} = NewAdminFormData;
+  const {
+    email, 
+    password, 
+    confirmPassword,
+    first_name,
+    last_name
+} = NewAdminFormData;
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onChangeAdmin = (e)=>{
-    setNewAdminFormData({ ...formData, [e.target.name]: e.target.value })
+    setNewAdminFormData({ ...NewAdminFormData, [e.target.name]: e.target.value })
   }
   const onSubmitAdmin = async (e) => {
     e.preventDefault();
-    console.log("email ", email, "password ", password);
+    if (password !== confirmPassword){
+      setAlert('Passwords do not match', 'danger');
+    } else {
+      registerAdmin(NewAdminFormData);
+  }
   }
 
   const onSubmit = async (e, id) => {
@@ -62,7 +77,6 @@ const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
 
   }
   };
-  console.log('in admin settgins conmponet ', settings)
   
   return false ?
       (<Spinner/>): (
@@ -117,6 +131,34 @@ const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
                 <CCardBody>
                   <CForm onSubmit={(e) => onSubmitAdmin(e)}>
                     <h2>Create An Admin Account </h2>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-user" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="text"
+                        placeholder="First name"
+                        name="first_name"
+                        value={first_name}
+                        onChange={(e) => onChangeAdmin(e)}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-user" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="text"
+                        placeholder="Last name"
+                        name="last_name"
+                        value={last_name}
+                        onChange={(e) => onChangeAdmin(e)}
+                      />
+                    </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
@@ -183,6 +225,7 @@ const AdminSettings = ({updateSettings, loadSettings, settings, setAlert}) =>{
 }
 
 AdminSettings.propTypes = {
+  registerAdmin: PropTypes.func,
   loadSettings: PropTypes.func,
   updateSettings: PropTypes.func, 
   setAlert: PropTypes.func, 
@@ -194,4 +237,4 @@ const mapStateToProps = state =>({
   loading: state.admin.loading
 })
 
-export default connect(mapStateToProps, {loadSettings, updateSettings, setAlert})(AdminSettings);
+export default connect(mapStateToProps, {loadSettings, updateSettings, setAlert, registerAdmin})(AdminSettings);

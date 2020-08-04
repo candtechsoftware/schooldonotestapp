@@ -4,7 +4,6 @@ dotenv.config();
 
 class StudentService {
   static async getAllStudents() {
-    console.log("env: ", process.env.apiURL)
 
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/students`);
