@@ -1,6 +1,5 @@
 import React, {useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import AdminRegister from './AdminRegister';
 import PropTypes from 'prop-types';
 import { loadSettings, updateSettings} from '../../../../redux/admin/admin.actions';
 import { setAlert } from '../../../../redux/alert/alert.action';

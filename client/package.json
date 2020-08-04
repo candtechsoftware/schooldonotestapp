@@ -1,7 +1,5 @@
 {
-
   "homepage": "https://hikefront.herokuapp.com/",
-
   "dependencies": {
     "@coreui/chartjs": "^2.0.0",
     "@coreui/coreui": "^3.2.2",

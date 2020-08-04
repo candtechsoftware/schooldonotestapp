@@ -6,6 +6,7 @@ dotenv.config();
 class UserService {
 
   static async registerStudent(formData) {
+  
     const configHeaders = {
       headers: {
         'Content-Type': 'application/json'
@@ -46,6 +47,7 @@ class UserService {
   }
 
   static async loginStudent(email, password) {
+    console.log(process.env.REACT_APP_URL)
     const configHeaders = {
       headers: {
         'Content-Type': 'application/json'
