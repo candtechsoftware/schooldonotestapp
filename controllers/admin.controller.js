@@ -143,6 +143,37 @@ class AdminController {
       });
     }
   }
+  
+  static async getAllAdmins(req, res) {
+    try {
+      const response  = await Admin.findAll({
+        where:{
+          is_archived: false
+        },
+        attributes: ['id','first_name', 'last_name', 'email']
+      })
+
+      res.status(200).json({admins: response});
+    } catch(err){
+      console.log(err); 
+    }
+  }
+
+  static async archiveAdmin(req, res) {
+    try {
+      let id = req.params.id;   
+      const admin = Admin.findByPk(id);
+      if (!admin){
+        res.status(500).json({error: "No admins"});
+        return; 
+      }
+    
+      const deletedAdmin = await Admin.destroy({ where: {id:id}});
+      res.status(200).json({admin: deletedAdmin , message: "Admin deleted"});
+    } catch (err){
+      console.log(err);
+    }
+  }
 
     /**
     /------------------------------------
