@@ -237,13 +237,12 @@ class StudentController {
     }
   }
 
-  static async sendResetLink(req, res, next) {
+  static async sendResetLink(req, res) {
     const {email} = req.body;
 
     try {
       const student = await Student.findOne({where: {email: email}});
       if (!student) return res.status(401).json({message: 'No email found'}); 
-      console.log("should be email ", student.dataValues.email); 
       let token = jwt.sign(
         {
           student: student,
@@ -255,7 +254,7 @@ class StudentController {
 
 
       )
-      let link = `http://localhost:/3000/reset-password/${token}`
+      let link = `${process.env.PUBLIC_URL}/reset-password/${token}`
       const text = `Hi ${student.first_name} \n
           Please click on following link ${link} to reset password. 
         `

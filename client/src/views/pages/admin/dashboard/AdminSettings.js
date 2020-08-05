@@ -23,7 +23,7 @@ import Spinner from '../../student/Dashboard/Spinner';
 import CIcon from "@coreui/icons-react";
 
 
-const AdminSettings = ({registerAdmin, updateSettings, loadSettings, settings, setAlert}) =>{
+const AdminSettings = ({registerAdmin, updateSettings, loadSettings, settings, setAlert, isRegistered}) =>{
   useEffect(() => {
     loadSettings();
   }, [loadSettings])
@@ -76,7 +76,9 @@ const AdminSettings = ({registerAdmin, updateSettings, loadSettings, settings, s
 
   }
   };
-  
+  if (isRegistered){
+    setAlert("User Registered", 'success', 2000);
+  }
   return false ?
       (<Spinner/>): (
         <>
@@ -228,12 +230,14 @@ AdminSettings.propTypes = {
   loadSettings: PropTypes.func,
   updateSettings: PropTypes.func, 
   setAlert: PropTypes.func, 
-  settings: PropTypes.object
+  settings: PropTypes.object,
+  isRegistered: PropTypes.bool
 }
 
 const mapStateToProps = state =>({
   settings: state.admin.settings,
-  loading: state.admin.loading
+  loading: state.admin.loading,
+  isRegistered: state.user.isRegistered
 })
 
 export default connect(mapStateToProps, {loadSettings, updateSettings, setAlert, registerAdmin})(AdminSettings);
