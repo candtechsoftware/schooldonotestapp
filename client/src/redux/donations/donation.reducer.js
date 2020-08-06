@@ -23,7 +23,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        donations: action.payload
+        donations: action.payload,
+        total: action.payload.total,
       };
     case GET_CURRENT_STUDENT_DONATION:
       return {

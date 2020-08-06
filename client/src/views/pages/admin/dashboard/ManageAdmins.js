@@ -1,7 +1,6 @@
 import React, {useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getDonationsGroupedBySchool } from "../../../../redux/donations/donation.actions";
 import {Link} from 'react-router-dom';
 import {
   CCardBody,
@@ -14,51 +13,28 @@ import {
 } from "@coreui/react";
 import Spinner from '../../student/Dashboard/Spinner'
 const SchoolDonation = ({
-  getDonationsGroupedBySchool,
-  donation: { donations, loading }
 }) => {
   useEffect(() => {
-    getDonationsGroupedBySchool();
-  }, [getDonationsGroupedBySchool]);
+  }, []);
 
 
-  if (Array.isArray(donations)) {
-    for (let i = 0; i < donations.length; i++) {
-        donations[i].total_amount = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD"
-        }).format(donations[i].total_amount)
-    }
-  }
 
-  const fields = [
-    { key: "school",label: "School", _style: { width: "1%" } },
-    { key: "total_amount", label: "Total Amount", _style: { width: "1%" } },
-    {
-      key: 'see_school',
-      label: '',
-      _style: { width: '1%' },
-      sorter: false,
-      filter: false
-    }
-
-  ];
-
-  return loading ? (
+  return false ? (
     <Spinner />
   ) : (
     <>
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader><h3>Donations Total By School</h3></CCardHeader>
+            <CCardHeader><h3>Manage Donations</h3></CCardHeader>
             <CCardBody>
               <CDataTable
-                items={donations}
-                fields={fields}
+                items={[]}
+                // fields={fields}
                 sorter
                 pagination
                 columnFilter
+
                 itemsPerPage={10}
                 scopedSlots={{
                   'see_school': (item, index) => {

@@ -34,7 +34,10 @@ const SingleStudent = ({getDonationsByStudentId, donation: {donations , loading 
         <CCard>
           <CCardHeader>
             <h2>{`${donations[0].student.first_name} ${donations[0].student.last_name}`}</h2>
-            <h5>Total: ${sum}</h5>
+            <h5>Total: {new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(sum)}</h5>
           </CCardHeader>
           <CCardBody>
             <CDataTable

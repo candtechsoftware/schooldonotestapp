@@ -36,7 +36,7 @@ export const getAllDonations = () => async dispatch => {
 
   try {
     let response = await DonationService.getAllDonations();
-
+    console.log("In actions" ,response.total)
     dispatch({
       type: GET_DONATONS,
       payload: response

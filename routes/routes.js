@@ -47,7 +47,7 @@ router.get('/student/:id', StudentController.getSingleStudent);
 router.post('/admin/register', [checkJWT], AdminController.createAdminAccount);
 
 // Load all settigns
-router.get('/admin/settings', AdminController.getAllSettings)
+router.get('/admin/settings', [checkJWT], AdminController.getAllSettings)
 
 // Update Settings
 router.post('/admin/settings/:id',[checkJWT], AdminController.updateSetting)
@@ -60,7 +60,11 @@ router.post('/admin/login', AdminController.login);
 router.get('/admin', [checkJWT], AdminController.loadAdmin);
 
 // GET logged in admin by token
-router.get('/admins',  AdminController.loadAdmin);
+router.get('/admins',  AdminController.getAllAdmins);
+// Delete logged in admin by token
+
+router.post('/admin/:id',  AdminController.archiveAdmin);
+
 
 // Admin Adding A School
 // @access admin only

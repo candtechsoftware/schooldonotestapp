@@ -15,8 +15,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 React.icons = icons
 const  onBeforeLift = () => {
   // take some action before the gate lifts
-  persistor.purge();
-  persistor.flush();
 }
 
 ReactDOM.render(
