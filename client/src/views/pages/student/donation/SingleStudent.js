@@ -109,6 +109,7 @@ const SingleStudent = ({
                       </CInputGroupText>
                     </CInputGroupPrepend>
                     <CInput
+                      id="amount"
                       type="text"
                       placeholder="Donation Amount"
                       name="amount"
