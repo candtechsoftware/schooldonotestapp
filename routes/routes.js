@@ -60,10 +60,10 @@ router.post('/admin/login', AdminController.login);
 router.get('/admin', [checkJWT], AdminController.loadAdmin);
 
 // GET logged in admin by token
-router.get('/admins',  AdminController.getAllAdmins);
+router.get('/admins',  [checkJWT], AdminController.getAllAdmins);
 // Delete logged in admin by token
 
-router.post('/admin/:id',  AdminController.archiveAdmin);
+router.post('/admin/:id',  [checkJWT], AdminController.archiveAdmin);
 
 
 // Admin Adding A School
