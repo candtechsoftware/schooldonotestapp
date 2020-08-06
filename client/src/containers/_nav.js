@@ -44,6 +44,11 @@ export default [
         name: 'Manage Settings',
         to: '/admin/settings/',
       },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Manage Admin Users',
+        to: '/admin/admins/',
+      },
     ]
   },
   

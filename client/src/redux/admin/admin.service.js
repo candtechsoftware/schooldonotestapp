@@ -29,6 +29,24 @@ class AdminService {
     }
   }
 
+  static async getAllAdmins() {
+    try {
+      const response = await api.get(`${process.env.REACT_APP_URL}/api/admins`)
+      return response.data.admins; 
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  static async archiveAdmin(id) {
+    try {
+      const response = await api.post(`${process.env.REACT_APP_URL}/api/admin/${id}`)
+      return response; 
+    } catch(err){
+      console.error('error in the admin service: ', err); 
+    }
+  }
+
 }
 
 export default AdminService;

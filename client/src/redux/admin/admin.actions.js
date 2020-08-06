@@ -1,4 +1,4 @@
-import { LOAD_SETTING, UPDATE_SETTING } from '../types';
+import { LOAD_SETTING, UPDATE_SETTING, CREATE_ADMIN, DELETE_ADMIN, GET_ALL_ADMINS } from '../types';
 import setAuthtoken from "../../utils/authHeader";
 import AdminService from './admin.service';
 
@@ -10,14 +10,13 @@ export const loadSettings = () => async dispatch => {
 
   try {
     let response = await AdminService.getAllSettings();
-    console.log('In actions ' , response);
     dispatch({ 
       type: LOAD_SETTING,
       payload: response
     });
 
   } catch(err) {
-    console.log('In actions', err);
+    console.error('In actions', err);
   }
 
 }
@@ -29,7 +28,6 @@ export const updateSettings = (setting_id, data) => async dispatch => {
   }
   try{
     const response = AdminService.updateSetting(setting_id, data);
-    console.log('setting: ' ,response);
     const newSettings = {
       id: setting_id,
       setting: "fee",
@@ -42,6 +40,36 @@ export const updateSettings = (setting_id, data) => async dispatch => {
     })
 
   } catch (err){
-
+    console.error(err);
   }
+}
+
+
+export const getAllAdmins = () => async dispatch => {
+  try {
+    const response = await AdminService.getAllAdmins();
+
+    dispatch({
+      type: GET_ALL_ADMINS,
+      payload: response
+    })
+  } catch(err) { 
+    console.error(err);
+  }
+
+}
+
+
+export const archiveAdmin = id => async dispatch => {
+  try {
+    const response = await AdminService.archiveAdmin(id);
+    dispatch({
+      type: DELETE_ADMIN,
+      payload: id
+    })
+    if (!response) throw new Error(`Failed to archive admin ${response}`);
+  } catch (err) {
+    console.error('error in service: ', err) ;
+  }
+
 }

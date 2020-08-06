@@ -24,7 +24,7 @@ class StudentService {
 
       return studentList;
     } catch (error) {
-      console.log("Error in student service getting all students: ", error);
+      console.error("Error in student service getting all students: ", error);
     }
   }
 
@@ -35,7 +35,7 @@ class StudentService {
       );
       return response;
     } catch (err) {
-      console.log("err in studnet delete service", err);
+      console.error("err in studnet delete service", err);
     }
   }
 

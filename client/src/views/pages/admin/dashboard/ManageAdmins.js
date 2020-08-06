@@ -1,7 +1,6 @@
 import React, {useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {Link} from 'react-router-dom';
 import {
   CCardBody,
   CCardHeader,
@@ -11,46 +10,51 @@ import {
   CCard,
   CButton
 } from "@coreui/react";
-import Spinner from '../../student/Dashboard/Spinner'
-const SchoolDonation = ({
-}) => {
+import Spinner from '../../student/Dashboard/Spinner';
+import { getAllAdmins, archiveAdmin } from '../../../../redux/admin/admin.actions';
+const ManageAdmins = ({getAllAdmins, archiveAdmin, admin: {admins, loading}}) => {
   useEffect(() => {
-  }, []);
+    getAllAdmins();
+  }, [getAllAdmins]);
 
 
+  const fields = [
+    {key: 'first_name',label: "First Name", _style: { width: '10%'}},
+    {key: 'last_name',label: "Last Name", _style: { width: '10%'}},
+    {key: 'email',label: "Email", _style: { width: '10%'}},
+    {key: 'Archive', label: '', _style: { width: '1%'}, sorter: false, filter: false }
+  ]
 
-  return false ? (
+  return loading ? (
     <Spinner />
   ) : (
     <>
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader><h3>Manage Donations</h3></CCardHeader>
+            <CCardHeader><h3>Manage Admin Users</h3></CCardHeader>
             <CCardBody>
               <CDataTable
-                items={[]}
-                // fields={fields}
+                items={admins}
+                fields={fields}
                 sorter
                 pagination
                 columnFilter
 
                 itemsPerPage={10}
-                scopedSlots={{
-                  'see_school': (item, index) => {
+                scopedSlots= {{
+                  'Archive':
+                  (item, index)=> {
                     return (
-                      <td className="py-2">
-
-
-                        <Link
-              to={`/admin/schools/donations/${item.school_id}`}
-            >
-            <CButton color="primary">See More</CButton>
-              </Link>
+                      <td className='py-2'>
+                      <CButton
+                        onClick={()=> {
+                          archiveAdmin(item.id)
+                        }}
+                        color='danger'
+                      >Archive</CButton>
                       </td>
-                      ) 
-                  }
-
+                    )}
                 }}
               />
             </CCardBody>
@@ -61,13 +65,13 @@ const SchoolDonation = ({
   );
 };
 
-SchoolDonation.propTypes = {
-    getDonationsGroupedBySchool: PropTypes.func.isRequired,
-    donation: PropTypes.object
+ManageAdmins.propTypes = {
+    getAllAdmins: PropTypes.func.isRequired,
+    archiveAdmin: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  donation: state.donation
+  admin: state.admin
 })
 
-export default connect(mapStateToProps, {getDonationsGroupedBySchool})(SchoolDonation);
+export default connect(mapStateToProps, {getAllAdmins, archiveAdmin})(ManageAdmins);
