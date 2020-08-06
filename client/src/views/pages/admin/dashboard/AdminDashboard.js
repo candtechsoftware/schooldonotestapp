@@ -12,6 +12,7 @@ import {
 } from '@coreui/react'
 
 import Spinner from '../../student/Dashboard/Spinner';
+import { get } from 'request';
 
 
 const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) => {
@@ -20,28 +21,38 @@ const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) =>
     },[getAllDonations]);
 
 
-    let donationsList = [];
     
-    let total = 0; 
-    if (Array.isArray(donations) && donations){
-        for (let i = 0; i < donations.length; i++){
-            total += donations[i].amount;
-          
-            let formatted = {
-            School: `${donations[i].school.name}` || '',
-            Total: `$${donations[i].amount}` || '',
-            }
-            donationsList.push(formatted)
-        }
-    }
+   const getTotal = () => {
+    let sum = 0.0;
+    let count = 0;
+    if (Array.isArray(donations)){
+    for (let dono of donations) {
+      let amount;
+      if ((typeof dono.amount) == typeof "" ){
+         amount = dono.amount.replace("$", "");
+         amount = amount.replace(",","");
+      }
+      sum += parseFloat(amount);   
+      console.log(amount)
 
+    }}
+
+    return  new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD"
+    }).format(sum);  
+
+   }
 
 
    const fields = [
-       {key: 'School',  _style: { width: '20%'}},
-       {key: 'Total',  _style: { width: '10%'}},
+       {key: 'school' , label:'School',  _style: { width: '20%'}},
+       {key: 'student' , label:'Student',  _style: { width: '20%'}},
+
+       {key: 'amount', label: 'Total',  _style: { width: '10%'}},
    ]
-   
+   getTotal();
+
    return loading ?
    (<Spinner/>)
    :
@@ -51,17 +62,15 @@ const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) =>
         <CCol>
           <CCard>
             <CCardHeader>
-              <h1>Donations Total: {new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "USD"
-                      }).format(total)}
+              <h1>Donations Total: {getTotal()}
                       </h1>
             </CCardHeader>
             <CCardBody>
                 <CDataTable 
-                items={donationsList}
+                items={donations}
                 fields={fields }
                 sorter
+                columnFilter
                 pagination
                 itemsPerPage={10}
                 />

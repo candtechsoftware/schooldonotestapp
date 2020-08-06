@@ -230,7 +230,6 @@ AdminSettings.propTypes = {
   loadSettings: PropTypes.func,
   updateSettings: PropTypes.func, 
   setAlert: PropTypes.func, 
-  settings: PropTypes.object,
   isRegistered: PropTypes.bool
 }
 

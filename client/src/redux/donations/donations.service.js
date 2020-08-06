@@ -16,6 +16,14 @@ class DonationService {
   static async getAllDonations() {
     try {
         const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/donations`);
+        for (let dono of response.data.donations){
+            dono.school = dono.school.name.toUpperCase();
+            dono.student = `${dono.student.first_name.toUpperCase()} ${dono.student.last_name.toUpperCase()}`
+            dono.amount = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD"
+            }).format(dono.amount)
+        }
         return response.data.donations;
       
     } catch(err) {
@@ -102,5 +110,7 @@ class DonationService {
 
 
 }
+
+
 
 export default DonationService;

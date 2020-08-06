@@ -59,7 +59,6 @@ const SchoolDonation = ({
                 sorter
                 pagination
                 columnFilter
-
                 itemsPerPage={10}
                 scopedSlots={{
                   'see_school': (item, index) => {
