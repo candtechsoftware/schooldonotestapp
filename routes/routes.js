@@ -47,7 +47,7 @@ router.get('/student/:id', StudentController.getSingleStudent);
 router.post('/admin/register', [checkJWT], AdminController.createAdminAccount);
 
 // Load all settigns
-router.get('/admin/settings', [checkJWT], AdminController.getAllSettings)
+router.get('/admin/settings', AdminController.getAllSettings)
 
 // Update Settings
 router.post('/admin/settings/:id',[checkJWT], AdminController.updateSetting)
