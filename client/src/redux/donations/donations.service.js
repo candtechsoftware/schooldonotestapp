@@ -6,7 +6,6 @@ class DonationService {
   static async getDonationByStudent() {
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/donations/student`)
-      console.log('resonse in service', response)
 
       return response.data; 
     } catch (err) {
@@ -44,26 +43,24 @@ class DonationService {
       return request;
 
     } catch (err){
-      console.log('error in add donation service: ' , err); 
+      console.error('error in add donation service: ' , err); 
     }
   }
 
   static async getDonationsGroupedBySchool(){
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/school/donations`);
-      console.log("response in service", response);
 
       return response.data.data; 
 
     } catch (err) {
-      console.log('Error in view donations grouped by school service ', err)
+      console.error('Error in view donations grouped by school service ', err)
     }
   }
 
   static async getDonationsBySchoolId(id){
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/school/donations/${id}`)
-    console.log('response in get donation by school id service' , response);
     
 
     for (let data of response.data.data){
@@ -74,10 +71,9 @@ class DonationService {
       }).format(data.amount)
       data.school = data.school.name
     }
-    console.log('IN SERVICE' , response.data.data);
     return response.data;
     } catch (err){
-      console.log('error in service ', err); 
+      console.error('error in service ', err); 
     }
   }
 
@@ -87,24 +83,21 @@ class DonationService {
   static async getDonationsGroupedByStudent(){
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/student/donations`);
-      console.log("response in service", response);
 
       return response.data.data; 
 
     } catch (err) {
-      console.log('Error in view donations grouped by student service ', err)
+      console.error('Error in view donations grouped by student service ', err)
     }
   }
 
   static async getDonationsByStudentId(id){
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/student/donations/${id}`)
-    console.log('response in get donation by student id service' , response);
-    
-    console.log('IN SERVICE' , response.data.data);
+
     return response.data;
     } catch (err){
-      console.log('error in service ', err); 
+      console.error('error in service ', err); 
     }
   }
 

@@ -4,7 +4,6 @@ import { SET_ALERT, REMOVE_ALERT } from '../types';
 
 export const setAlert = (msg, alertType, timeout = 3000) => async dispatch => {
   const id = uuidv4();
-  console.log('this is in actions');
   dispatch({
     type: SET_ALERT,
     payload: {msg, alertType, id },

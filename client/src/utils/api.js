@@ -15,7 +15,7 @@ const api = axios.create({
 api.interceptors.request.use(
   res => res,
   err => {
-    console.log('error in api', err)
+    console.error('error in api', err)
     if (err.res.data.message === 'Token is not valid') {
       store.dispatch({ type: LOGOUT });
     }
@@ -28,7 +28,7 @@ api.interceptors.response.use(
   error => {
     const {status} = error.response;
     if (status === 401){
-      console.log('erorr in api js', status);
+      console.error('erorr in api js', status);
 
       store.dispatch({type: LOGOUT});
     }

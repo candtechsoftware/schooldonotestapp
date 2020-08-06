@@ -9,6 +9,7 @@ const Admin = db.admin;
 const Student = db.student;
 const School = db.school;
 const AdminSettings = db.admin_settings;
+const { Op } = require("sequelize");
 
 
 class AdminController {
@@ -148,7 +149,8 @@ class AdminController {
     try {
       const response  = await Admin.findAll({
         where:{
-          is_archived: false
+          is_archived: false,
+          is_super: false,
         },
         attributes: ['id','first_name', 'last_name', 'email']
       })
@@ -162,6 +164,10 @@ class AdminController {
   static async archiveAdmin(req, res) {
     try {
       let id = req.params.id;   
+      if(id == 1) {
+        res.status(500).json({message: 'Invalid Admin Type'});
+        return; 
+      }
       const admin = Admin.findByPk(id);
       if (!admin){
         res.status(500).json({error: "No admins"});

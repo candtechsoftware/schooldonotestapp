@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AdminDonations from '../views/pages/admin/dashboard/AdminDashboard';
 import AdminSettings from '../views/pages/admin/dashboard/AdminSettings';
+import ManageAdmins from '../views/pages/admin/dashboard/ManageAdmins';
 
 import Schools from '../views/pages/admin/schools/Schools';
 import SchoolDonation from '../views/pages/admin/schools/SchoolDonation';
@@ -33,6 +34,8 @@ const TheContent = ({user: {isAuthenticated, isAdmin}}) => {
               <AdminRoutes exact path='/dashboard' component={AdminDonations}/>
               <AdminRoutes exact path='/admin/settings' component={AdminSettings}/>
               <AdminRoutes exact path='/admin/schools' component={Schools}/>
+              <AdminRoutes exact path='/admin/admins' component={ManageAdmins}/>
+
               <AdminRoutes exact path='/admin/schools/donations' component={SchoolDonation}/>
             <AdminRoutes exact path='/admin/schools/donations/:id' component={SingleSchool}/>
               <AdminRoutes exact path='/admin/students' component={Students}/>
