@@ -12,7 +12,6 @@ import {
 } from '@coreui/react'
 
 import Spinner from '../../student/Dashboard/Spinner';
-import { get } from 'request';
 
 
 const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) => {
@@ -24,7 +23,6 @@ const AdminDonations = ({ getAllDonations, donation: {donations, loading } }) =>
     
    const getTotal = () => {
     let sum = 0.0;
-    let count = 0;
     if (Array.isArray(donations)){
     for (let dono of donations) {
       let amount;

@@ -63,7 +63,13 @@ const SingleStudent = ({
     donationData.school_id = student.school_id;
     console.log(donationData);
     addDonation(donationData);
-    window.location = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3KBGNFDPRV6TE&source=url&item_name=${student.id}`;
+    // window.location = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3KBGNFDPRV6TE&source=url&item_name=${student.id}`;
+    window.location = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-phrta2265642@business.example.com&item_name=${student.id}&item_number=Fall+Cleanup+Campaign&amount=${donationData.amount}`
+    
+
+    console.log("amount ", donationData.amount);
+    console.log(typeof donationData.amount);
+    console.log(`https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-phrta2265642@business.example.com&item_name=${student.id}&item_number=Fall+Cleanup+Campaign&amount=${donationData.amount}`)
     // addDonation(donationData);
   };
   if (donationSuccess) {

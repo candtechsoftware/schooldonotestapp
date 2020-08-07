@@ -1,4 +1,4 @@
-import { LOAD_SETTING, UPDATE_SETTING, CREATE_ADMIN, DELETE_ADMIN, GET_ALL_ADMINS } from '../types';
+import { LOAD_SETTING, UPDATE_SETTING, DELETE_ADMIN, GET_ALL_ADMINS } from '../types';
 import setAuthtoken from "../../utils/authHeader";
 import AdminService from './admin.service';
 
@@ -34,7 +34,7 @@ export const updateSettings = (setting_id, data) => async dispatch => {
       setting: "fee",
       value: data.value,
     };
-
+    if (!response) console.log('No response: ', response);
     dispatch({
       type: UPDATE_SETTING,
       payload: newSettings

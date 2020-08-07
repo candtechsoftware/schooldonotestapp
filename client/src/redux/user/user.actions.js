@@ -51,7 +51,7 @@ export const registerAdmin = formData => async dispatch => {
         dispatch({
           type: REGISTER_FAIL,
         })
-        dispatch(setAlert("Registration Failed", 'danger', 2000))
+        dispatch(setAlert(message, 'danger', 2000))
       }
 
   } catch (err) {
