@@ -30,7 +30,6 @@ const studentReducer = (state = initialState, action) => {
       }
 
     case UPDATE_STUDENT:
-      console.log('in disptch: ',payload )
       return {
         ...state,
         student: payload,

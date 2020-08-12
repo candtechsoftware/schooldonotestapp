@@ -24,19 +24,21 @@ import { getAllSchools } from '../../../../redux/schools/schools.action';
 
 const ManageSingleStudent = ({
   getStudent,
+  getAllSchools,
   updateStudent,
-  schools: {schools},
+  schools,
   student: { student, loading },
   match
   }) => {
+  
+  
   useEffect( () => {
       getStudent(match.params.id)
+      getAllSchools();
   },[getStudent, match.params.id])
 
-  useEffect(()=>{
-    getAllSchools()
 
-  },[getAllSchools])
+
   const grades = [
     'Select Grade',
     'Pre-L',
@@ -96,8 +98,8 @@ const ManageSingleStudent = ({
         formData[data] = student[data]
       }
     }
-    setAlert('Success', 'sucess');
-    updateStudent(student.id, formData);
+      setAlert('Success', 'sucess', 3300);
+    // updateStudent(student.id, formData);
   } 
 
 
@@ -225,7 +227,7 @@ const ManageSingleStudent = ({
 
                     > 
                       <option key='select' value='select school'>Select School</option>
-                      {schools.map(school => <option key={school.id} value={school.id}>{school.name}</option>)}
+                      {schools.schools.map(school => <option key={school.id} value={school.id}>{school.name}</option>)}
                       </select>               
                   </CInputGroup>
                   <p className="current-info">Current Grade: {student.grade}</p>
@@ -307,10 +309,11 @@ const ManageSingleStudent = ({
 
 }
 ManageSingleStudent.propTypes = {
-  getStudent: PropTypes.func.isRequired,
-  students: PropTypes.object,
   getAllSchools: PropTypes.func.isRequired,
   updateStudent: PropTypes.func.isRequired,
+  getStudent: PropTypes.func.isRequired,
+  students: PropTypes.object,
+
 
 }
 

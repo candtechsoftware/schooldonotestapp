@@ -7,7 +7,6 @@ class AdminService {
   static async getAllSettings(){
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/admin/settings/`);
-      console.log("In service ",response);
       return response.data.settings[0];
     } catch(err){
       console.error(err);
@@ -23,7 +22,6 @@ class AdminService {
     const body = JSON.stringify(data);
     try {
       const response = await api.post(`${process.env.REACT_APP_URL}/api/admin/settings/${setting_id}`, body, configHeaders );
-      console.log("In service: ", response)
       return response.settings;
     } catch(err){
       console.error(err);

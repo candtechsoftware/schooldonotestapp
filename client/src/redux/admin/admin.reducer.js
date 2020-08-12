@@ -36,7 +36,6 @@ export default function(state = initialState, action){
             loading: false, 
           }
         case UPDATE_SETTING:
-          console.log('reducer payload' , payload);
           return {
             ...state,
             settings: payload,

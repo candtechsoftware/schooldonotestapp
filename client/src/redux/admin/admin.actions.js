@@ -10,7 +10,6 @@ export const loadSettings = () => async dispatch => {
 
   try {
     let response = await AdminService.getAllSettings();
-    console.log('in settigns, ', response);
     dispatch({ 
       type: LOAD_SETTING,
       payload: response

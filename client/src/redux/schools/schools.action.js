@@ -3,8 +3,10 @@ import SchoolsService from './schools.service';
 
 
 export const getAllSchools = () => async dispatch => {
+  console.log('I am beingcalled');
   try {
     const response = await SchoolsService.getAllSchools();
+    console.log("in actrions ", response)
     dispatch({
       type: GET_SCHOOLS,
       payload: response,

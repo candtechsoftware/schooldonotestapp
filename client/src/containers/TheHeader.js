@@ -17,7 +17,6 @@ import {
 
 const TheHeader = ({isAdmin, setOpen, loadStudent, isOpen }) => {
 
-  console.log('in header', isAdmin);
   return (
     <CHeader withSubheader>
     {isAdmin ?  (

@@ -6,6 +6,7 @@ class SchoolsService {
   static async getAllSchools() {
     try {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/schools`);
+      console.log("in service", response.data.schools); 
       return response.data.schools
 
     } catch (error) {

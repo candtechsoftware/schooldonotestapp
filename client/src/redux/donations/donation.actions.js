@@ -21,7 +21,6 @@ export const loadDonationByStudent = () => async dispatch => {
       type: GET_CURRENT_STUDENT_DONATION,
       payload: response.donations
     });
-    console.log("in action ", response);
   } catch (err) {
     dispatch({
       type: DONATION_ERROR
@@ -36,7 +35,6 @@ export const getAllDonations = () => async dispatch => {
 
   try {
     let response = await DonationService.getAllDonations();
-    console.log("In actions" ,response.total)
     dispatch({
       type: GET_DONATONS,
       payload: response
@@ -49,13 +47,12 @@ export const getAllDonations = () => async dispatch => {
 export const addDonation = donation => async dispatch => {
   try {
     const response = await DonationService.addDonation(donation);
-    console.log(response);
     dispatch({ 
       type: ADD_DONATION,
       payload: response
     })
   } catch (err) {
-    console.log("error in action add donation: ", err);
+    console.error("error in action add donation: ", err);
   }
 };
 
@@ -67,14 +64,13 @@ export const getDonationsGroupedBySchool = () => async dispatch => {
       payload: response
     });
   } catch (err) {
-    console.log("Error in actions groupd by school ", err);
+    console.error("Error in actions groupd by school ", err);
   }
 };
 
 export const getDonationsBySchoolId = (id) => async dispatch => {
   try {
     const response = await DonationService.getDonationsBySchoolId(id);
-    console.log('response in action', response);
     dispatch({
       type: GET_DONATONS_BY_SCHOOL_ID,
       payload: response.data
@@ -88,20 +84,18 @@ export const getDonationsBySchoolId = (id) => async dispatch => {
   export const getDonationsGroupedByStudent = () => async dispatch => {
     try {
       const response = await DonationService.getDonationsGroupedByStudent();
-      console.log('in actions: ', response);
       dispatch({
         type: GET_DONATONS_BY_STUDENT,
         payload: response
       });
     } catch (err) {
-      console.log("Error in actions groupd by school ", err);
+      console.error("Error in actions groupd by school ", err);
     }
   };
   
   export const getDonationsByStudentId = (id) => async dispatch => {
     try {
       const response = await DonationService.getDonationsByStudentId(id);
-      console.log('response in action', response);
       dispatch({
         type: GET_DONATONS_BY_STUDENT_ID,
         payload: response.data

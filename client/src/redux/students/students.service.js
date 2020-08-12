@@ -60,7 +60,7 @@ class StudentService {
       return formatted; 
 
     } catch (err) {
-      console.log("error in get student service", err);
+      console.error("error in get student service", err);
     }
   }
 
@@ -87,8 +87,6 @@ class StudentService {
         school_id: response.data.student.school.id
 
     }
-    console.log("in service ",formatted);
-
     return formatted; 
     } catch (err) {
       console.log(err)

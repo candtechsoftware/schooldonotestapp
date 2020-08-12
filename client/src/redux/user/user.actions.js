@@ -20,7 +20,6 @@ export const registerStudent = formData => async dispatch => {
   const response = await UserService.registerStudent(formData);
   const user = response.user;
   const message = response.message;
-  console.log(user);
   if(user){
     dispatch({
       type: REGISTER_SUCCES,
@@ -28,7 +27,6 @@ export const registerStudent = formData => async dispatch => {
     });
     console.log('non error:', message);
   } else {
-    console.log(message);
     dispatch({
       type: REGISTER_FAIL,
     })
@@ -41,7 +39,6 @@ export const registerAdmin = formData => async dispatch => {
       const response = await UserService.registerAdmin(formData);
       const user = response.user;
       const message = response.message;
-      console.log(user);
       if (user){
         dispatch({
           type: REGISTER_SUCCES,
@@ -55,7 +52,7 @@ export const registerAdmin = formData => async dispatch => {
       }
 
   } catch (err) {
-    console.log('error in register admin: ', err);
+    console.error('error in register admin: ', err);
   }
 
 }
@@ -75,7 +72,7 @@ export const loadStudent = () => async dispatch => {
         payload: response,
       }, [])
       } catch (err) {
-        console.log('error in the user actions', err);
+        console.error('error in the user actions', err);
         dispatch({
           type: AUTH_ERROR
         })
