@@ -99,7 +99,7 @@ const ManageSingleStudent = ({
       }
     }
       setAlert('Success', 'sucess', 3300);
-    // updateStudent(student.id, formData);
+      updateStudent(student.id, formData);
   } 
 
 
