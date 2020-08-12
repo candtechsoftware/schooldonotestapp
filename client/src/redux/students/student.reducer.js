@@ -1,4 +1,4 @@
-import { GET_STUDENT ,GET_STUDENTS, DELETE_STUDENT, GET_FILTERED_STUDENTS } from "../types";
+import { GET_STUDENT ,GET_STUDENTS, DELETE_STUDENT, GET_FILTERED_STUDENTS, UPDATE_STUDENT } from "../types";
 
 const initialState = {
   students: null,
@@ -27,6 +27,14 @@ const studentReducer = (state = initialState, action) => {
       return {
         ...state,
         students: payload,
+      }
+
+    case UPDATE_STUDENT:
+      console.log('in disptch: ',payload )
+      return {
+        ...state,
+        student: payload,
+        loading: false,
       }
 
     case DELETE_STUDENT:

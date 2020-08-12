@@ -44,7 +44,9 @@ class StudentService {
       const response = await api.get(`${process.env.REACT_APP_URL}/api/student/${id}`);
       const formatted = {
           id: response.data.student.id,
-          name: `${response.data.student.first_name} ${response.data.student.last_name}`,
+          first_name: response.data.student.first_name,
+          last_name: response.data.student.last_name,
+          email: response.data.student.email,
           student_school_id: response.data.student.student_school_id,
           phone: response.data.student.phone,
           grade: response.data.student.grade,
@@ -60,6 +62,38 @@ class StudentService {
     } catch (err) {
       console.log("error in get student service", err);
     }
+  }
+
+  static async updateStudent(id, data) {
+    const configHeaders = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const body = JSON.stringify(data)
+    try{
+      const response = await api.post(`${process.env.REACT_APP_URL}/api/student/${id}`,body, configHeaders );
+      const formatted = {
+        id: response.data.student.id,
+        first_name: response.data.student.first_name,
+        last_name: response.data.student.last_name,
+        email: response.data.student.email,
+        student_school_id: response.data.student.student_school_id,
+        phone: response.data.student.phone,
+        grade: response.data.student.grade,
+        teacher: response.data.student.teacher,
+        shirt_size: response.data.student.shirt_size,
+        school: response.data.student.school.name,
+        school_id: response.data.student.school.id
+
+    }
+    console.log("in service ",formatted);
+
+    return formatted; 
+    } catch (err) {
+      console.log(err)
+    }
+
   }
 }
 export default StudentService;

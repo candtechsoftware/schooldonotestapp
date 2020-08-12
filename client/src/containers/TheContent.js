@@ -16,6 +16,7 @@ import AdminSettings from '../views/pages/admin/dashboard/AdminSettings';
 import ManageAdmins from '../views/pages/admin/dashboard/ManageAdmins';
 
 import Schools from '../views/pages/admin/schools/Schools';
+import ManageSingleStudent from '../views/pages/admin/students/ManageSingleStudent';
 import SchoolDonation from '../views/pages/admin/schools/SchoolDonation';
 import StudentDonations from '../views/pages/admin/students/StudentDonations';
 import SingleSchool from '../views/pages/admin/schools/SingleSchool';
@@ -39,6 +40,8 @@ const TheContent = ({user: {isAuthenticated, isAdmin}}) => {
               <AdminRoutes exact path='/admin/schools/donations' component={SchoolDonation}/>
             <AdminRoutes exact path='/admin/schools/donations/:id' component={SingleSchool}/>
               <AdminRoutes exact path='/admin/students' component={Students}/>
+              <AdminRoutes exact path='/admin/student/:id' component={ManageSingleStudent}/>
+
               <AdminRoutes exact path='/admin/students/donations' component={StudentDonations}/>
             <AdminRoutes exact path='/admin/students/donations/:id' component={SingleStudent}/>
     

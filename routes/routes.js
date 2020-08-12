@@ -29,12 +29,17 @@ router.post('/student/reset-password/:token', StudentController.resetPassword);
 
 
 // GET logged in student by token
-router.get('/student', checkJWT, StudentController.loadStudent);
+router.get('/student', [checkJWT], StudentController.loadStudent);
 
 // Fetch All Students
 // @access public
 router.get('/students', StudentController.getAllStudents);
 router.get('/student/:id', StudentController.getSingleStudent);
+
+// Update All Students
+// @access admin
+router.post('/student/:id', [checkJWT], StudentController.updateStudent);
+
 /**
 /------------------------------------
 / Admin Routes
@@ -44,13 +49,13 @@ router.get('/student/:id', StudentController.getSingleStudent);
 // Creating an Admin Account
 // @access protected
 // Only Admins can create other admin accounts
-router.post('/admin/register', [checkJWT], AdminController.createAdminAccount);
+router.post('/admin/register',[checkJWT], AdminController.createAdminAccount);
 
 // Load all settigns
-router.get('/admin/settings', AdminController.getAllSettings)
+router.get('/admin/settings',[checkJWT], AdminController.getAllSettings)
 
 // Update Settings
-router.post('/admin/settings/:id',[checkJWT], AdminController.updateSetting)
+router.post('/admin/settings/:id', [checkJWT], AdminController.updateSetting)
 
 // Logging In Admin Account
 // @access public
@@ -68,19 +73,19 @@ router.post('/admin/:id',  [checkJWT], AdminController.archiveAdmin);
 
 // Admin Adding A School
 // @access admin only
-router.post('/admin/school', AdminController.createSchool);
+router.post('/admin/school', [checkJWT], AdminController.createSchool);
 
 // Finding Get All Schools
 // @access public
 router.get('/schools/', AdminController.fetchSchools);
 
 // Removing A School
-router.delete('/admin/school/:id', AdminController.archiveSchool);
+router.delete('/admin/school/:id', [checkJWT], AdminController.archiveSchool);
 
 // Archive Student
 // @access protected
 // only admins can archive accounts
-router.delete('/admin/student/:id', AdminController.archiveSingleStudent);
+router.delete('/admin/student/:id', [checkJWT],AdminController.archiveSingleStudent);
 router.delete(
   '/admin/student/',
   [checkJWT],

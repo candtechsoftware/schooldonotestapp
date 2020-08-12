@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+
 import {connect} from 'react-redux';
 
 import {
@@ -13,6 +15,7 @@ import {
 } from '@coreui/react'
 import Spinner from '../../student/Dashboard/Spinner';
 import { getAllStudents, archiveStudent } from '../../../../redux/students/student.actions';
+import { Redirect } from 'react-router-dom';
 
 
 const Students = ({getAllStudents, archiveStudent, students: {loading, students}}) => {
@@ -28,7 +31,9 @@ const Students = ({getAllStudents, archiveStudent, students: {loading, students}
     {key: 'grade', label: 'Grade', _style: { width: '1%'}, sorter: false, filter: false },
     {key: 'teacher', label: 'Teacher', _style: { width: '1%'}, sorter: false, filter: false },
   {key: 'shirt_size', label: 'Shirt Size', _style: { width: '1%'}, sorter: false, filter: false },
+    {key: 'Edit', label: '', _style: { width: '1%'}, sorter: false, filter: false },
     {key: 'Archive', label: '', _style: { width: '1%'}, sorter: false, filter: false }
+
   ]
 
   return loading ? (<Spinner/>) 
@@ -52,9 +57,24 @@ const Students = ({getAllStudents, archiveStudent, students: {loading, students}
               itemsPerPageSelect
               itemsPerPage={10}
               scopedSlots= {{
+                'Edit':
+                (item, index)=> (
+                    <td className='py-2'>
+                          <Link 
+                        to={`/admin/student/${item.id}`}>
+                    <CButton
+                      onClick={()=> {
+                    
+                      }}
+                      color='primary'
+                    >Edit</CButton>
+                    </Link>
+                    </td>
+                  )
+              ,
+              
                 'Archive':
-                (item, index)=> {
-                  return (
+                (item, index)=> (
                     <td className='py-2'>
                     <CButton
                       onClick={()=> {
@@ -64,8 +84,9 @@ const Students = ({getAllStudents, archiveStudent, students: {loading, students}
                       color='danger'
                     >Archive</CButton>
                     </td>
-                  )}
-              }}
+                  )
+            
+            }}
             />
           </CCardBody>
         </CCard>

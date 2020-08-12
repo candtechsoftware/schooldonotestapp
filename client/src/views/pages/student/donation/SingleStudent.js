@@ -43,14 +43,14 @@ const SingleStudent = ({
 
 
   const convienceFee = parseFloat(settings.value)/100;
-  console.log("In Component ", settings)
-  console.log("In Component ", convienceFee)
+
   const [amount, setAmount] = useState(0);
   let fee = amount * convienceFee;
   let total = fee + parseFloat(amount);
 
   let donationData = {};
   const onChange = (e) => {
+    console.log(`https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-phrta2265642@business.example.com&item_name=${student.id}&item_number=Fall+Cleanup+Campaign&amount=${total}`)
     setAmount(e.target.value);
     fee = amount * convienceFee;
     total = fee + amount;
@@ -61,25 +61,13 @@ const SingleStudent = ({
     donationData.amount = total;
     donationData.student_id = student.id;
     donationData.school_id = student.school_id;
-    console.log(donationData);
-    addDonation(donationData);
-    // window.location = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3KBGNFDPRV6TE&source=url&item_name=${student.id}`;
-    window.location = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-phrta2265642@business.example.com&item_name=${student.id}&item_number=Fall+Cleanup+Campaign&amount=${donationData.amount}`
-    
-
-    console.log("amount ", donationData.amount);
-    console.log(typeof donationData.amount);
-    console.log(`https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-phrta2265642@business.example.com&item_name=${student.id}&item_number=Fall+Cleanup+Campaign&amount=${donationData.amount}`)
-    // addDonation(donationData);
+    console.log("Donation: ", donationData);
+    window.location = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-phrta2265642@business.example.com&item_name=${student.id}&item_number=Fall+Cleanup+Campaign&amount=${parseFloat(total).toFixed(2)}`;
   };
   if (donationSuccess) {
     setAlert("Donation Successful");
   }
 
-  // const paymentHandler = (details, data) => {
-  //   console.log("details", details);
-  //   console.log("data ", data);
-  // };
   return loading || student == null ? (
     <div className="c-app c-default-layout flex-row align-items-center">
       <Spinner />
@@ -92,7 +80,7 @@ const SingleStudent = ({
             <CRow className="single-student-donation">
               <CCardBody>
                 <CCardHeader>
-                  <h1>{student.name} </h1>
+                  <h1>{`${student.first_name} ${student.last_name}`} </h1>
                   <h5>
                     ID: {student.student_school_id} Grade: {student.grade}
                   </h5>

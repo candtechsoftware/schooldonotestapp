@@ -167,6 +167,45 @@ class StudentController {
       const {
         first_name,
         last_name,
+        phone,
+        student_school_id,
+        shirt_size,
+        grade,
+        teacher,
+      } = req.body;
+
+      let updateStudent = {
+        first_name,
+        last_name,
+        phone,
+        student_school_id,
+        shirt_size,
+        grade,
+        teacher,
+      };
+      let updated = await Student.update(updateStudent, {
+        where: {id : req.params.id}
+      })
+      if (updated){
+        let studentInfo = await Student.findByPk(req.params.id,{
+          include: [School],
+          where: {
+            is_archived: false, 
+          },
+          attributes: ['id','first_name', 'last_name', 'student_school_id', 'email', 'phone', 'grade', 'teacher', 'shirt_size']},)
+        res.status(200).json({success: true, message: "Student updated", student: studentInfo})
+      }
+  } catch(err){
+    res.status(500).json({error: err});
+    console.log(err)
+  }
+}
+
+  static async updatePassword(req, res) {
+    try {
+      const {
+        first_name,
+        last_name,
         email,
         password,
         phone,
@@ -199,7 +238,7 @@ class StudentController {
         })
         .then((err) => res.json({ err: err.message }));
     } catch (e) {
-      res.status(500).json({ error: e });
+      res.status(500).json({ error: e.message });
     }
   }
 
@@ -227,7 +266,7 @@ class StudentController {
           id: id,
           is_archived: false, 
         },
-        attributes: ['id','first_name', 'last_name', 'student_school_id', 'phone', 'grade', 'teacher', 'shirt_size'],
+        attributes: ['id','first_name', 'last_name', 'student_school_id', 'email', 'phone', 'grade', 'teacher', 'shirt_size'],
       })
 
       console.log('student: ', student);
