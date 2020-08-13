@@ -64,7 +64,7 @@ const ResetPassword = ({resetPassword, isAuthenticated, match, setAlert, success
                         </CInputGroupText>
                       </CInputGroupPrepend>
                       <CInput
-                        type="text"
+                        type="password"
                         placeholder="password"
                         name="password"
                         value={password}
@@ -79,7 +79,7 @@ const ResetPassword = ({resetPassword, isAuthenticated, match, setAlert, success
                         </CInputGroupText>
                       </CInputGroupPrepend>
                       <CInput
-                        type="confirmPassword"
+                        type="password"
                         placeholder="confirmPassword"
                         name="confirmPassword"
                         value={confirmPassword}
