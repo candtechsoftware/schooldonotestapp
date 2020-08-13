@@ -2,7 +2,7 @@ import React, { useEffect,useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../../redux/alert/alert.action';
-
+import Spinner from '../../student/Dashboard/Spinner'
 import {
   CButton,
   CCard,
@@ -106,7 +106,7 @@ const ManageSingleStudent = ({
 
   return loading || student == null ? (
     <div>
-      <h1>Hi</h1>      
+      <Spinner/> 
     </div>
   ) : (
     <div >
