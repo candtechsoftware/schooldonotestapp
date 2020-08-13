@@ -16,9 +16,10 @@ import './scss/style.scss';
 import Alert from './views/notifications/alerts/Alerts';
 import { connect } from 'react-redux'; 
 import { loadStudent } from './redux/user/user.actions';
+import { clearState } from './redux/user/user.actions';
 import setAuthtoken from './utils/authHeader';
 import {store} from './store';
-
+import PropTypes from 'prop-types';
 
 
 if (localStorage.token) {
@@ -26,10 +27,15 @@ if (localStorage.token) {
 
 
 }
-const App = () =>{
+const App = (currentUser) =>{
   useEffect(() => {
     store.dispatch(loadStudent())
-  },[])
+    if (currentUser){
+      store.dispatch(clearState())
+    }
+  },[clearState])
+
+
   return (
       <BrowserRouter >
             <Alert/>
@@ -52,9 +58,11 @@ const App = () =>{
     
 
 )}
-
+App.propTypes = {
+  clearState: PropTypes.func.isRequired
+}
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser
 })
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, {clearState})(App);

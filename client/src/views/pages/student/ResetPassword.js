@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
-import { loginStudent } from '../../../redux/user/user.actions';
+import { resetPassword } from '../../../redux/user/user.actions';
+import { setAlert } from '../../../redux/alert/alert.action';
 import {
   CButton,
   CCard,
@@ -19,13 +20,13 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-const ResetPassword = ({loginStudent, isAuthenticated}) => {
+const ResetPassword = ({resetPassword, isAuthenticated, match, setAlert, success}) => {
   const [formData, setFormData] = useState({
-    email: "",
     password: "",
+    confirmPassword: ""
   });
 
-  const { email, password } = formData;
+  const { password, confirmPassword} = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,10 +34,17 @@ const ResetPassword = ({loginStudent, isAuthenticated}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    loginStudent(email, password);
+
+    if (password !== confirmPassword){
+      setAlert('Passwords Do no match', 'danger', 1000)
+    }else {
+      resetPassword(match.params.token, password);
+
+  }
+
   };
-  if (isAuthenticated) {
-    return <Redirect to='/students'/>
+  if (success) {
+    return <Redirect to='/login'/>
   }
   
   return (
@@ -57,11 +65,11 @@ const ResetPassword = ({loginStudent, isAuthenticated}) => {
                       </CInputGroupPrepend>
                       <CInput
                         type="text"
-                        placeholder="email"
-                        name="email"
-                        value={email}
+                        placeholder="password"
+                        name="password"
+                        value={password}
                         onChange={(e) => onChange(e)}
-                        autoComplete="email"
+                        autoComplete="password"
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -71,49 +79,30 @@ const ResetPassword = ({loginStudent, isAuthenticated}) => {
                         </CInputGroupText>
                       </CInputGroupPrepend>
                       <CInput
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        value={password}
+                        type="confirmPassword"
+                        placeholder="confirmPassword"
+                        name="confirmPassword"
+                        value={confirmPassword}
                         onChange={(e) => onChange(e)}
-                        autoComplete="current-password"
+                        autoComplete="current-confirmPassword"
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
                         <CButton type="submit" color="success" className="px-4">
-                          Login
+                          Reset Password
                         </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <CButton color="success">Forgot password?</CButton>
+                          <Link to="/login">
+                        <CButton color="success">Back To Login</CButton>
+                        </Link>
                       </CCol>
                     </CRow>
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard
-                className="text-white bg-primary py-5 d-md-down-none"
-                style={{ width: "44%" }}
-              >
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <div>
-                      <Link to="/register">
-                        <CButton
-                          color="success"
-                          className="mt-3"
-                          active
-                          tabIndex={-1}
-                        >
-                          Register Now!
-                        </CButton>
-                      </Link>
-                    </div>
-                  </div>
-                </CCardBody>
-              </CCard>
+              
             </CCardGroup>
           </CCol>
         </CRow>
@@ -123,11 +112,13 @@ const ResetPassword = ({loginStudent, isAuthenticated}) => {
 };
 
 ResetPassword.propTypes = {
-  loginStudent: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  resetPassword: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+
+  success: PropTypes.bool
 }
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.isAuthenticated
+  success: state.user.success
 });
 
-export default connect(mapStateToProps, { loginStudent })(ResetPassword);
+export default connect(mapStateToProps, { resetPassword, setAlert })(ResetPassword);

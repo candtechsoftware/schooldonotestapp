@@ -6,9 +6,9 @@ import sideBarReducer from './sidebar/sidebar.reducer';
 import studentReducer from './students/student.reducer';
 import schoolReducer from './schools/school.reducer';
 import adminReducer from './admin/admin.reducer';
+import {LOGOUT} from './types';
 
-
-const rootReducer = combineReducers(
+const appReducer = combineReducers(
   {
     user: userReducer, 
     admin:adminReducer,
@@ -19,5 +19,12 @@ const rootReducer = combineReducers(
     schools: schoolReducer,
   });
 
+const rootReducer =  (state, actions) => {
+  if (actions.type === LOGOUT){
+    localStorage.removeItem('token');
+    state = undefined;
+  }
+  return appReducer(state, actions)
+}
 
   export default rootReducer;

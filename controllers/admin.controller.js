@@ -53,7 +53,7 @@ class AdminController {
                 },
                 secret,
                 {
-                  expiresIn: "1d",
+                  expiresIn:'1h',
                 }
               );
 

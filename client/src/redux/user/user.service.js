@@ -153,6 +153,39 @@ class UserService {
     localStorage.removeItem('user');
   }
 
+  static async sendResetLink(email) {
+    const configHeaders = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const body = JSON.stringify({email});
+    try {
+      const response = await api.post(`${process.env.REACT_APP_URL}/api/forgot-password`, body, configHeaders); //
+      console.log('In service ', response);
+      return response
+    } catch (err){
+      console.error('Error in send reset link: ', err); 
+    }
+  }
+
+  static async resetPassword(token, password) {
+
+    const configHeaders = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const body = JSON.stringify({token, password});
+    console.log("Body in service ",body);
+    try {
+    const response = await api.post(`${process.env.REACT_APP_URL}/api/reset-password`, body, configHeaders)
+    return response;
+    } catch(err){
+      console.error('Error in the reset passowrd service: ', err);
+    }
+  }
+
 }
 
 export default UserService;

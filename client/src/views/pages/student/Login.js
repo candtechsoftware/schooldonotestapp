@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
@@ -19,7 +19,11 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-const Login = ({loginStudent, isAuthenticated}) => {
+const Login = ({loginStudent, isAuthenticated, success}) => {
+  useEffect(()=> {
+    success = false;
+
+  })
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -130,7 +134,9 @@ Login.propTypes = {
   isAuthenticated: PropTypes.bool
 }
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.isAuthenticated
+  isAuthenticated: state.user.isAuthenticated,
+  success: state.user.success
+
 });
 
 export default connect(mapStateToProps, { loginStudent })(Login);

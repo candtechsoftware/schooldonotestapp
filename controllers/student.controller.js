@@ -98,9 +98,11 @@ class StudentController {
               },
               secret,
               {
-                expiresIn: 3600,
+                expiresIn: '1h',
               }
             );
+
+
 
             res.status(200).json({
               success: true,
@@ -295,10 +297,12 @@ class StudentController {
       )
       let link = `${process.env.PUBLIC_URL}/reset-password/${token}`
       const text = `Hi ${student.first_name} \n
-          Please click on following link ${link} to reset password. 
+          Please click on following <a href="${link}">link</a>  to reset password. 
         `
       
-      sendMail(student.dataValues.email, "Password Reset", text)
+      sendMail(student.dataValues.email, "Password Reset", text);
+      res.status(200).json({status: "success", message: "email sent"})
+
     } catch (err ){
       console.log("Error in forgot password ", err)
     }
@@ -307,15 +311,29 @@ class StudentController {
 
   static async resetPassword(req, res, next){ 
     let token = req.body.token;
-    let student = jwt.verify(token, secret, (error, decoded) => {
+    let password = req.body.password;
+
+    try {
+    let student = await jwt.verify(token, secret, (error, decoded) => {
       if (error) {
         return res.status(401).json({ message: 'Token is not valid'});
-      } else {
-        return req.user;
-
       }
+        return decoded
     });
-    console.log(student);
+    let hashPassword = bcrypt.hashSync(password, 10);
+
+    const updateStudent = {
+      password: hashPassword
+    }
+    student = await Student.update(updateStudent, {
+      where:{id: student.student.id}
+    })
+    
+    res.status(200).json({studnet: student, message: 'Password updated'})
+  } catch (err) {
+    console.error("In reset password: ", err ); 
   }
+}
+
 }
 module.exports = StudentController;

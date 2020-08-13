@@ -1,4 +1,4 @@
-import { LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_FAIL, REGISTER_SUCCES, SET_CURRENT_USER, AUTH_ERROR, LOGOUT } from '../types';
+import { LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_FAIL, REGISTER_SUCCES, SET_CURRENT_USER, AUTH_ERROR, LOGOUT, RESET_LINK, RESET_PASSWORD } from '../types';
 import UserService from './user.service'
 import { setAlert } from '../alert/alert.action';
 import setAuthtoken from '../../utils/authHeader';
@@ -104,3 +104,44 @@ export const logout = () => async dispatch => {
   localStorage.removeItem('token');
   dispatch({type: LOGOUT})
 }
+
+export const sendResetLink = (email) => async dispatch => {
+  try {
+    const response = await UserService.sendResetLink(email);
+    if (!response){
+      dispatch({
+        type: AUTH_ERROR,
+        payload: response,
+      })
+    }else {
+    dispatch({
+      type: RESET_LINK,
+      payload: response,
+    })
+  }
+  } catch (err) {
+    console.error('In actions: ' , err)
+  }
+}
+
+export const resetPassword = (token, password) => async dispatch => {
+  console.log('I am being called ');
+  try{
+    const resposne = await UserService.resetPassword(token, password); 
+    dispatch({
+      type: RESET_PASSWORD,
+      payload: resposne, 
+    })
+  } catch(err) {
+    console.error('Error in actions: ', err);
+  }
+
+}
+
+export const clearState = () => async dispatch => {
+    console.log('in actions')
+    dispatch({ 
+      type: LOGOUT,
+    })
+}
+

@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_SUCCES, REGISTER_FAIL, AUTH_ERROR, LOGOUT } from '../types';
+import { SET_CURRENT_USER, LOGIN_STUDENT_SUCCESS, LOGIN_ADMIN_SUCCESS,REGISTER_SUCCES, REGISTER_FAIL, AUTH_ERROR, LOGOUT,RESET_LINK, RESET_PASSWORD } from '../types';
 
 const initialState = {
   token: null,
@@ -42,6 +42,12 @@ const userReducer = (state= initialState, action) => {
         ...state,
         isRegistered: true,
         loading: false 
+      }
+    case RESET_LINK:
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        success: true
       }
       case LOGOUT:
       case AUTH_ERROR:

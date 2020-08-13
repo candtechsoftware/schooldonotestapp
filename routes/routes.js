@@ -24,8 +24,8 @@ router.post('/student/login', StudentController.login);
 
 // Student Login
 // @access public
-router.post('/student/forgot-password', StudentController.sendResetLink);
-router.post('/student/reset-password/:token', StudentController.resetPassword);
+router.post('/forgot-password', StudentController.sendResetLink);
+router.post('/reset-password', StudentController.resetPassword);
 
 
 // GET logged in student by token

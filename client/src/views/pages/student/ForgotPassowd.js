@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
-import { loginStudent } from '../../../redux/user/user.actions';
+import { sendResetLink } from '../../../redux/user/user.actions';
+import { setAlert } from '../../../redux/alert/alert.action.js';
 import {
   CButton,
   CCard,
@@ -19,13 +20,13 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-const ForgotPassword = ({loginStudent, isAuthenticated}) => {
+const ForgotPassword = ({sendResetLink,  setAlert, success}) => {
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+
   });
 
-  const { email, password } = formData;
+  const { email} = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,12 +34,13 @@ const ForgotPassword = ({loginStudent, isAuthenticated}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    loginStudent(email, password);
+    console.log(email);
+    setAlert('Email Sent', 'success', 1000);
+    sendResetLink(email);
   };
-  if (isAuthenticated) {
-    return <Redirect to='/students'/>
+  if(success){
+    return <Redirect to='/login'/>
   }
-  
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -89,11 +91,12 @@ const ForgotPassword = ({loginStudent, isAuthenticated}) => {
 };
 
 ForgotPassword.propTypes = {
-  loginStudent: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  setAlert:  PropTypes.func.isRequired,
+  sendResetLink: PropTypes.func.isRequired,
+  success: PropTypes.bool
 }
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.isAuthenticated
+  success: state.user.success
 });
 
-export default connect(mapStateToProps, { loginStudent })(ForgotPassword);
+export default connect(mapStateToProps, { setAlert, sendResetLink })(ForgotPassword);

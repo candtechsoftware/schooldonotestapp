@@ -15,6 +15,8 @@ export const LOGIN_ADMIN_SUCCESS = 'LOGIN_ADMIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 
+export const RESET_LINK  = 'RESET_LINK';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 // Students
 export const GET_STUDENTS = 'GET_STUDENTS';
