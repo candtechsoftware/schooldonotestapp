@@ -35,7 +35,7 @@ const ManageSingleStudent = ({
   useEffect( () => {
       getStudent(match.params.id)
       getAllSchools();
-  },[getStudent, match.params.id])
+  },[getStudent, match.params.id, getAllSchools])
 
 
 
@@ -94,7 +94,7 @@ const ManageSingleStudent = ({
     e.preventDefault();
     getAllSchools();
     for(let data in formData){
-      if (formData[data] == "" ||formData[data] == undefined ){
+      if (formData[data] === "" ||formData[data] === undefined ){
         formData[data] = student[data]
       }
     }

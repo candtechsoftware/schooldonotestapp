@@ -33,7 +33,7 @@ const App = (currentUser) =>{
     if (currentUser){
       store.dispatch(clearState())
     }
-  },[clearState])
+  },[currentUser])
 
 
   return (
