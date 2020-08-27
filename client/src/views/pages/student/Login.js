@@ -95,22 +95,13 @@ const Login = ({loginStudent, isAuthenticated, success}) => {
                         <CButton color="success">Forgot password?</CButton>
                         </Link>
                       </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard
-                className="text-white bg-primary py-5 d-md-down-none"
-                style={{ width: "44%" }}
-              >
-                <CCardBody className="text-center">
+                      <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
                     <div>
                       <Link to="/register">
                         <CButton
                           color="success"
-                          className="mt-3"
+                          className="mt-1"
                           active
                           tabIndex={-1}
                         >
@@ -120,7 +111,11 @@ const Login = ({loginStudent, isAuthenticated, success}) => {
                     </div>
                   </div>
                 </CCardBody>
+                    </CRow>
+                  </CForm>
+                </CCardBody>
               </CCard>
+
             </CCardGroup>
           </CCol>
         </CRow>

@@ -15,7 +15,6 @@ import {
 } from '@coreui/react'
 import Spinner from '../../student/Dashboard/Spinner';
 import { getAllStudents, archiveStudent } from '../../../../redux/students/student.actions';
-import { Redirect } from 'react-router-dom';
 
 
 const Students = ({getAllStudents, archiveStudent, students: {loading, students}}) => {
