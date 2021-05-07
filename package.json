@@ -34,7 +34,7 @@
     "request": "^2.88.2",
     "rxjs": "^6.5.5",
     "sequelize": "^6.2.3",
-    "underscore": "^1.10.2"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
